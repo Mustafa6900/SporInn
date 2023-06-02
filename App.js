@@ -11,7 +11,7 @@ import Profile from './pages/Profile/profile';
 import Products from './pages/Products/products.js';
 import QrCode from './pages/Qrcode/qrcode.js';
 import Budy from './pages/Budy/budy.js';
-import Fitness from './pages/Home/Fitness/fitness.js';
+import ItemAllPage from './components/ItemAllPage.js';
 import Sports from './pages/Home/Sports/sports.js';
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -55,9 +55,9 @@ const App = () => {
           options={{ title: "Home" }}
         />
         <Stack.Screen
-          name='Fitness'
-          component={Fitness}
-          options={{ title: "Fitness" }}
+          name='ItemAllPage'
+          component={ItemAllPage}
+          options={{ title: "ItemAllPage" }}
         />
         <Stack.Screen
           name='Sports'

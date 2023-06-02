@@ -24,7 +24,7 @@ const Sports = ({ navigation }) => {
   ];
   const navigations = useNavigation();
   const handleCategoryPress = (category) => {
-    navigations.navigate('Fitness', { category: category.name });
+    navigations.navigate('ItemAllPage', { category: category.name });
  };
 
 

@@ -47,13 +47,15 @@ const styles = StyleSheet.create({
     button1: {
         backgroundColor: '#0D0D0D',
         width: "90%",
-        marginLeft: 17,
+        marginLeft: "auto",
+        marginRight: "auto",
         marginBottom: 10,
     }
     ,
     button2: {
         width: "90%",
-        marginLeft: 17,
+        marginLeft: "auto",
+        marginRight: "auto",
         
     }
 

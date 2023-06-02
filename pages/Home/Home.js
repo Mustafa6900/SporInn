@@ -22,7 +22,7 @@ export default function Home({ navigation }) {
         />
         <PictureButton 
         title="Spor Salonları"
-        onPress={() => navigation.navigate('Fitness', { category: "Spor Salonları" }) }
+        onPress={() => navigation.navigate('ItemAllPage', { category: "Spor Salonları" }) }
         backgroundImage={require('../../assets/buttonblurpicture.png')}
         style={{marginBottom: 40}}
         />
