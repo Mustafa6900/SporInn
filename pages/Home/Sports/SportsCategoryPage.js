@@ -3,8 +3,8 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import SearchButton from '../../../components/searchbutton';
-import SportTitle from '../../../components/sporttitle';
-import SportList from '../../../components/sportlist';
+import SportTitle from '../../../components/sportptTitle';
+import SportList from './sportCategoryList';
 import { useNavigation } from '@react-navigation/native';
 
 const Sports = ({ navigation }) => {
@@ -24,7 +24,7 @@ const Sports = ({ navigation }) => {
   ];
   const navigations = useNavigation();
   const handleCategoryPress = (category) => {
-    navigations.navigate('ItemAllPage', { category: category.name });
+    navigations.navigate('AllItemAllPages', { category: category.name });
  };
 
 
@@ -54,3 +54,5 @@ const styles = StyleSheet.create({
 });
 
 export default Sports;
+
+// Tesislerin listelendiği sayfa

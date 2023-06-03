@@ -12,6 +12,7 @@ export default function BackButton({ left,top }) {
   const buttonStyle = {
     left: left,
     top: top,
+    position: 'relative',
   };
 
   return (
@@ -23,4 +24,4 @@ export default function BackButton({ left,top }) {
   );
 }
 
-
+// Geri dönüş butonu için kullanılan component.

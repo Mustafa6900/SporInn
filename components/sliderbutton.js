@@ -68,3 +68,5 @@ const styles = StyleSheet.create({
 });
 
 export default SliderButton;
+
+// Genel resimli slider buton için kullanılan component

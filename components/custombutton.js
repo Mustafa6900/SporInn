@@ -36,3 +36,5 @@ const styles = StyleSheet.create({
 });
 
 export default CustomButton;
+
+// Genel turuncu buton için kullanılan component

@@ -11,8 +11,10 @@ import Profile from './pages/Profile/profile';
 import Products from './pages/Products/products.js';
 import QrCode from './pages/Qrcode/qrcode.js';
 import Budy from './pages/Budy/budy.js';
-import ItemAllPage from './components/ItemAllPage.js';
-import Sports from './pages/Home/Sports/sports.js';
+import AllItemAllPages from './pages/F,F-ItemsPages/AllItemAllPages.js';
+import ItemPackagePage from './pages/F,F-ItemsPages/AllItemPacketsPages.js';
+import Sports from './pages/Home/Sports/SportsCategoryPage.js';
+import FitnessPackageDetailPage from './pages/Home/Fitness/fitnessPackageDetailPage.js';
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -55,9 +57,19 @@ const App = () => {
           options={{ title: "Home" }}
         />
         <Stack.Screen
-          name='ItemAllPage'
-          component={ItemAllPage}
-          options={{ title: "ItemAllPage" }}
+          name='AllItemAllPages'
+          component={AllItemAllPages}
+          options={{ title: "AllItemAllPages" }}
+        />
+        <Stack.Screen
+          name='ItemPackagePage'
+          component={ItemPackagePage}
+          options={{ title: "ItemPackagePage" }}
+        />
+        <Stack.Screen
+          name='FitnessPackageDetailPage'
+          component={FitnessPackageDetailPage}
+          options={{ title: "FitnessPackageDetailPage" }}
         />
         <Stack.Screen
           name='Sports'

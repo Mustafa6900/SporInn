@@ -41,3 +41,5 @@ const styles = StyleSheet.create({
 
 export default SearchButton;
 
+// Arama butonu için kullanılan component
+

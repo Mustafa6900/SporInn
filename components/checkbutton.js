@@ -36,3 +36,5 @@ const styles = StyleSheet.create({
 });
 
 export default CheckButton;
+
+// Onaylamalar için kullanılan check butonu.

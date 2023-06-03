@@ -30,3 +30,5 @@ const styles = StyleSheet.create({
 });
 
 export default Header;
+
+// Sayfa başlığı için kullanılan component

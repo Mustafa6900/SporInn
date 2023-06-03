@@ -42,3 +42,6 @@ const styles = StyleSheet.create({
 });
 
 export default PictureButton;
+
+// Genel resimli buton için kullanılan component
+

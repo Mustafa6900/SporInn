@@ -62,3 +62,5 @@ const styles = StyleSheet.create({
 });
 
 export default SportsTopInfo;
+
+// Spor sayfasının üst kısmında bulunan adres belirle veya seç ve listeler butonları için kullanılan component

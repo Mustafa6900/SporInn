@@ -1,18 +1,20 @@
 import React from 'react';
-import { ScrollView, Text, StyleSheet, TouchableOpacity,Image,View } from 'react-native';
+import {Text, StyleSheet, TouchableOpacity,Image,View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 const ItemList = ({ items, onItemPress }) => {
   const handleItemPress = (item) => {
     onItemPress(item);
   };
-
+  const navigations = useNavigation();
   return (
     <View style={styles.container}>
       {items.map((item, index) => (
         <TouchableOpacity
           key={index}
           style={styles.Item}
-          // onPress={() => handleItemPress(item)}
+           onPress={() => navigations.navigate('ItemPackagePage', { item })}
         >
           <Image source={item.image} style={styles.itemImage} />
           <View style={styles.itemInfo}>
@@ -83,3 +85,5 @@ const styles = StyleSheet.create({
   });
 
 export default ItemList;
+
+// Seçilen kategoriye göre Tüm Ürünlerin listelendiği component fotoğraf,başlık,puan ve bilgi kısmı bulunmaktadır.

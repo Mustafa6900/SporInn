@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         height: 40,
         justifyContent: "center",
         top: "19%",
+        borderRadius: 3,
     },
     title: {
         color: "#0D0D0D",
@@ -26,3 +27,5 @@ const styles = StyleSheet.create({
 });
 
 export default SportTitle;
+
+// Sayfa başlığı için kullanılan component beyaz arkaplanlı ve siyah yazılıdır. 

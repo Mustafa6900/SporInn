@@ -61,3 +61,5 @@ const styles = StyleSheet.create({
 });
 
 export default SportList;
+
+// Spor listesi (kategoriler) için kullanılan component

@@ -32,3 +32,5 @@ const styles = StyleSheet.create({
     }
     });
 export default InformationText;
+
+// Bilgilendirme metni için kullanılan component
