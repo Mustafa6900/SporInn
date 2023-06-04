@@ -13,7 +13,7 @@ const ItemDetailPage = ({ route }) => {
         <Header title={item.maincategory} />
         <BackButton left={15} top={-35} />
         <View style={styles.topContainer}>
-        <Image source={item.image} style={styles.topContainerImage} />
+        <Image source={ require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <ItemTitleFavorite title={item.name} point={item.point} />
         </View>
         <CategorySlider items = {item} />

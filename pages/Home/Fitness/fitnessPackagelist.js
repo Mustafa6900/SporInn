@@ -6,7 +6,7 @@ const ItemList = ({ items }) => {
   const navigation = useNavigation();
 
   const handleItemPress = (packet, price, shortdetail,bigdetail,image) => {
-    navigation.navigate('FitnessPackageDetailPage', { packet, price, shortdetail,bigdetail,image });
+    navigation.navigate('PackageDetailPage', { packet, price, shortdetail,bigdetail,image });
   };
   
   return (
@@ -22,7 +22,7 @@ const ItemList = ({ items }) => {
           <Text style={styles.itemDetail}>{items.packetsDetail[index]}</Text>
           <Text style={styles.itemPrice}>{items.packetsPrice[index]}</Text>
           </View>
-          <Image source={items.image} style={styles.itemImage} />
+          <Image source={require('../../../assets/buttonpicture.png') } style={styles.itemImage} />
         </TouchableOpacity>
       ))}
     </ScrollView>

@@ -1,0 +1,82 @@
+
+[
+    {
+        'Havuz Tesisleri': [
+        { id: 1, name: 'Havuz Tesisleri 1', info: 'Havuz Tesisleri 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.5,maincategory: 'Havuz Tesisi',subcategories: ['Kapalı Havuz', 'Açık Havuz'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+          { id: 2, name: 'Havuz Tesisleri 2', info: 'Havuz Tesisleri 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.2,maincategory: 'Havuz Tesisi',subcategories: ['Kapalı Havuz', 'Açık Havuz'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+      ]
+    },
+    {
+        'Futbol Sahaları': [
+            { id: 1, name: 'Futbol Sahası 1', info: 'Basketbol Sahası 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.0,maincategory: 'Futbol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Futbol Sahası 2', info: 'Basketbol Sahası 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.8,maincategory: 'Futbol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },  
+      ]
+    },
+    {
+        'Basketbol Sahaları': [
+            { id: 1, name: 'Basketbol Sahası 1', info: 'Futbol Sahası 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Basketbol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Basketbol Sahası 2', info: 'Futbol Sahası 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Basketbol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+      ]
+    },
+    {
+        'Voleybol Sahaları':[
+            { id: 1, name: 'Voleybol Sahası 1', info: 'Voleybol Sahası 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Voleybol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]  },
+            { id: 2, name: 'Voleybol Sahası 2', info: 'Voleybol Sahası 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Voleybol Sahası',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]  },
+        ]
+    },
+    {
+        'Atlı Binicilik Tesisleri':[
+            { id: 1, name: 'Atlı Binicilik Tesisleri 1', info: 'Atlı Binicilik Tesisleri 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Atlı Binicilik Tesisleri',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]  },
+            { id: 2, name: 'Atlı Binicilik Tesisleri 2', info: 'Atlı Binicilik Tesisleri 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Atlı Binicilik Tesisleri',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]  },
+        ]
+    },
+    {
+        'Golf Tesisleri':[
+            { id: 1, name: 'Golf Tesisleri 1', info: 'Golf Tesisleri 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Golf Tesisleri',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]  },
+            { id: 2, name: 'Golf Tesisleri 2', info: 'Golf Tesisleri 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Golf Tesisleri',subcategories: [ 'Kapalı Sahalar', 'Açık Sahalar'],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"]}
+        ]
+    },
+    {
+        'Masa Tenisi Tesisleri':[
+            { id: 1, name: 'Masa Tenisi Tesisi 1', info: 'Masa Tenisi Tesisi 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Masa Tenisi Tesisi', subcategories:["Masa Tenisi kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Masa Tenisi Tesisi 2', info: 'Masa Tenisi Tesisi 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Masa Tenisi Tesisi', subcategories:["Masa Tenisi kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Okçuluk Tesisleri':[
+            { id: 1, name: 'Okçuluk Tesisi 1', info: 'Okçuluk Tesisi 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Okçuluk Tesisi', subcategories:["Okçuluk kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Okçuluk Tesisi 2', info: 'Okçuluk Tesisi 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Okçuluk Tesisi', subcategories:["Okçuluk kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Tenis Kortları':[
+            { id: 1, name: 'Tenis Kortu 1', info: 'Tenis Kortu 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Tenis Tesisi', subcategories:["Tenis kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Tenis Kortu 2', info: 'Tenis Kortu 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Tenis Tesisi', subcategories:["Tenis kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Kayak Tesisleri':[   
+            { id: 1, name: 'Kayak Tesisi 1', info: 'Masa Tenisi Tesisi 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Kayak Tesisi', subcategories:["Kayak kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Kayak Tesisi 2', info: 'Masa Tenisi Tesisi 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Kayak Tesisi', subcategories:["Kayak kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Buz Pistleri':[
+            { id: 1, name: 'Buz Pistleri 1', info: 'Okçuluk Tesisi 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Buz Pisti', subcategories:["Buz kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Buz Pistleri 2', info: 'Okçuluk Tesisi 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Buz Pisti', subcategories:["Buz kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Bilardo Tesisleri':[
+            { id: 1, name: 'Bilardo tesisleri 1', info: 'Tenis Kortu 1 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Bilardo Tesisi', subcategories:["Bilardo kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+            { id: 2, name: 'Bilardo tesisleri 2', info: 'Tenis Kortu 2 ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Bilardo Tesisi', subcategories:["Bilardo kategori 1", "golf kategori 2"],appointmentTime:["Boş Saat: 15.30","Boş Saat: 20.30"],appointmentDay:["Boş Gün: 15 Mayıs","Boş Gün: 24 Haziran"] },
+        ]
+    },
+    {
+        'Spor Salonları':[
+            { id: 1, name: 'Let’s Fit', info: 'Let’s Fit spora dair herşey burada!', imagepath: '../../assets/buttonpicture.png', point: 4.5,maincategory: 'Spor Salonu', subcategories:["Spor Salonu kategori 1", "Spor Salonu kategori 2", "Spor Salonu kategori 3", "Spor Salonu kategori 4", "Spor Salonu kategori 5"],packets:['3 Aylık Üyelik','6 Aylık Üyelik','9 Aylık Üyelik','12 Aylık Üyelik','15 Aylık Üyelik','18 Aylık Üyelik',],packetsDetail:['90 Gün','60 Gün','9 aylık üyelik detay1','detay4','15 aylık üyelik detay1','detay5',],packetsPrice:['₺ 100',' ₺ 200','₺ 300',' ₺ 400','₺ 500',' ₺ 600',],packetsBigDetail:['3 aylık üyelik detayı cok uzun her sey var','6 ayyy detaydetayı cok un her sey vardetayı detaydetayı cok uzun un her sey vardetayı detaydetayı cok uzun uzun her sey vardetayı detaydetayı cok uzun her sey vardetayı cok uzuncok uzundetaydetayı cok uzun her sey vardetayı cok uzundetaydetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var','9 aylık üyelik detayı cok uzun her sey var','detaydetayı cok uzun her sey vardetayı cok uzun her sey var','15 aylık üyelik detayı cok uzun her sey vardetayı cok uzun her sey var','detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',] },
+            { id: 2, name: 'Fitness Center', info: 'Fitness Center ayrıntıları', imagepath: '../../assets/buttonpicture.png', point: 4.2,maincategory: 'Spor Salonu', subcategories:["Spor Salonu kategori 1", "Spor Salonu kategori 2"],packets:['3 Aylık Üyelik','6 Aylık Üyelik'],packetsDetail:['3 aylık üyelik detay1','detay2'],packetsPrice:['₺ 100 ','₺ 200 '] },  
+        ]
+    },
+  ]
+  

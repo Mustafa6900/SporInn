@@ -3,12 +3,13 @@ import { View, Text, FlatList,StyleSheet } from 'react-native';
 
 const SubCategories = ({ items, onItemPress }) => {
   const renderItem = ({ item }) => (
+    
     <Text style={styles.categoryText} /*onPress={() => onItemPress(item)}*/>{item}</Text>
   );
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList
-        style={styles.container}
+        style={styles.flatcontainer}
         data={items.subcategories}
         horizontal={true}
         renderItem={renderItem}
@@ -25,10 +26,12 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         marginTop: 25,
         height: 50,
-        borderRadius: 3,
-        
+        borderRadius: 3,  
     },
-
+    flatcontainer: {
+      paddingLeft: 25,
+      
+    },
     categoryText: {
         fontSize: 14,
         color: '#AAAAAA',
@@ -40,11 +43,12 @@ const styles = StyleSheet.create({
         height: 30,
         width:"auto",
         padding: 5,
-        marginLeft: 10,
-        marginRight: 10,
+       
+        marginRight: 25,
         marginTop: 10,
         backgroundColor: "#1F1F1F",
-        
+        paddingLeft: 15,
+        paddingRight: 15,
     },
     });
 

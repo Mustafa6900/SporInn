@@ -1,27 +1,27 @@
 import React from 'react';
 import { View, Text, StyleSheet,Image,SafeAreaView } from 'react-native';
-import Header from '../../../components/header';
-import BackButton from '../../../components/backbutton';
-import Categoryslider from '../../../components/categoryslider';
-import OutputText from '../../../components/outputText';
-import CustomButton from '../../../components/custombutton';
+import Header from '../../components/header';
+import BackButton from '../../components/backbutton';
+import Categoryslider from '../../components/categoryslider';
+import OutputText from '../../components/outputText';
+import CustomButton from '../../components/custombutton';
 const FitnessPackageDetailPage = ({ route }) => {
   const { packet, price, shortdetail,image,bigdetail } = route.params;
-
+  console.log("detail page",packet, price, shortdetail,image,bigdetail);
   return (
     
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
         <BackButton left={15} top={-35} />
         <View style={styles.topContainer}>
-        <Image source={image} style={styles.topContainerImage} />
+        <Image source={require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <View style={styles.info}>
         <Text style={styles.price}>Fiyat: {price}</Text>
       <Text style={styles.title}>{packet}</Text>
       <Text style={styles.detail}>{shortdetail}</Text>
       </View>
         </View>
-        <Categoryslider items = {{ subcategories: ['İçerik', 'Yorumlar'] }} />
+        <Categoryslider items = {{ subcategories: ['İçerik', 'Yorumlar','Google Yorumları'] }} />
         <OutputText text={bigdetail} />
         <CustomButton style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Satın Al" />
     </SafeAreaView>

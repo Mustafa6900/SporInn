@@ -8,13 +8,14 @@ import Logout from './pages/Auth/Logout';
 import phoneCode from './pages/Auth/phoneCode';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/profile';
-import Products from './pages/Products/products.js';
+import Products from './pages/Products/ProductsCategoryPage.js';
+import ProductsItems from './pages/Products/ProductsItemsPage.js';
 import QrCode from './pages/Qrcode/qrcode.js';
 import Budy from './pages/Budy/budy.js';
 import AllItemAllPages from './pages/F,F-ItemsPages/AllItemAllPages.js';
 import ItemPackagePage from './pages/F,F-ItemsPages/AllItemPacketsPages.js';
 import Sports from './pages/Home/Sports/SportsCategoryPage.js';
-import FitnessPackageDetailPage from './pages/Home/Fitness/fitnessPackageDetailPage.js';
+import PackageDetailPage from './pages/F,F-ItemsPages/AllPackageDetailPage.js';
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -67,9 +68,9 @@ const App = () => {
           options={{ title: "ItemPackagePage" }}
         />
         <Stack.Screen
-          name='FitnessPackageDetailPage'
-          component={FitnessPackageDetailPage}
-          options={{ title: "FitnessPackageDetailPage" }}
+          name='PackageDetailPage'
+          component={PackageDetailPage}
+          options={{ title: "PackageDetailPage" }}
         />
         <Stack.Screen
           name='Sports'
@@ -86,6 +87,12 @@ const App = () => {
           component={Products}
           options={{ title: "Products"}}
         />
+        <Stack.Screen
+          name='ProductsItems'
+          component={ProductsItems}
+          options={{ title: "ProductsItems"}}
+        />
+
         <Stack.Screen
           name='QrCode'
           component={QrCode}

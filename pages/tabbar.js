@@ -5,7 +5,7 @@ import Home from './Home/Home'
 import Profile from './Profile/profile';
 import QrCode from './Qrcode/qrcode';
 import Budy from './Budy/budy';
-import Products from './Products/products.js';
+import Products from './Products/ProductsCategoryPage.js';
 
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';

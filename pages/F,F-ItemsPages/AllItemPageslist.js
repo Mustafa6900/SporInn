@@ -8,6 +8,7 @@ const ItemList = ({ items, onItemPress }) => {
     onItemPress(item);
   };
   const navigations = useNavigation();
+
   return (
     <View style={styles.container}>
       {items.map((item, index) => (
@@ -16,7 +17,7 @@ const ItemList = ({ items, onItemPress }) => {
           style={styles.Item}
            onPress={() => navigations.navigate('ItemPackagePage', { item })}
         >
-          <Image source={item.image} style={styles.itemImage} />
+          <Image source={ require('../../assets/buttonpicture.png') } style={styles.itemImage} />
           <View style={styles.itemInfo}>
             <Text style={styles.itemName}>{item.name}</Text>
             <Text style={styles.iteminfo}>{item.info}</Text>
