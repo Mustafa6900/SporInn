@@ -7,7 +7,6 @@ import OutputText from '../../components/outputText';
 import CustomButton from '../../components/custombutton';
 const FitnessPackageDetailPage = ({ route }) => {
   const { packet, price, shortdetail,image,bigdetail } = route.params;
-  console.log("detail page",packet, price, shortdetail,image,bigdetail);
   return (
     
     <SafeAreaView style={styles.container}>
