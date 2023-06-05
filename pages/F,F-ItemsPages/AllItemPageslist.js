@@ -1,47 +1,53 @@
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity,Image,View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ItemList = ({ items, onItemPress }) => {
-  const handleItemPress = (item) => {
-    onItemPress(item);
-  };
-  const navigations = useNavigation();
+const ItemList = ({ items}) => {
+  
+  const navigation = useNavigation();
+
+  const renderItem = ({ item }) => (
+    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.Item}
+      onPress={() => navigation.navigate('ItemPackagePage', { item })}
+    >
+      <Image source={require('../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <View style={styles.itemInfo}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={styles.itemInfo}>{item.info}</Text>
+        <View style={styles.itemInfo2}>
+          <AntDesign name="star" size={24} color="black" />
+          <Text style={styles.itemPoint}>{item.point}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+    </View>
+
+  );
 
   return (
     <View style={styles.container}>
-      {items.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.Item}
-           onPress={() => navigations.navigate('ItemPackagePage', { item })}
-        >
-          <Image source={ require('../../assets/buttonpicture.png') } style={styles.itemImage} />
-          <View style={styles.itemInfo}>
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.iteminfo}>{item.info}</Text>
-            <View style={styles.itemInfo2}>
-            <AntDesign name="star" size={24} color="black" />          
-            <Text style={styles.itemPoint}>{item.point}</Text>
-          </View>
-          </View>
-         
-        </TouchableOpacity>
-      ))}
+      <FlatList
+        data={items}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
     container: {
-        width: "90%",
-        marginTop: "62%",
+        width: "95%",
         marginLeft: "auto",
         marginRight: "auto",
+        paddingBottom: 20,
     },
     Item: {
-        flexDirection: 'column',
+      flexDirection: 'column',
       marginBottom: 10,
       backgroundColor: "#AAAAAA",
       height: 240,

@@ -1,38 +1,33 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ImageBackground } from 'react-native';
-import { SliderBox } from "react-native-image-slider-box";
-const SliderButton = ({ onPress, style}) => {
-    const images = [
-        require(".././assets/sliderpic/b.jpg"),
-        require(".././assets/sliderpic/c.jpg"),
-        require(".././assets/sliderpic/d.jpg"),
-        require(".././assets/sliderpic/e.jpg"),
-    ];
+import { TouchableOpacity, ImageBackground, StyleSheet, View } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
+
+const SliderButton = ({ onPress, style }) => {
+  const images = [
+    require(".././assets/sliderpic/b.jpg"),
+    require(".././assets/sliderpic/c.jpg"),
+    require(".././assets/sliderpic/d.jpg"),
+    require(".././assets/sliderpic/e.jpg"),
+  ];
+
+  const renderImageItem = ({ item }) => (
+    <View style={styles.imageContainer}>
+      <ImageBackground source={item} style={styles.imageBackground} resizeMode="cover" />
+    </View>
+  );
 
   return (
     <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-         <SliderBox 
-            style={styles.imageBackground}
-            images={images}
-            dotColor="#FF6F25"
-            inactiveDotColor="#90A4AE"
-            autoplay
-            circleLoop
-            resizeMethod={'resize'}
-            resizeMode={'cover'}
-            paginationBoxStyle={{
-                position: "absolute",
-                bottom: 0,
-                padding: 0,
-                alignItems: "center",
-                alignSelf: "center",
-                justifyContent: "center",
-                paddingVertical: 12
-            }}
-            dotStyle={{
-                width: 25,
-            }}
-        />
+      <Carousel
+        data={images}
+        renderItem={renderImageItem}
+        sliderWidth={375}
+        itemWidth={372}
+        loop
+        autoplay
+        autoplayDelay={100}
+        autoplayInterval={100}
+      />
     </TouchableOpacity>
   );
 };
@@ -57,16 +52,17 @@ const styles = StyleSheet.create({
     width: 300,
     textAlign: 'center',
   },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   imageBackground: {
     height: 177,
     width: 372,
     borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 20,
   },
 });
 
 export default SliderButton;
-
-// Genel resimli slider buton için kullanılan component

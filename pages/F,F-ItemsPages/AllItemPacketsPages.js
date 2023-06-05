@@ -45,10 +45,7 @@ const styles = StyleSheet.create({
         marginLeft:"auto",
         marginRight:"auto"
     },
-    scrollView: {
-        marginHorizontal: 20,
-        marginTop: 20,
-    },
+    
     text: {
         fontSize: 16,
         color: '#AAAAAA',
