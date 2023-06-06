@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         borderRadius: 0
     },
     topContainerImage: {
-        width: 370,
+        width: 375,
         height: 180,
         marginBottom: 10,
         marginTop: 20,

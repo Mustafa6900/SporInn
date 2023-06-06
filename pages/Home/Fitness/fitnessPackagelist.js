@@ -29,6 +29,7 @@ const ItemList = ({ items }) => {
       data={items.packets}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

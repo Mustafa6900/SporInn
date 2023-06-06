@@ -10,12 +10,17 @@ import Home from './pages/Home/Home';
 import Profile from './pages/Profile/profile';
 import Products from './pages/Products/ProductsCategoryPage.js';
 import ProductsItems from './pages/Products/ProductsItemsPage.js';
-import QrCode from './pages/Qrcode/qrcode.js';
+import QrCode from './pages/Qrcode/QrcodeHome.js';
+import  QrCodePage from './pages/Qrcode/QrCodePage.js'
 import Budy from './pages/Budy/budy.js';
+import PtDtitemPages from './pages/Budy/PtDtChPages/PtDtitemPages.js';
 import AllItemAllPages from './pages/F,F-ItemsPages/AllItemAllPages.js';
 import ItemPackagePage from './pages/F,F-ItemsPages/AllItemPacketsPages.js';
 import Sports from './pages/Home/Sports/SportsCategoryPage.js';
 import PackageDetailPage from './pages/F,F-ItemsPages/AllPackageDetailPage.js';
+import MyEventPage from './pages/Qrcode/MyPages/MyEventPage.js';
+import MyEventDetailPage from './pages/Qrcode/MyPages/MyEventDetailPage.js';
+
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -99,10 +104,31 @@ const App = () => {
           options={{ title: "QrCode" }}
         />
         <Stack.Screen
+          name='QrCodePage'
+          component={QrCodePage}
+          options={{ title: "QrCodePage" }}
+        />
+        <Stack.Screen
+          name='MyEventPage'
+          component={MyEventPage}
+          options={{ title: "MyEventPage" }}
+        />
+        <Stack.Screen
+          name='MyEventDetailPage'
+          component={MyEventDetailPage}
+          options={{ title: "MyEventDetailPage" }}
+        />
+        <Stack.Screen
           name='Budy'
           component={Budy}
           options={{ title: "Budy" }}
         />
+        <Stack.Screen
+          name='PtDtitemPages'
+          component={PtDtitemPages}
+          options={{ title: "PtDtitemPages" }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

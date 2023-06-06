@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigationState } from '@react-navigation/native';
 import Home from './Home/Home'
 import Profile from './Profile/profile';
-import QrCode from './Qrcode/qrcode';
+import QrCode from './Qrcode/QrcodeHome';
 import Budy from './Budy/budy';
 import Products from './Products/ProductsCategoryPage.js';
 

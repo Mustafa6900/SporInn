@@ -1,0 +1,17 @@
+[
+    {
+        'Kişisel Antrenör':[
+            { id: 1, name: 'Hulk', info: 'Benim gibi olamazsınız ama çabalayabilirsiniz!',info2: 'Eğitim detaylarını görmek için tıkla!', imagepath: '../../assets/buttonpicture.png', point: 4.5,maincategory: 'Spor Salonu', packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',],join: false },
+            { id: 2, name: 'Mustafa', info: 'Benim gibi olamazsınız ama çabalayabilirsiniz!',info2: 'Eğitim detaylarını görmek için tıkla!', imagepath: '../../assets/buttonpicture.png', point: 4.2,maincategory: 'Spor Salonu',   packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',],join: false  },
+            { id: 3, name: 'Hasan', info: 'Benim gibi olamazsınız ama çabalayabilirsiniz!',info2: 'Eğitim detaylarını görmek için tıkla!', imagepath: '../../assets/buttonpicture.png', point: 4.5,maincategory: 'Spor Salonu', packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',],join: false },
+            
+        ]
+    },
+    {
+        'Diyetisyen': [
+            { id: 1, name: 'Sevda', info: 'Sizi zayıflatmak için varım.',info2: 'Eğitim detaylarını görmek için tıkla!', imagepath: '../../assets/buttonpicture.png', point: 4.0,maincategory: 'Futbol Sahası',packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',],join: true  },
+            { id: 2, name: 'Burcu', info: 'En kolay zayıflama taktikleri icin burdayım.',info2: 'Eğitim detaylarını görmek için tıkla!', imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Basketbol Sahası',packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',],join: false   },
+      ]
+    },
+  
+]

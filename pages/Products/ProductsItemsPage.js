@@ -31,7 +31,7 @@ export default function ProductsItems({ route }) {
         <CategorySlider items = {{ subcategories: ['kategori 1', 'kategori 2', 'kategori 3'] }}/>
         </View>
  
-        <ScrollView >
+        <ScrollView showsVerticalScrollIndicator={false}>
         <ProductList items={items} />
         </ScrollView>
       

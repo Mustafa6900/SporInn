@@ -15,9 +15,9 @@ export default function Home({ navigation }) {
         //> 
         }
         <PictureButton 
-        title=""
+        title="Reklam Alanı"
         onPress={() => navigation.navigate('Home') }
-        backgroundImage={require('../../assets/buttonblurpicture.png')}
+        backgroundImage={require('../../assets/advertpic.png')}
         style={{marginTop: -50,marginBottom: 40}}
         />
         <PictureButton 
@@ -29,7 +29,7 @@ export default function Home({ navigation }) {
         <PictureButton 
         title="Spor Tesisleri"
         onPress={() => navigation.navigate('Sports')}
-        backgroundImage={require('../../assets/buttonblurpicture.png')}
+        backgroundImage={require('../../assets/budypic/allsports.png')}
         style={{marginBottom: 50}}
         />
         </View>

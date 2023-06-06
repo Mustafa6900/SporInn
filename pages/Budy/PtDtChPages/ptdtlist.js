@@ -3,7 +3,7 @@ import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ItemList = ({ items}) => {
+const ItemList = ({ items, styletip}) => {
   
   const navigation = useNavigation();
 
@@ -11,16 +11,13 @@ const ItemList = ({ items}) => {
     <View style={styles.container}>
     <TouchableOpacity
       style={styles.Item}
-      onPress={() => navigation.navigate('ItemPackagePage', { item })}
+      onPress={() =>  console.log("tıklandı")}
     >
-      <Image source={require('../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.iteminfo}>{item.info}</Text>
-        <View style={styles.itemInfo2}>
-          <AntDesign name="star" size={24} color="black" />
-          <Text style={styles.itemPoint}>{item.point}</Text>
-        </View>
+       
       </View>
     </TouchableOpacity>
     </View>
@@ -28,12 +25,13 @@ const ItemList = ({ items}) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, styletip]}>
       <FlatList
         data={items}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
+       
       />
     </View>
   );
@@ -44,11 +42,12 @@ const styles = StyleSheet.create({
         width: "95%",
         marginLeft: "auto",
         marginRight: "auto",
-        paddingBottom: 20,
+        paddingTop: 15,
+        paddingBottom: 10,
     },
+  
     Item: {
       flexDirection: 'column',
-      marginBottom: 10,
       backgroundColor: "#AAAAAA",
       height: 240,
       borderRadius: 7,
@@ -61,14 +60,15 @@ const styles = StyleSheet.create({
     },
     itemInfo: {
         padding: 13,
-        flexDirection: 'column', 
+        flexDirection: 'column',
+         
     },
     itemInfo2: {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
         flexDirection: 'row',
-        marginLeft: "88%",
+        marginLeft: "70%",
         marginTop: "6%", 
     },
     itemName: {
@@ -76,19 +76,19 @@ const styles = StyleSheet.create({
       fontWeight: '900',
       color: "#0D0D0D",
       marginBottom: 10,
-
     },
     iteminfo: {
       fontSize: 11,
-      fontWeight: '600',
+      fontWeight: '800',
+      color: "#292929",
+      
+    },
+    iteminfo2: {
+      fontSize: 20,
+      fontWeight: '900',
       color: "#292929",
     },
-    itemPoint: {
-        fontSize: 16,
-        fontWeight: '900',
-        color: "#0D0D0D",
-        marginLeft: 5,
-        },
+   
   });
 
 export default ItemList;

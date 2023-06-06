@@ -11,15 +11,14 @@ const ItemList = ({ items}) => {
     <View style={styles.container}>
     <TouchableOpacity
       style={styles.Item}
-      onPress={() => navigation.navigate('ItemPackagePage', { item })}
+      onPress={() =>  navigation.navigate('MyEventDetailPage', { item })}
     >
-      <Image source={require('../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.iteminfo}>{item.info}</Text>
-        <View style={styles.itemInfo2}>
-          <AntDesign name="star" size={24} color="black" />
-          <Text style={styles.itemPoint}>{item.point}</Text>
+        <View style={styles.itemInfo2}> 
+          <Text style={styles.iteminfo2}>{item.info2}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -34,6 +33,7 @@ const ItemList = ({ items}) => {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
+       
       />
     </View>
   );
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
         width: "95%",
         marginLeft: "auto",
         marginRight: "auto",
-        paddingBottom: 20,
+        paddingTop: 20,
     },
+  
     Item: {
       flexDirection: 'column',
-      marginBottom: 10,
       backgroundColor: "#AAAAAA",
       height: 240,
       borderRadius: 7,
@@ -61,14 +61,15 @@ const styles = StyleSheet.create({
     },
     itemInfo: {
         padding: 13,
-        flexDirection: 'column', 
+        flexDirection: 'column',
+         
     },
     itemInfo2: {
         justifyContent: "center",
         alignItems: "center",
         position: "absolute",
         flexDirection: 'row',
-        marginLeft: "88%",
+        marginLeft: "70%",
         marginTop: "6%", 
     },
     itemName: {
@@ -76,19 +77,19 @@ const styles = StyleSheet.create({
       fontWeight: '900',
       color: "#0D0D0D",
       marginBottom: 10,
-
     },
     iteminfo: {
       fontSize: 11,
-      fontWeight: '600',
+      fontWeight: '800',
+      color: "#292929",
+      
+    },
+    iteminfo2: {
+      fontSize: 20,
+      fontWeight: '900',
       color: "#292929",
     },
-    itemPoint: {
-        fontSize: 16,
-        fontWeight: '900',
-        color: "#0D0D0D",
-        marginLeft: 5,
-        },
+   
   });
 
 export default ItemList;
