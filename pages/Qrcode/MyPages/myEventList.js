@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         width: "95%",
         marginLeft: "auto",
         marginRight: "auto",
-        paddingTop: 20,
+        paddingTop: 10,
+        paddingBottom: 10, 
     },
   
     Item: {

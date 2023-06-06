@@ -35,7 +35,7 @@ export default function MyEventPage({ route }) {
             <View>
             <SearchButton placeholder={title} />
             </View>
-            <View style={{paddingTop:110}}>
+            <View style={{paddingTop:110,paddingBottom:30}}>
             <Title title={title}/>
             </View>
             </>

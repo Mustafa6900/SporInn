@@ -42,7 +42,7 @@ export default function  PtDtChitemPages({ route }) {
             {shouldShowText ? (
         <Text style={styles.text}>Kişisel Antrenör Edinin!</Text>
       ) : (
-        <PtDtList items={filteredItems} styletip={{ paddingBottom: 15, marginBottom: -20, paddingTop: 25 }} />
+        <PtDtList items={filteredItems} styletip={{ paddingBottom: 15, marginBottom: -20, paddingTop: 25 } } imagestyletip={{borderWidth: 1,borderColor: '#FF6F25'}} />
       )}
             <View style={{paddingTop:30,paddingBottom:20}} >
             <Title title={"Tüm "+title+"ler"}/>

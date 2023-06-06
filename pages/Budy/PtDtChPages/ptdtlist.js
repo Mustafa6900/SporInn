@@ -3,14 +3,14 @@ import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ItemList = ({ items, styletip}) => {
+const ItemList = ({ items, styletip,imagestyletip}) => {
   
   const navigation = useNavigation();
 
   const renderItem = ({ item }) => (
     <View style={styles.container}>
     <TouchableOpacity
-      style={styles.Item}
+      style={[styles.Item,imagestyletip]}
       onPress={() =>  console.log("tıklandı")}
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
