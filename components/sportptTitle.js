@@ -15,8 +15,9 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 40,
         justifyContent: "center",
-        top: "19%",
+        marginTop: 30,
         borderRadius: 3,
+        marginBottom: 30,
     },
     title: {
         color: "#0D0D0D",

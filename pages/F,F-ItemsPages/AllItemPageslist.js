@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         marginLeft: "auto",
         marginRight: "auto",
         paddingBottom: 20,
+       
     },
     Item: {
       flexDirection: 'column',

@@ -32,12 +32,11 @@ export default function MyEventPage({ route }) {
             <>
             <Header title={title} />
             <BackButton left={15} top={-35} />
-            <View>
+            <View style={{top:-15}}>
             <SearchButton placeholder={title} />
             </View>
-            <View style={{paddingTop:110,paddingBottom:30}}>
             <Title title={title}/>
-            </View>
+            
             </>
         )}
         keyExtractor={(item, index) => index.toString()}

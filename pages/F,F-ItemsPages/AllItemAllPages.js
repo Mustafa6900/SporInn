@@ -39,16 +39,10 @@ const ItemAllPage = ({ route }) => {
             <Header title={title} />
             <BackButton left={15} top={-35} />
             <SportsTopInfo />
-           
-            <View style={{paddingTop:0}} >
             <InformationText />
-            </View>
-            <View style={{top:110}} >
-            <SearchButton placeholder={`${title} Ara`} />
-            </View>
-            <View style={{paddingTop:200,paddingBottom:30}} >
+            <SearchButton placeholder={title+" Ara"} />
             <SportTitle title={`Tüm ${title}`} />
-            </View>
+            
           </>
         )}
         keyExtractor={(item, index) => index.toString()}

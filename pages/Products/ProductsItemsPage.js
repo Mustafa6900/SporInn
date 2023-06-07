@@ -24,12 +24,12 @@ export default function ProductsItems({ route }) {
         <SafeAreaView style={styles.container}>
         <Header title={category} />
         <BackButton left={15} top={-35} />
-        <View style={{ top:-20 }}>
+        <View style={{ top:-15 }}>
         <SearchButton placeholder={`${category} Ara`} />
         </View>
-        <View style={{paddingTop:60,}}>
+      
         <CategorySlider items = {{ subcategories: ['kategori 1', 'kategori 2', 'kategori 3'] }}/>
-        </View>
+      
  
         <ScrollView showsVerticalScrollIndicator={false}>
         <ProductList items={items} />

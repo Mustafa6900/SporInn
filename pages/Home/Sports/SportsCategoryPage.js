@@ -32,12 +32,8 @@ const Sports = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Header title="Spor Tesisleri" />
       <BackButton left={15} top={-35} />
-      <View style={styles.searchButtonContainer}>
-        <SearchButton placeholder="Spor tesisi ara" />
-      </View>
-      <View style={{ top:90 }}>
-      <SportTitle title="Tüm Spor Tesisleri"/>
-      </View>
+      <SearchButton placeholder="Spor Tesisi Ara" /> 
+      <SportTitle title="Tüm Spor Tesisleri"/>  
       <SportList categories={categories} onCategoryPress={handleCategoryPress} />
     </SafeAreaView>
   );
@@ -48,9 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#292929',
   },
-  searchButtonContainer: {
-    marginBottom: 20,
-  },
+ 
 });
 
 export default Sports;

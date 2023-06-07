@@ -30,11 +30,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#0D0D0D',
         height: 50,
         width: "90%",
-        position: "absolute",
-        top: "41%",
+        marginTop: 30,
         left: 20,
         borderRadius: 7,
-        marginTop: "6%",
+    
 
     },
 });

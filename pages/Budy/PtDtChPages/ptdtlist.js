@@ -11,7 +11,7 @@ const ItemList = ({ items, styletip,imagestyletip}) => {
     <View style={styles.container}>
     <TouchableOpacity
       style={[styles.Item,imagestyletip]}
-      onPress={() =>  console.log("tıklandı")}
+      onPress={() =>  navigation.navigate('ItemPackagePage', { item })}
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>

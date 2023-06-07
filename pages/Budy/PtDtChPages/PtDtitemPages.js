@@ -36,18 +36,17 @@ export default function  PtDtChitemPages({ route }) {
             <>
             <Header title={title} />
             <BackButton left={15} top={-35} />
-            <View >
-            <Title title={"Benim "+title}/>
+            <View style={{marginTop:-30}}>
+            <Title title={"Kayıtlı  "+title}/>
             </View>
             {shouldShowText ? (
         <Text style={styles.text}>Kişisel Antrenör Edinin!</Text>
       ) : (
-        <PtDtList items={filteredItems} styletip={{ paddingBottom: 15, marginBottom: -20, paddingTop: 25 } } imagestyletip={{borderWidth: 1,borderColor: '#FF6F25'}} />
+        <PtDtList items={filteredItems} styletip={{ paddingBottom: 5,marginTop:-20 } } imagestyletip={{borderWidth: 1,borderColor: '#FF6F25'}} />
       )}
-            <View style={{paddingTop:30,paddingBottom:20}} >
+           
             <Title title={"Tüm "+title+"ler"}/>
-            </View>
-            <View style={{paddingTop:75}}>
+            <View style={{marginTop:-30}}>
             <SearchButton placeholder={title+"ler"} />
             </View>
             </>
@@ -74,8 +73,6 @@ const styles = StyleSheet.create({
         letterSpacing: 0.4,
         marginLeft:"auto",
         marginRight:"auto",
-        marginTop: 40,
-        marginBottom: 0,
     },
     
 

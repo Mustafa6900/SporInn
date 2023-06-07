@@ -24,15 +24,15 @@ export default function Products({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <Header title="Ürünler" />
-            <View style={{top: 30}}>
+            <View style={{top:15}}>
             <SearchButton placeholder="Ürün ara" />
-             </View>
-             <View style={{top: 150}}>
+            </View>
+            <View style={{top:25}}>
             <Title title="Ürün Kategorileri" />
             </View>
-            <View style={{ top:180 }}>
+         
             <ProductCategoryList categories={categories} onCategoryPress={handleCategoryPress} />
-            </View>
+            
         </SafeAreaView>
     );
 }

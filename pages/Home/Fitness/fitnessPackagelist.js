@@ -14,6 +14,7 @@ const ItemList = ({ items }) => {
       style={styles.item}
       onPress={() => handleItemPress(item, items.packetsPrice[index], items.packetsDetail[index], items.packetsBigDetail[index], items.image)}
     >
+      {console.log(item)}
       <View style={styles.info}>
         <Text style={styles.itemName}>{item}</Text>
         <Text style={styles.itemDetail}>{items.packetsDetail[index]}</Text>

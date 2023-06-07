@@ -8,6 +8,7 @@ import SportsPackageDetailPage from '../Home/Sports/sportsPackageDetail';
 import BackButton from '../../components/backbutton';
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
+    console.log(item)
     return (
         <SafeAreaView style={styles.container}>
         <Header title={item.maincategory} />
@@ -18,7 +19,7 @@ const ItemDetailPage = ({ route }) => {
         </View>
         <CategorySlider items = {item} />
         
-        {item.maincategory === 'Spor Salonu' ? (
+        {item.maincategory === 'Spor Salonu' || item.maincategory === 'Kişisel Antrenör' || item.maincategory === 'Diyetisyen' ?(
         <FitnessPackagelist items={item} />  
         ) : (
         <SportsPackageDetailPage items={item} />

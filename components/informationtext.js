@@ -11,8 +11,7 @@ const InformationText = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     text: {
-        marginTop: "6%",
-        top: "31.5%",
+        marginTop: 20,
         left: 20,
         height: 85,
         width: "90%",
@@ -20,7 +19,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor:"#1F1F1F",
         borderRadius: 10,
-        position: "absolute",
     },
     textinfo: {
         color: "#AAAAAA",

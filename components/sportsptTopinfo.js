@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, ImageBackground, View } from 'react-native';
 import CustomButton from './custombutton';
+
 const SportsTopInfo = ({ navigation }) => {
 
     return (
@@ -8,7 +9,7 @@ const SportsTopInfo = ({ navigation }) => {
             <View style={styles.viewcontainer}>
                 <CustomButton
                     title="Adres Belirle veya Seç"
-                    onPress={() => navigation.navigate('Budy')}
+                    onPress={() => console.log("Adres Belirle veya Seç")}
                     style={styles.button1}
                     titleStyle={{ color: '#AAAAAA' }}
                     icon="radar"
@@ -17,7 +18,7 @@ const SportsTopInfo = ({ navigation }) => {
                 />
                 <CustomButton
                     title="Listeler "
-                    onPress={() => navigation.navigate('Budy')}
+                    onPress={() => console.log("Listeler")}
                     style={styles.button2}
                 />
             </View>
