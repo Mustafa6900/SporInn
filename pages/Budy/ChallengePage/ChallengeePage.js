@@ -4,12 +4,12 @@ import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import SearchButton from '../../../components/searchbutton';
 import Title from '../../../components/sportptTitle';
-import MyEventList from './myEventList';
-import mysportsdata from './mysportsdata.json';
-export default function MyEventPage({ route }) {
+import ChallengeList from './challengeList';
+import ChallengeData from './challengedata.json';
+export default function ChallengePage({ route }) {
     const { category } = route.params;
     const getItems = () => {
-        const categoryData = mysportsdata.find((data) => category in data);
+        const categoryData = ChallengeData.find((data) => category in data);
         if (categoryData) {
             return categoryData[category];
         } else {
@@ -27,7 +27,7 @@ export default function MyEventPage({ route }) {
         <SafeAreaView style={styles.container}>
         <SectionList
         sections={sections}
-        renderItem={({ item }) => <MyEventList items={[item]} />}
+        renderItem={({ item }) => <ChallengeList items={[item]} />}
         renderSectionHeader={({ section }) => (
             <>
             <Header title={title} />

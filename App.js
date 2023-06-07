@@ -11,9 +11,11 @@ import Profile from './pages/Profile/profile';
 import Products from './pages/Products/ProductsCategoryPage.js';
 import ProductsItems from './pages/Products/ProductsItemsPage.js';
 import QrCode from './pages/Qrcode/QrcodeHome.js';
-import  QrCodePage from './pages/Qrcode/QrCodePage.js'
+import QrCodePage from './pages/Qrcode/QrCodePage.js'
 import Budy from './pages/Budy/budy.js';
 import PtDtitemPages from './pages/Budy/PtDtChPages/PtDtitemPages.js';
+import ChallengeDetailPage from './pages/Budy/ChallengePage/ChallengeDetailPage.js';
+import ChallengePage from './pages/Budy/ChallengePage/ChallengeePage.js';
 import AllItemAllPages from './pages/F,F-ItemsPages/AllItemAllPages.js';
 import ItemPackagePage from './pages/F,F-ItemsPages/AllItemPacketsPages.js';
 import Sports from './pages/Home/Sports/SportsCategoryPage.js';
@@ -123,6 +125,18 @@ const App = () => {
           component={Budy}
           options={{ title: "Budy" }}
         />
+        <Stack.Screen
+          name='ChallengePage'
+          component={ChallengePage}
+          options={{ title: "ChallengePage" }}
+        />
+
+        <Stack.Screen
+          name='ChallengeDetailPage'
+          component={ChallengeDetailPage}
+          options={{ title: "ChallengeDetailPage" }}
+        />
+
         <Stack.Screen
           name='PtDtitemPages'
           component={PtDtitemPages}

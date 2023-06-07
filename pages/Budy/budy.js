@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SafeAreaView,StyleSheet,Text,View,ScrollView } from 'react-native';
+import { SafeAreaView,StyleSheet,Text,View,ScrollView,Alert } from 'react-native';
 import Header from '../../components/header';
 import PictureButton from '../../components/picturebutton';
 export default function Budy({ navigation }) {
@@ -23,13 +23,13 @@ export default function Budy({ navigation }) {
                 />
                 <PictureButton 
                 title="Müzik"
-                onPress={() => console.log("Müzik tıklandı") }
+                onPress={() => Alert.alert("Müzik Açılmadı","Lütfen tasarımda olan butonları çok kurcalamayın!") }
                 backgroundImage={require('../../assets/budypic/music.png')}
                 style={{marginBottom: 30}}
                 />
                 <PictureButton 
                 title="Challenge"
-                onPress={() => console.log('challenge tıklandı') }
+                onPress={() => navigation.navigate('ChallengePage',{ category: "Challenge" }) }
                 backgroundImage={require('../../assets/budypic/challenge.png')}
                 style={{marginBottom: 30}}
                 />
