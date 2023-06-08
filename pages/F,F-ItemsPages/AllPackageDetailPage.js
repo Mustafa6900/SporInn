@@ -13,7 +13,7 @@ const FitnessPackageDetailPage = ({ route }) => {
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
         <BackButton left={15} top={43} />
-        <FavoriteButton left={360} top={45} />
+        <FavoriteButton left={345} top={45} />
         <View style={styles.topContainer}>
         <Image source={require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <View style={styles.info}>

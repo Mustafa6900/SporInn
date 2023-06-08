@@ -12,7 +12,7 @@ const ProfileButtons = ({ item }) => {
             navigation.navigate('FavoriteProducts', { item: item });
         }
         else if(name=="Sepetim"){
-            navigation.navigate('Cart');
+            navigation.navigate('Cart', { item: item });
         }
         else if(name=="Siparişlerim"){
             navigation.navigate('Orders');

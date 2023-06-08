@@ -3,7 +3,7 @@ import {ScrollView,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
 import ProfileTopInfo from '../../components/profileTopinfo';
 import profiledata from './profiledata.json';
-import ProfileButtons from '../../components/profilebuttons';
+import ProfileButtons from './profilebuttons';
 import LanguageVersionbuttons from '../../components/languageVersionbuttons';
 
 export default function Profile({ navigation }) {

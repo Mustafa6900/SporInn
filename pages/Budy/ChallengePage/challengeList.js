@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
       
     },
     iteminfo2: {
-      fontSize: 13,
+      fontSize: 15,
       fontWeight: '900',
-      color: "#292929",
+      color: "#0D0D0D",
     },
    
   });

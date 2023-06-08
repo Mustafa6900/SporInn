@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
         width: "95%",
         marginLeft: "auto",
         marginRight: "auto",
-      
         paddingBottom: 10,
     },
   
@@ -56,7 +55,8 @@ const styles = StyleSheet.create({
       width: "100%",
       height: "70%",
       marginRight: 10,
-      borderRadius: 7,
+      borderTopLeftRadius: 7,
+      borderTopRightRadius: 7,
     },
     itemInfo: {
         padding: 13,

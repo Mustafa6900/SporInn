@@ -1,10 +1,10 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 
-const CheckButton = ({ title, onPress, checked }) => {
+const CheckButton = ({ title, onPress, checked,styletip }) => {
   return (
     <TouchableOpacity
-      style={[styles.button, checked ]}
+      style={[styles.button, checked,styletip ]}
       onPress={onPress}
     >
       <Text style={[styles.buttonText, checked && styles.checkedButtonText]}>
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     color: '#0d0d0d',
   },
   buttonText: {
-    color: '#292929',
+    color: 'transparent',
     fontWeight: '900',
     fontSize: 25,
     textAlign: 'center',

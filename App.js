@@ -8,6 +8,8 @@ import Logout from './pages/Auth/Logout';
 import phoneCode from './pages/Auth/phoneCode';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/profile';
+import Cart from './pages/Profile/Carts/Cart';
+import Payment from './pages/Profile/Payments/payment.js';
 import Adresses from './pages/Profile/Adress/AdressesPage.js';
 import AddAdressPage from './pages/Profile/Adress/AddAdressPage.js';
 import FavoriteProducts from './pages/Profile/FavoriteProduct/FavoriteProducts.js';
@@ -91,6 +93,16 @@ const App = () => {
           name='Profile'
           component={Profile}
           options={{ title: "Profile" }}
+        />
+        <Stack.Screen
+          name='Cart'
+          component={Cart}
+          options={{ title: "Cart" }}
+        />
+        <Stack.Screen
+          name='Payment'
+          component={Payment}
+          options={{ title: "Payment" }}
         />
         <Stack.Screen
           name='Adresses'

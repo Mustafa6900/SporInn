@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
       width: "100%",
       height: "70%",
       marginRight: 10,
-      borderRadius: 7,
+      borderTopLeftRadius: 7,
+      borderTopRightRadius: 7,
     },
     itemInfo: {
         padding: 13,
@@ -72,24 +73,29 @@ const styles = StyleSheet.create({
         marginLeft: "88%",
         marginTop: "6%", 
     },
-    itemName: {
+   itemName: {
       fontSize: 16,
       fontWeight: '900',
       color: "#0D0D0D",
       marginBottom: 10,
-
     },
     iteminfo: {
       fontSize: 11,
-      fontWeight: '600',
+      fontWeight: '800',
+      color: "#292929",
+      
+    },
+    iteminfo2: {
+      fontSize: 20,
+      fontWeight: '900',
       color: "#292929",
     },
     itemPoint: {
-        fontSize: 16,
-        fontWeight: '900',
-        color: "#0D0D0D",
-        marginLeft: 5,
-        },
+      fontSize: 20,
+      fontWeight: '900',
+      color: "#0D0D0D",
+      marginLeft: 5,
+    },
   });
 
 export default ItemList;

@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 7,
     borderColor: '#FF6F25',
-    borderWidth: 0.5,
+    borderWidth: 2,
   },
   categoryInfo: {
     marginTop: 10,
