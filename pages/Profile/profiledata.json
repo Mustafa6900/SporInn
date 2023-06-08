@@ -1,0 +1,35 @@
+[{
+    "id": 1,
+    "name": "Mustafa",
+    "surname": "Demirhan",
+    "age": "23",
+    "adresses": [
+      {
+        "adressName": "Ev Adresi",
+        "adres": "Carsı ssssssssssssssssssdsdsdsdsdsssssmah. yukarı sk. no:4 Bayburt",
+        "city": "Bayburt",
+        "district" : "Merkez",
+        "buildingNo": "25",
+        "doorNo": "5",
+      },
+      {
+        "adressName": "İş Adresi",
+        "adres": "İş mah. aşağı sk. no:10 İstanbul",
+        "city": "İstanbul",
+        "district" : "Merkez",
+        "buildingNo": "10",
+        "doorNo": "2",
+      }
+    ],
+    "card": {
+      "cardName": "CardFinans",
+      "cardNo": "1234 5678 9012 3456",
+      "cardMonth": "12",
+      "cardYear": "2023",
+      "cardCvv": "123"
+    },
+    "phone": "+90 532 123 45 67",
+    "email": "mustafaa.demirhann@gmail.com",
+    "imagepath": "profilepicture.png"
+  }
+]

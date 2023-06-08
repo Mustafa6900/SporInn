@@ -25,13 +25,15 @@ export default function MyEventPage({ route }) {
 
     return (
         <SafeAreaView style={styles.container}>
+        <Header title={title} />
+        <BackButton left={15} top={43} />
+        <View>
         <SectionList
         sections={sections}
         renderItem={({ item }) => <MyEventList items={[item]} />}
         renderSectionHeader={({ section }) => (
             <>
-            <Header title={title} />
-            <BackButton left={15} top={-35} />
+            
             <View style={{top:-15}}>
             <SearchButton placeholder={title} />
             </View>
@@ -44,6 +46,7 @@ export default function MyEventPage({ route }) {
         showsVerticalScrollIndicator={false}
        
         />
+        </View>
         </SafeAreaView>
     );
 }
@@ -53,6 +56,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#292929',
     },
+    sectionList: {
+        marginBottom: 100,
+      },
    
 });
 

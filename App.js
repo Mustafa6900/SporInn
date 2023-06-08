@@ -8,6 +8,9 @@ import Logout from './pages/Auth/Logout';
 import phoneCode from './pages/Auth/phoneCode';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/profile';
+import Adresses from './pages/Profile/Adress/AdressesPage.js';
+import AddAdressPage from './pages/Profile/Adress/AddAdressPage.js';
+import FavoriteProducts from './pages/Profile/FavoriteProduct/FavoriteProducts.js';
 import Products from './pages/Products/ProductsCategoryPage.js';
 import ProductsItems from './pages/Products/ProductsItemsPage.js';
 import QrCode from './pages/Qrcode/QrcodeHome.js';
@@ -90,6 +93,21 @@ const App = () => {
           options={{ title: "Profile" }}
         />
         <Stack.Screen
+          name='Adresses'
+          component={Adresses}
+          options={{ title: "Adresses" }}
+        />
+        <Stack.Screen
+          name='AddAdressPage'
+          component={AddAdressPage}
+          options={{ title: "AddAdressPage" }}
+        />
+        <Stack.Screen
+          name='FavoriteProducts'
+          component={FavoriteProducts}
+          options={{ title: "FavoriteProducts" }}
+        />
+        <Stack.Screen
           name='Products'
           component={Products}
           options={{ title: "Products"}}
@@ -99,7 +117,6 @@ const App = () => {
           component={ProductsItems}
           options={{ title: "ProductsItems"}}
         />
-
         <Stack.Screen
           name='QrCode'
           component={QrCode}

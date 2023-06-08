@@ -11,7 +11,7 @@ const MyEventDetailPage = ({ route }) => {
     return (
         <SafeAreaView style={styles.container}>
         <Header title={item.name} />
-        <BackButton left={15} top={-35} />
+        <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
         <Image source={ require('../../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <Text style={styles.text}>{item.name}</Text>

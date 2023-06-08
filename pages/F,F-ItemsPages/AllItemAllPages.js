@@ -30,14 +30,16 @@ const ItemAllPage = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+       <Header title={title} />
+      <BackButton left={15} top={43} />
+      <View>
       <SectionList
         sections={sections}
         renderItem={({ item }) => <ItemList items={[item]} />}
         renderSectionHeader={({ section }) => (
           <>
          
-            <Header title={title} />
-            <BackButton left={15} top={-35} />
+           
             <SportsTopInfo />
             <InformationText />
             <SearchButton placeholder={title+" Ara"} />
@@ -50,6 +52,7 @@ const ItemAllPage = ({ route }) => {
         showsVerticalScrollIndicator={false}
 
       />
+      </View>
     </SafeAreaView>
   );
 };
@@ -58,9 +61,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#292929',
+    
   },
   sectionList: {
-    paddingBottom: 20,
+    marginBottom: 60,
   },
 });
 

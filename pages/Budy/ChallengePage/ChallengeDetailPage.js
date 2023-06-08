@@ -11,7 +11,7 @@ const ChallengeDetailPage = ({ route }) => {
     
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
-        <BackButton left={15} top={-35} />
+        <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
         <Image source={require('../../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <View style={styles.info}>

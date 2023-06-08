@@ -29,24 +29,25 @@ export default function  PtDtChitemPages({ route }) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <Header title={title} />
+            <BackButton left={15} top={43} />
+            <View >
         <SectionList
         sections={sections}
         renderItem={({ item }) => <PtDtList items={[item]} />}
         renderSectionHeader={({ section }) => (
             <>
-            <Header title={title} />
-            <BackButton left={15} top={-35} />
-            <View style={{marginTop:-30}}>
+            
+         
             <Title title={"Kayıtlı  "+title}/>
-            </View>
             {shouldShowText ? (
         <Text style={styles.text}>Kişisel Antrenör Edinin!</Text>
       ) : (
-        <PtDtList items={filteredItems} styletip={{ paddingBottom: 5,marginTop:-20 } } imagestyletip={{borderWidth: 1,borderColor: '#FF6F25'}} />
+        <PtDtList items={filteredItems} styletip={{ paddingBottom: 5,marginTop:0,marginBottom:-10 } } imagestyletip={{borderWidth: 1,borderColor: '#FF6F25'}} />
       )}
            
             <Title title={"Tüm "+title+"ler"}/>
-            <View style={{marginTop:-30}}>
+            <View style={{marginTop:-30,marginBottom:30}}>
             <SearchButton placeholder={title+"ler"} />
             </View>
             </>
@@ -55,6 +56,7 @@ export default function  PtDtChitemPages({ route }) {
         style={styles.sectionList}
         showsVerticalScrollIndicator={false}
         />
+        </View>
         </SafeAreaView>
     );
 }
@@ -74,6 +76,8 @@ const styles = StyleSheet.create({
         marginLeft:"auto",
         marginRight:"auto",
     },
-    
+    sectionList: {
+        marginBottom: 100,
+      },
 
 });

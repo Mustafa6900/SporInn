@@ -10,7 +10,7 @@ const QrCodePage = ({ route }) => {
     return(
         <SafeAreaView style={styles.container}>
             <Header title="Qr Code & NFC"/>
-            <BackButton left={15} top={-35} />
+            <BackButton left={15} top={43} />
             <Text style={{color:"#AAA",marginTop:400,marginLeft:"auto",marginRight:"auto"}}>{item.name+"'e ait Qr Code Sayfası"}</Text>
         </SafeAreaView>
 

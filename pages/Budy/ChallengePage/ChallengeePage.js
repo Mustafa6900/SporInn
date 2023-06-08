@@ -25,16 +25,18 @@ export default function ChallengePage({ route }) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <Header title={title} />
+            <BackButton left={15} top={43} />
+            <SafeAreaView>
         <SectionList
         sections={sections}
         renderItem={({ item }) => <ChallengeList items={[item]} />}
         renderSectionHeader={({ section }) => (
             <>
-            <Header title={title} />
-            <BackButton left={15} top={-35} />
-            <View style={{top:-15}}>
+            
+           
             <SearchButton placeholder={title} />
-            </View>
+       
             <Title title={title}/>
             
             </>
@@ -45,6 +47,7 @@ export default function ChallengePage({ route }) {
        
         />
         </SafeAreaView>
+        </SafeAreaView>
     );
 }
 
@@ -53,7 +56,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#292929',
     },
-   
+    sectionList: {
+        marginBottom: 100,
+      },
 });
 
 

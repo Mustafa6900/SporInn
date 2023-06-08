@@ -5,13 +5,15 @@ import BackButton from '../../components/backbutton';
 import Categoryslider from '../../components/categoryslider';
 import OutputText from '../../components/outputText';
 import CustomButton from '../../components/custombutton';
+import FavoriteButton from '../../components/favoritebutton';
 const FitnessPackageDetailPage = ({ route }) => {
   const { packet, price, shortdetail,image,bigdetail } = route.params;
   return (
     
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
-        <BackButton left={15} top={-35} />
+        <BackButton left={15} top={43} />
+        <FavoriteButton left={360} top={45} />
         <View style={styles.topContainer}>
         <Image source={require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
         <View style={styles.info}>

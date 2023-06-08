@@ -31,7 +31,7 @@ const Sports = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Spor Tesisleri" />
-      <BackButton left={15} top={-35} />
+      <BackButton left={15} top={43} />
       <SearchButton placeholder="Spor Tesisi Ara" /> 
       <SportTitle title="Tüm Spor Tesisleri"/>  
       <SportList categories={categories} onCategoryPress={handleCategoryPress} />

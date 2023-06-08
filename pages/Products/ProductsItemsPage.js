@@ -23,7 +23,7 @@ export default function ProductsItems({ route }) {
     return (
         <SafeAreaView style={styles.container}>
         <Header title={category} />
-        <BackButton left={15} top={-35} />
+        <BackButton left={15} top={43} />
         <View style={{ top:-15 }}>
         <SearchButton placeholder={`${category} Ara`} />
         </View>
