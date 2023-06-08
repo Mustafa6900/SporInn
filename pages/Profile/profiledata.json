@@ -28,6 +28,26 @@
       "cardYear": "2023",
       "cardCvv": "123"
     },
+    "favoriteProducts": [
+      {
+        "id": 1,
+        "name": "Ürün 1",
+        "price": "100",
+        "imagepath": "product1.png"
+      },
+      {
+        "id": 2,
+        "name": "Ürün 2",
+        "price": "200",
+        "imagepath": "product2.png"
+      },
+      {
+        "id": 3,
+        "name": "Ürün 3",
+        "price": "300",
+        "imagepath": "product3.png"
+      }
+    ],
     "phone": "+90 532 123 45 67",
     "email": "mustafaa.demirhann@gmail.com",
     "imagepath": "profilepicture.png"

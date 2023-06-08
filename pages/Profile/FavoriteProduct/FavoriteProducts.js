@@ -2,16 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity,SafeAreaView } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
-
-const FavoriteProducts = ({ item }) => {
-
+import MyFavoriteProductList from "./myFavoriteproductlist";
+const FavoriteProducts = ({ route }) => {
+    const { item } = route.params;
     return (
         <SafeAreaView style={styles.container}>
         <Header title="Favori Ürünlerim" />
         <BackButton left={15} top={43} />
-        <View style={styles.prducts}>
-            <Text style={styles.text}>Favori Ürünlerim</Text>
-        </View>
+        <MyFavoriteProductList item={item}/>
         </SafeAreaView>
     );
 }

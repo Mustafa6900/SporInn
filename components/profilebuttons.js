@@ -9,7 +9,7 @@ const ProfileButtons = ({ item }) => {
             navigation.navigate('Adresses', { item: item });
         }
         else if(name=="Favori Ürünlerim"){
-            navigation.navigate('FavoriteProducts');
+            navigation.navigate('FavoriteProducts', { item: item });
         }
         else if(name=="Sepetim"){
             navigation.navigate('Cart');
