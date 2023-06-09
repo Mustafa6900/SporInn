@@ -18,7 +18,7 @@ export default function Cart({route}){
                 <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '500',color:"white" }}>Toplam Tutar:</Text>
                 <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900',color:"#FF6F25" }}>₺{item.totalPrice}</Text>
                 </View>
-            <CustomButton title="Sepeti Onayla  " onPress={() => navigation.navigate("Payment",{ item })} />
+            <CustomButton title="Sepeti Onayla  " onPress={() => navigation.navigate("PaymentProducts",{ item })} />
         </View>
         </SafeAreaView>
     )

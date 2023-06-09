@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 const ItemList = ({ items }) => {
   const navigation = useNavigation();
 
-  const handleItemPress = (packet, price, shortdetail, bigdetail, image) => {
-    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image });
+  const handleItemPress = (packet, price, shortdetail, bigdetail, image,item) => {
+    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image});
   };
 
   const renderItem = ({ item, index }) => (

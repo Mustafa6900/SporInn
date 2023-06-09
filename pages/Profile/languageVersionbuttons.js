@@ -2,8 +2,14 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity,View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 const languageVersionbuttons = ({  }) => {
-
+    const navigation = useNavigation();
+    const handleItemPress = (name) => {
+        if(name=="Türkçe"){
+            navigation.navigate('Languages', { item: item });
+        }
+    };
     category=[
         {
             name:"Türkçe",
@@ -22,6 +28,7 @@ const languageVersionbuttons = ({  }) => {
             <TouchableOpacity
             style={styles.button}
             key={index}
+            onPress={() => handleItemPress(item.name)}
             >
             <View style={styles.buttontext}>
             <Ionicons name={item.icon} size={24} style={{marginLeft:20}}/>

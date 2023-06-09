@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity,View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity,View,Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 const ProfileButtons = ({ item }) => {
@@ -15,10 +15,10 @@ const ProfileButtons = ({ item }) => {
             navigation.navigate('Cart', { item: item });
         }
         else if(name=="Siparişlerim"){
-            navigation.navigate('Orders');
+            navigation.navigate('Orders', { item: item });
         }
         else if(name=="Ödeme Yöntemlerim"){
-            navigation.navigate('PaymentMethods');
+            navigation.navigate('PaymentMethods', { item: item });
         }
         else if(name=="İletişim Tercihlerim"){
             navigation.navigate('ContactPreferences');
@@ -30,7 +30,21 @@ const ProfileButtons = ({ item }) => {
             navigation.navigate('Help');
         }
         else if(name=="Çıkış Yap"){
-            navigation.navigate('Login');
+            Alert.alert(
+                'Çıkış Yap',
+                'Çıkış yapmak istediğinize emin misiniz?',
+                [
+                    {
+                        text: 'Hayır',
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'Evet',
+                        onPress: () => navigation.navigate('Login'),
+                    },
+                ],
+            );
+            
         }
     };
 

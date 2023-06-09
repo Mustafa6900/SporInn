@@ -1,12 +1,31 @@
 import React from 'react';
-import {TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-export default function BackButton({ left,top }) {
+
+export default function BackButton({ left, top, showConfirmation }) {
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.goBack(); // Geri gitme işlemi
+    if (showConfirmation) {
+      Alert.alert(
+        'Geri Dön',
+        'Geri dönmek istediğinize emin misiniz?',
+        [
+          {
+            text: 'Hayır',
+            style: 'cancel',
+          },
+           
+          {
+            text: 'Evet',
+            onPress: () => navigation.goBack(),
+          },
+        ],
+      );
+    } else {
+      navigation.goBack();
+    }
   };
 
   const buttonStyle = {
@@ -16,12 +35,8 @@ export default function BackButton({ left,top }) {
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={ buttonStyle}>
- 
-      <Ionicons name="return-up-back-outline" size={45}></Ionicons>
+    <TouchableOpacity onPress={handlePress} style={buttonStyle}>
+      <Ionicons name="return-up-back-outline" size={45} />
     </TouchableOpacity>
   );
 }
-
-// Geri dönüş butonu için kullanılan component.
-//<ion-icon name="return-up-back-outline"></ion-icon>

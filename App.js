@@ -8,12 +8,23 @@ import Logout from './pages/Auth/Logout';
 import phoneCode from './pages/Auth/phoneCode';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/profile';
+import Orders from './pages/Profile/Order/Orders';
 import Cart from './pages/Profile/Carts/Cart';
-import Payment from './pages/Profile/Payments/payment.js';
+import PaymentProducts from './pages/Payments/PaymentProducts.js';
+import PaymentFtPtDt from './pages/Payments/PaymentFtPtDt.js';
+import PaymentSports from './pages/Payments/PaymentSports.js';
+import PaymentMethods from './pages/Profile/PaymentMethod/PaymentMethods.js'
+import AddCreditCardPage from './pages/Profile/PaymentMethod/AddCreditCardPage.js';
+import AddCardsNextPage from './pages/Profile/PaymentMethod/AddCardsNextPage.js';
 import Adresses from './pages/Profile/Adress/AdressesPage.js';
 import AddAdressPage from './pages/Profile/Adress/AddAdressPage.js';
 import FavoriteProducts from './pages/Profile/FavoriteProduct/FavoriteProducts.js';
+import ContactPreferences from './pages/Profile/ContactPreference/ContactPreferences.js';
+import AccountSettings from './pages/Profile/AccountSetting/AccountSettings.js';
+import Help from './pages/Profile/Helps/Help.js';
+import Languages from './pages/Profile/Language/Languages.js';
 import Products from './pages/Products/ProductsCategoryPage.js';
+import ProductDetailPage from './pages/Products/ProductDetailPage.js';
 import ProductsItems from './pages/Products/ProductsItemsPage.js';
 import QrCode from './pages/Qrcode/QrcodeHome.js';
 import QrCodePage from './pages/Qrcode/QrCodePage.js'
@@ -24,7 +35,7 @@ import ChallengePage from './pages/Budy/ChallengePage/ChallengeePage.js';
 import AllItemAllPages from './pages/F,F-ItemsPages/AllItemAllPages.js';
 import ItemPackagePage from './pages/F,F-ItemsPages/AllItemPacketsPages.js';
 import Sports from './pages/Home/Sports/SportsCategoryPage.js';
-import PackageDetailPage from './pages/F,F-ItemsPages/AllPackageDetailPage.js';
+import PackageDetailPage from './pages/Home/Fitness/FitnessPackageDetailPage.js';
 import MyEventPage from './pages/Qrcode/MyPages/MyEventPage.js';
 import MyEventDetailPage from './pages/Qrcode/MyPages/MyEventDetailPage.js';
 
@@ -95,14 +106,44 @@ const App = () => {
           options={{ title: "Profile" }}
         />
         <Stack.Screen
+          name='Orders'
+          component={Orders}
+          options={{ title: "Orders" }}
+        />
+        <Stack.Screen
           name='Cart'
           component={Cart}
           options={{ title: "Cart" }}
         />
         <Stack.Screen
-          name='Payment'
-          component={Payment}
-          options={{ title: "Payment" }}
+          name='PaymentProducts'
+          component={PaymentProducts}
+          options={{ title: "PaymentProducts" }}
+        />
+        <Stack.Screen
+          name='PaymentFtPtDt'
+          component={PaymentFtPtDt}
+          options={{ title: "PaymentFtPtDt" }}
+        />
+        <Stack.Screen
+          name='PaymentSports'
+          component={PaymentSports}
+          options={{ title: "PaymentSports" }}
+        />
+        <Stack.Screen
+          name='PaymentMethods'
+          component={PaymentMethods}
+          options={{ title: "PaymentMethods" }}
+        />
+        <Stack.Screen
+          name='AddCreditCardPage'
+          component={AddCreditCardPage}
+          options={{ title: "AddCreditCardPage" }}
+        />
+        <Stack.Screen
+          name='AddCardsNextPage'
+          component={AddCardsNextPage}
+          options={{ title: "AddCardsNextPage" }}
         />
         <Stack.Screen
           name='Adresses'
@@ -120,9 +161,34 @@ const App = () => {
           options={{ title: "FavoriteProducts" }}
         />
         <Stack.Screen
+          name='ContactPreferences'
+          component={ContactPreferences}
+          options={{ title: "ContactPreferences" }}
+        />
+        <Stack.Screen
+          name='AccountSettings'
+          component={AccountSettings}
+          options={{ title: "AccountSettings" }}
+        />
+        <Stack.Screen
+          name='Help'
+          component={Help}
+          options={{ title: "Help" }}
+        />
+        <Stack.Screen
+          name='Languages'
+          component={Languages}
+          options={{ title: "Languages" }}
+        />
+        <Stack.Screen
           name='Products'
           component={Products}
           options={{ title: "Products"}}
+        />
+        <Stack.Screen
+          name='ProductDetailPage'
+          component={ProductDetailPage}
+          options={{ title: "ProductDetailPage"}}
         />
         <Stack.Screen
           name='ProductsItems'

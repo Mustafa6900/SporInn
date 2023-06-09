@@ -4,13 +4,13 @@ import Header from '../../components/header';
 import ProfileTopInfo from '../../components/profileTopinfo';
 import profiledata from './profiledata.json';
 import ProfileButtons from './profilebuttons';
-import LanguageVersionbuttons from '../../components/languageVersionbuttons';
+import LanguageVersionbuttons from './languageVersionbuttons';
 
 export default function Profile({ navigation }) {
     const items = profiledata[0];
     return (
         <SafeAreaView style={styles.container}>
-        <Header title="Profile" />
+        <Header title="Profil" />
         <ScrollView style={{paddingBottom:100}}>
         <ProfileTopInfo item={items}/>
         <ProfileButtons item={items}/>

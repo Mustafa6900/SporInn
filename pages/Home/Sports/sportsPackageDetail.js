@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import CustomButton from '../../../components/custombutton';
+import { useNavigation } from '@react-navigation/native';
 
 const ItemList = ({ items, onItemPress }) => {
+  const navigation = useNavigation();
   const handleItemPress = (item) => {
     onItemPress(item);
   };
+  console.log(items)
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
@@ -28,6 +31,7 @@ const ItemList = ({ items, onItemPress }) => {
           title="Randevu Al"
           style={{ marginTop: 120 }}
           titleStyle={{ color: '#0D0D0D', fontSize: 18, fontFamily: 'Roboto', fontWeight: '900', letterSpacing: 0.4 }}
+          onPress={() => navigation.navigate('PaymentSports', { items })}
         />
       }
     />

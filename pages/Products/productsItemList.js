@@ -6,7 +6,7 @@ const ProductList = ({ items }) => {
     const navigation = useNavigation();
 
     const handleItemPress = (packet, price, shortdetail,bigdetail) => {
-      navigation.navigate('PackageDetailPage', { packet, price, shortdetail,bigdetail});
+      navigation.navigate('ProductDetailPage', { packet, price, shortdetail,bigdetail});
     };
 
   return (
