@@ -1,19 +1,43 @@
 import { useState } from 'react';
-import {StyleSheet, View,SafeAreaView,Text, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, View,SafeAreaView,Text, KeyboardAvoidingView,Alert} from 'react-native';
 import CustomTextInput from '../../components/customtext.js';
 import CheckButton from '../../components/checkbutton.js';
 import CustomButton from '../../components/custombutton.js';
 import BackButton from '../../components/backbutton.js';
 import { useNavigation } from '@react-navigation/native';
-
+import { supabase } from '../../supabaseClient.js';
 export default function SignUp({navigation}) { 
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     const [isChecked, setChecked] = useState(false);
     const handleButtonPress = () => {
       setChecked(!isChecked);
     };
+
+    const handleSignUp = async () => {
+        try {
+          const {error } = await supabase.auth.signUp({
+            email,
+            phone,
+            password,
+          });
+    
+          if (error) {
+            // Kayıt hatası varsa alert mesajını göster
+            Alert.alert('Hata', "Kayıt bilgilerinizi kontrol ediniz.");
+          } else {
+            // Kayıt başarılı olduğunda alert mesajını göster ve login sayfasına yönlendir
+            Alert.alert('Kayıt Tamamlandı', 'Kaydınız başarıyla tamamlandı!', [{ text: 'Tamam', onPress: () => navigation.navigate('ExampleLogin') }]);
+          }
+        } catch (error) {
+          console.error('Sign up error:', error.message);
+          // Hata durumunda kullanıcıya uygun bir geri bildirim gösterilebilir
+        }
+      };
+
+
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.viewcontainer}>
@@ -34,6 +58,11 @@ export default function SignUp({navigation}) {
           value={email}
           onChangeText={(e) => setEmail(e)}
         />
+        <CustomTextInput
+          placeholder="Şifre"
+          value={password}
+          onChangeText={(e) => setPassword(e)}
+        />
         <View style={{ flexDirection: 'row', paddingHorizontal: 20,top:5}}>
          <CheckButton
         title="✓"
@@ -49,16 +78,11 @@ export default function SignUp({navigation}) {
         </View>
         <CustomButton
           title="KAYIT OL"
-          onPress={() => navigation.navigate('Login')}
+          onPress={handleSignUp}
         />
         </View>
         
-        <KeyboardAvoidingView style={styles.textContainer2} keyboardVerticalOffset={80} behavior="padding">
-          <Text style={styles.text}>SporInn'e üyeyseniz</Text>
-          <Text style={[styles.text, styles.highlightedText2]}
-          onPress={() => navigation.navigate('Login')}
-          >Giriş Yap</Text>
-        </KeyboardAvoidingView>
+      
       </SafeAreaView>
     );
   };

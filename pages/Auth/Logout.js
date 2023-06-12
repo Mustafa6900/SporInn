@@ -26,12 +26,12 @@ export default function Logout({ navigation }) {
                 <CustomButton  
                 title="GİRİŞ YAP"
                 style={styles.button1}
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('ExampleLogin')}
                 />
                 <CustomButton  
                 title="KAYIT OL"
                 style={styles.button2}
-                onPress={() => navigation.navigate('SignUp')}
+                onPress={() => navigation.navigate('ExampleSignUp')}
                 titleStyle={styles.customTitleStyle}
                 /></View>
                 </View>

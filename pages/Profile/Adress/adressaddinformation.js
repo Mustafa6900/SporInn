@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, TouchableOpacity, View, SafeAreaView, TextInput } from "react-native";
 import CustomButton from "../../../components/custombutton";
+import { supabase } from "../../../supabaseClient";
 const AddressAddInformation = ({ item }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -26,8 +27,33 @@ const AddressAddInformation = ({ item }) => {
     };
     // Yeni adresi kullanarak yapmak istediğiniz işlemleri burada gerçekleştirin
     console.log("Yeni adres:", newAddress);
+    sendSupabase();
   };
+  const sendSupabase = async () => {
+  const { data, error } = await supabase
+    .from("addresses")
+    .insert([
+      {
+        first_name: firstName,
+        last_name: lastName,
+        phone: phone,
+        address_name: address,
+        city: city,
+        district: district,
+        building_no: buildingNo,
+        door_no: apartmentNo,
+        full_address: addressName,
+      },
+    ]);
+  if (error) {
+    console.log("Hata", error);
+  } else {
+    console.log("Adres eklendi", data);
+  }
+};
 
+  
+  
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Kişisel Bilgileriniz</Text>

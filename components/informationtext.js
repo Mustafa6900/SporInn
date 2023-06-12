@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View,StyleSheet } from "react-native";
 
-const InformationText = ({ navigation }) => {
+const InformationText = ({ navigation,text }) => {
     return (
         <View style={styles.text}>
-        <Text style={styles.textinfo}>Şehrinizdeki tüm basketbol sahaları listelenmektedir.Adresinize yakın basketbol sahalarını görmek için lütfen adresinizi giriniz.</Text>
+        <Text style={styles.textinfo}>{text}</Text>
         </View>
     );
     }

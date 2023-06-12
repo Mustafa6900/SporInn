@@ -1,12 +1,33 @@
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, Alert} from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import BackButton from '../../components/backbutton';
 import CustomTextInput from '../../components/customtext';
 import CustomButton from '../../components/custombutton';
+import { supabase } from '../../supabaseClient';
 export default function Login({ navigation }) {
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+  
+      if (error) {
+        // Giriş hatası varsa kullanıcıya bir uyarı göster
+        Alert.alert("Giriş Başarışız", "Giriş bilgilerinizi kontrol ediniz.")
+      } else {
+        Alert.alert('Giriş Başarılı', 'Giriş başarıyla tamamlandı!', [{ text: 'Tamam', onPress: () => navigation.navigate('Tabbar') }]);
+        
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return(
     <SafeAreaView style={styles.container}>
       
@@ -14,13 +35,18 @@ export default function Login({ navigation }) {
         <Text style={{ color: "#E0E0E0", fontWeight: 700, fontSize: 30,textAlign:'center',marginBottom:50}}>Giriş Yap</Text>
         <BackButton />
         <CustomTextInput
-          placeholder="Telefon Numarası"
-          value={phone}
-          onChangeText={(e) => setPhone(e)}
+          placeholder="E-Posta"
+          value={email}
+          onChangeText={(e) => setEmail(e)}
+        />
+         <CustomTextInput
+          placeholder="Şifre"
+          value={password}
+          onChangeText={(e) => setPassword(e)}
         />
         <CustomButton
-          title="TELEFON NUMARASI İLE DEVAM ET"
-          onPress={() => navigation.navigate('phoneCode')}
+          title="GİRİŞ YAP"
+          onPress={handleLogin}
         />
         <View style={{ flexDirection: 'row', paddingHorizontal: 20,top:5}}>
         <Text style={styles.text}>Kişisel verilerinize dair </Text>
@@ -30,7 +56,7 @@ export default function Login({ navigation }) {
         <View style={{ flexDirection: 'row', paddingHorizontal: 20,top:40,justifyContent: 'center',}}>
         <Text style={styles.text}>Hala kayıt olmadınız mı? </Text>
         <Text style={[styles.text, styles.highlightedText2]}
-        onPress={() => navigation.navigate('SignUp')}
+        onPress={() => navigation.navigate('ExampleSignUp')}
         >Kayıt Ol</Text>
         </View>
         </View>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 
-const ProfileTopInfo = ({ item }) => {
+const ProfileTopInfo = ({ item, session }) => {
+    const [first_name, setFirst_Name] = useState('')
+    const [last_name, setLast_Name] = useState('')
+   
+    console.log()
     return (
         <View style={styles.container}>
         <Image source={require("../assets/profilepic/user.png")} style={styles.topContainerImage} />

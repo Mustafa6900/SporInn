@@ -11,8 +11,8 @@ export default function Login({ navigation }) {
     <SafeAreaView style={styles.container}>
       
         <View style={styles.viewcontainer}>
-        <BackButton />
         <Text style={{ color: "#E0E0E0", fontWeight: 700, fontSize: 30,textAlign:'center',marginBottom:50}}>Giriş Yap</Text>
+        <BackButton />
         <CustomTextInput
           placeholder="Kodu giriniz"
           value={code}
