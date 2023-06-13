@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Text, StyleSheet, TouchableOpacity, View, SafeAreaView, TextInput } from "react-native";
 import CustomButton from "../../../components/custombutton";
 import { supabase } from "../../../supabaseClient";
-const AddressAddInformation = ({ item }) => {
+import { useNavigation } from "@react-navigation/native";
+const AddressAddInformation = ({ session }) => {
+  const navigation = useNavigation();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
@@ -12,43 +14,34 @@ const AddressAddInformation = ({ item }) => {
   const [buildingNo, setBuildingNo] = useState("");
   const [apartmentNo, setApartmentNo] = useState("");
   const [addressName, setAddressName] = useState("");
+  const { user } = session;
 
-  const handleSave = () => {
-    const newAddress = {
-      firstName,
-      lastName,
-      phone,
-      address,
-      city,
-      district,
-      buildingNo,
-      apartmentNo,
-      addressName
-    };
-    // Yeni adresi kullanarak yapmak istediğiniz işlemleri burada gerçekleştirin
-    console.log("Yeni adres:", newAddress);
-    sendSupabase();
-  };
+  
   const sendSupabase = async () => {
-  const { data, error } = await supabase
-    .from("addresses")
+    const { data, error } = await supabase
+    .from('addresses')
     .insert([
       {
+        created_at: new Date(),
+        user_id: user.id,
         first_name: firstName,
         last_name: lastName,
         phone: phone,
-        address_name: address,
+        address_name: addressName,
         city: city,
         district: district,
         building_no: buildingNo,
         door_no: apartmentNo,
-        full_address: addressName,
+        full_address: address,
       },
-    ]);
+    ])
+    
   if (error) {
     console.log("Hata", error);
   } else {
-    console.log("Adres eklendi", data);
+    console.log("Adres eklendi");
+    navigation.replace('Adresses');
+
   }
 };
 
@@ -143,7 +136,7 @@ const AddressAddInformation = ({ item }) => {
         <CustomButton
             style={{ marginTop: 20, width: "75%", marginLeft: "auto", marginRight: "auto" }}
             title="Adres Ekle"
-            onPress={handleSave}
+            onPress={sendSupabase}
         />
     </SafeAreaView>
   );

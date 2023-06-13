@@ -2,23 +2,23 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity,View,Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-const ProfileButtons = ({ item }) => {
+const ProfileButtons = () => {
     const navigation = useNavigation();
     const handleItemPress = (name) => {
         if(name=="Adreslerim"){
-            navigation.navigate('Adresses', { item: item });
+            navigation.navigate('Adresses');
         }
         else if(name=="Favori Ürünlerim"){
-            navigation.navigate('FavoriteProducts', { item: item });
+            navigation.navigate('FavoriteProducts');
         }
         else if(name=="Sepetim"){
-            navigation.navigate('Cart', { item: item });
+            navigation.navigate('Cart' );
         }
         else if(name=="Siparişlerim"){
-            navigation.navigate('Orders', { item: item });
+            navigation.navigate('Orders');
         }
         else if(name=="Ödeme Yöntemlerim"){
-            navigation.navigate('PaymentMethods', { item: item });
+            navigation.navigate('PaymentMethods');
         }
         else if(name=="İletişim Tercihlerim"){
             navigation.navigate('ContactPreferences');

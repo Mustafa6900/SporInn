@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
     React.useEffect(() => {
         supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
-            console.log("alaaallala",session);
         });
     }, []);
     

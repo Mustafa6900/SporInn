@@ -1,19 +1,53 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, View, Image, SafeAreaView, TextInput } from "react-native";
+import React, { useState,useContext } from "react";
+import { Text, StyleSheet, TouchableOpacity, View, Image, SafeAreaView, TextInput,Alert } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import CheckButton from "../../../components/checkbutton";
 import CustomButton from "../../../components/custombutton";
 import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from '../../Auth/AuthContext';
+import { supabase } from "../../../supabaseClient";
 const AddAdressPage = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [cardName, setCardName] = useState("");
   const [cardNo, setCardNo] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [checked, setChecked] = useState(false);
+  const { session } = useContext(AuthContext);
 
-  console.log(cardName, cardNo, month, year, checked, "cardName, cardNo, month, year, checked");
+
+  const handleContinue = () => {
+    if (checked) {
+      sendSupabase();
+    } else {
+      Alert.alert("Uyarı", "Kullanım koşullarını kabul etmelisiniz.");
+    }
+  };
+
+  const sendSupabase = async () => {
+    const { data, error } = await supabase
+      .from("credit_cards")
+      .insert([
+        {
+          created_at: new Date(),
+          user_id: session.user.id,
+          card_name: cardName,
+          card_number: cardNo,
+          expiry_month: month,
+          expiry_year: year,
+          image_url: ""
+        },
+      ])
+    if (error) {
+      console.log("Hata", error);
+    } else {
+      console.log("Kart eklendi");
+      navigation.replace('PaymentMethods');
+    }
+  };
+
+      
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +113,7 @@ const AddAdressPage = () => {
         <CustomButton
             title="Devam Et"
             style={{width:"75%",marginLeft:"auto",marginRight:"auto",marginBottom:40,marginTop:170}}
-            onPress={() => navigation.navigate("AddCardsNextPage")}
+            onPress={handleContinue}
             
         />     
     </SafeAreaView>

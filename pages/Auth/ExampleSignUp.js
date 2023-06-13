@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import {StyleSheet, View,SafeAreaView,Text, KeyboardAvoidingView,Alert} from 'react-native';
 import CustomTextInput from '../../components/customtext.js';
 import CheckButton from '../../components/checkbutton.js';
@@ -10,6 +10,7 @@ export default function SignUp({navigation}) {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [isChecked, setChecked] = useState(false);
     const handleButtonPress = () => {
@@ -19,9 +20,17 @@ export default function SignUp({navigation}) {
     const handleSignUp = async () => {
         try {
           const {error } = await supabase.auth.signUp({
-            email,
-            phone,
-            password,
+            email: email,
+            password: password,
+            options: {
+              data: {
+                first_name: name,
+                last_name: surname,
+                phone: phone,
+                image_url: ""
+              },
+              table: 'profiles'
+            }
           });
     
           if (error) {
@@ -29,7 +38,7 @@ export default function SignUp({navigation}) {
             Alert.alert('Hata', "Kayıt bilgilerinizi kontrol ediniz.");
           } else {
             // Kayıt başarılı olduğunda alert mesajını göster ve login sayfasına yönlendir
-            Alert.alert('Kayıt Tamamlandı', 'Kaydınız başarıyla tamamlandı!', [{ text: 'Tamam', onPress: () => navigation.navigate('ExampleLogin') }]);
+            Alert.alert('Kayıt Tamamlandı', 'Kaydınız başarıyla tamamlandı!', [{ text: 'Tamam', onPress: () => navigation.navigate('Tabbar') }]);
           }
         } catch (error) {
           console.error('Sign up error:', error.message);
@@ -48,11 +57,21 @@ export default function SignUp({navigation}) {
           value={phone}
           onChangeText={(e) => setPhone(e)}
         />
+        <View style={{flexDirection:"row"}}>
         <CustomTextInput
-          placeholder="Ad Soyad"
+          placeholder="Ad"
           value={name}
           onChangeText={(e) => setName(e)}
+          style={{width:180,marginRight:10}}
         />
+          <CustomTextInput
+          placeholder="Soyad"
+          value={surname}
+          onChangeText={(e) => setSurname(e)}
+          style={{width:180}}
+
+        />
+        </View>
         <CustomTextInput
           placeholder="E-Posta"
           value={email}

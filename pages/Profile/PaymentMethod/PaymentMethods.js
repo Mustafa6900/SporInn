@@ -1,19 +1,24 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Text, StyleSheet, TouchableOpacity, View,Image,SafeAreaView } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import MyPaymentMethods from "./mypaymentmethods";
 import CustomButton from "../../../components/custombutton";
 import { useNavigation } from "@react-navigation/native";
-export default function PaymentMethods({route}){
-    const { item } = route.params;
+import { AuthContext } from '../../Auth/AuthContext';
+import { supabase } from "../../../supabaseClient";
+
+export default function PaymentMethods(){
+ 
     const navigation = useNavigation();
+    const { session } = useContext(AuthContext);
+    console.log("session payment ",session);
 
     return(
         <SafeAreaView style={styles.container}>
         <Header title="Ödeme Yöntemlerim" />
         <BackButton left={15} top={43} />
-        <MyPaymentMethods item={item} />
+        <MyPaymentMethods session={session}/>
         <View style={styles.pluscontainer}>
         <CustomButton 
         title="Yeni Kart Ekle"

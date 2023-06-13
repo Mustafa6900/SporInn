@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+const ProfileTopInfo = ({session }) => {
+ 
+    const { user } = session;
 
-const ProfileTopInfo = ({ item, session }) => {
-    const [first_name, setFirst_Name] = useState('')
-    const [last_name, setLast_Name] = useState('')
-   
-    console.log()
     return (
         <View style={styles.container}>
         <Image source={require("../assets/profilepic/user.png")} style={styles.topContainerImage} />
-        <Text style={styles.text}>{item.name+" "+item.surname}</Text>
+        <Text style={styles.text}>{user?.user_metadata.first_name+" "+user?.user_metadata.last_name}</Text>
         <View style={{flexDirection:"row", marginLeft:20,marginBottom:10}}>
         <Ionicons name="mail-outline" size={40}></Ionicons>
-        <Text style={{fontSize:20,marginTop:10,marginLeft:10}}>{item.email}</Text>
+        <Text style={{fontSize:20,marginTop:10,marginLeft:10}}>{user.email}</Text>
         </View>
         <View style={{flexDirection:"row", marginLeft:20,marginBottom:20}}>
         <Ionicons name="phone-portrait-outline" size={35}></Ionicons>
-        <Text style={{fontSize:20,marginTop:10,marginLeft:15}}>{item.phone}</Text>
+        <Text style={{fontSize:20,marginTop:10,marginLeft:15}}>{user?.user_metadata.phone}</Text>
         </View>
         </View>
     );

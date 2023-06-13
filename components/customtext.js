@@ -1,10 +1,10 @@
 import React from 'react';
 import { TextInput, StyleSheet } from 'react-native';
 
-const CustomTextInput = ({ placeholder, value, onChangeText }) => {
+const CustomTextInput = ({ placeholder, value, onChangeText,style }) => {
     return (
       <TextInput
-        style={styles.input}
+        style={[styles.input, style]}
         placeholder={placeholder}
         placeholderTextColor="#585858" // Placeholder rengini burada belirleyebilirsiniz
         value={value}

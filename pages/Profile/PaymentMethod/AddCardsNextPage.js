@@ -4,7 +4,7 @@ import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import { useNavigation } from '@react-navigation/native';
 
-const AddCardsNextPage = ({item }) => {
+const AddCardsNextPage = () => {
     const navigation = useNavigation();
 
     const [phoneCode, setPhoneCode] = useState("")

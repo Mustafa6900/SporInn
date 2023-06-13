@@ -1,19 +1,22 @@
-import * as React from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import {ScrollView,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
 import ProfileTopInfo from '../../components/profileTopinfo';
 import profiledata from './profiledata.json';
 import ProfileButtons from './profilebuttons';
 import LanguageVersionbuttons from './languageVersionbuttons';
+import { AuthContext } from '../Auth/AuthContext';
 
 export default function Profile({ navigation }) {
-    const items = profiledata[0];
+    const { session } = useContext(AuthContext);
+    console.log("session profile ",session);
+    
     return (
         <SafeAreaView style={styles.container}>
         <Header title="Profil" />
         <ScrollView style={{paddingBottom:100}}>
-        <ProfileTopInfo item={items}/>
-        <ProfileButtons item={items}/>
+        <ProfileTopInfo session = {session}/>
+        <ProfileButtons />
         <LanguageVersionbuttons/>
         </ScrollView>
         </SafeAreaView>

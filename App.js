@@ -6,14 +6,7 @@ import { AuthProvider } from './pages/Auth/AuthContext';
 import AuthStack from './pages/Auth/AuthStack';
 
 const App = () => {
-  const [auth, setAuth] = useState(null);
-  useEffect(() => {
-   supabase.auth.onAuthStateChange((_event, session) => {
   
-    setAuth(session);
-    });
-  }, []);
-  const Stack = createNativeStackNavigator();
   return (
       
     <NavigationContainer>
