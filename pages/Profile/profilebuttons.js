@@ -9,13 +9,46 @@ const ProfileButtons = () => {
             navigation.navigate('Adresses');
         }
         else if(name=="Favori Ürünlerim"){
-            navigation.navigate('FavoriteProducts');
+            //navigation.navigate('FavoriteProducts');
+            Alert.alert(
+                'Favori Ürünlerim',
+                'Bu özellik şu anda tasarım aşamasında.',
+                [
+                    {
+                        text: 'Tamam',
+                        style: 'cancel',
+                    },
+                ],
+            );
+
         }
         else if(name=="Sepetim"){
-            navigation.navigate('Cart' );
+            //navigation.navigate('Cart' );
+            Alert.alert(
+                'Sepetim',
+                'Bu özellik şu anda tasarım aşamasında.',
+                [
+                    {
+                        text: 'Tamam',
+                        style: 'cancel',
+                    },
+                ],
+            );
+
         }
         else if(name=="Siparişlerim"){
-            navigation.navigate('Orders');
+            //navigation.navigate('Orders');
+            Alert.alert(
+                'Siparişlerim',
+                'Bu özellik şu anda tasarım aşamasında.',
+                [
+                    {
+                        text: 'Tamam',
+                        style: 'cancel',
+                    },
+                ],
+            );
+            
         }
         else if(name=="Ödeme Yöntemlerim"){
             navigation.navigate('PaymentMethods');

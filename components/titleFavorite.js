@@ -15,7 +15,7 @@ const ItemTitleFavorite = ({ title,point }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#AAA',
-        height: 60,
+        height: 50,
         width: '100%',
         alignItems: 'center',
         flexDirection: 'row',
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: '900',
         letterSpacing: 0.4,
-        
         marginLeft: 25,
         
         },

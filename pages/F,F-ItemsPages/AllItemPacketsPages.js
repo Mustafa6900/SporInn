@@ -6,6 +6,7 @@ import CategorySlider from '../../components/categoryslider';
 import FitnessPackagelist from '../Home/Fitness/fitnessPackagelist';
 import SportsPackageDetailPage from '../Home/Sports/sportsPackageDetail';
 import BackButton from '../../components/backbutton';
+import SportProfileInfo from '../../components/sportprofileinfo';
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
     console.log(item)
@@ -14,8 +15,7 @@ const ItemDetailPage = ({ route }) => {
         <Header title={item.maincategory} />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
-        <Image source={ require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
-        <ItemTitleFavorite title={item.name} point={item.point} />
+        <SportProfileInfo onPress={() => console.log('Image pressed')} />
         </View>
         <CategorySlider items = {item} />
         
@@ -37,15 +37,7 @@ const styles = StyleSheet.create({
         marginTop:-5,
         borderRadius: 0
     },
-    topContainerImage: {
-        width: 375,
-        height: 180,
-        marginBottom: 10,
-        marginTop: 20,
-        borderRadius: 7,
-        marginLeft:"auto",
-        marginRight:"auto"
-    },
+
     
     text: {
         fontSize: 16,

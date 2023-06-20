@@ -41,7 +41,7 @@ const ItemAllPage = ({ route }) => {
          
            
             <SportsTopInfo />
-            <InformationText  text={`Şehrinizdeki ${title}   listelenmektedir. Adresinize yakın havuz tesislerini görmek için lütfen adresinizi giriniz.`} />
+            <InformationText  text={`Şehrinizdeki ${title}  listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
             <SearchButton placeholder={title+" Ara"} />
             <SportTitle title={`Tüm ${title}`} />
             
