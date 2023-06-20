@@ -15,7 +15,7 @@ const ItemDetailPage = ({ route }) => {
         <Header title={item.maincategory} />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
-        <SportProfileInfo onPress={() => console.log('Image pressed')} />
+        <SportProfileInfo onPress={() => console.log('Image press')} />
         </View>
         <CategorySlider items = {item} />
         
