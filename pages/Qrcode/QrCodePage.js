@@ -1,17 +1,25 @@
 import React from 'react';
-import { Text,SafeAreaView,StyleSheet } from 'react-native';
+import { View,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
 import BackButton from '../../components/backbutton';
+import SvgQRCode from 'react-native-qrcode-svg';
+
+function Simple( {item}) {
+    return <SvgQRCode value={item} size={300}/>;
+  }
+  
 
 const QrCodePage = ({ route }) => {
     const { item } = route.params;
-    console.log("itemmsmsms",item)
+    console.log("itemmsmsms",item.qr_code)
 
     return(
         <SafeAreaView style={styles.container}>
             <Header title="Qr Code & NFC"/>
             <BackButton left={15} top={43} />
-            <Text style={{color:"#AAA",marginTop:400,marginLeft:"auto",marginRight:"auto"}}>{item.name+"'e ait Qr Code Sayfası"}</Text>
+             <View style={{marginLeft:"auto",marginRight:"auto",marginTop:"auto",marginBottom:"auto"}}>
+            <Simple item = {item.qr_code} />
+            </View> 
         </SafeAreaView>
 
     );
@@ -21,6 +29,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#292929',
+
     },
 });
 

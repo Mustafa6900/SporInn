@@ -15,8 +15,8 @@ const ItemList = ({ items}) => {
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.iteminfo}>{item.info}</Text>
+        <Text style={styles.itemName}>Paket kodu:{item.packages_id}</Text>
+        <Text style={styles.iteminfo}>Alınma tarihi: {item.purchase_date}</Text>
         <View style={styles.itemInfo2}> 
           <Text style={styles.iteminfo2}>{item.info2}</Text>
         </View>

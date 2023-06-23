@@ -16,7 +16,7 @@ const ItemList = ({ items}) => {
       <Image source={require('../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.iteminfo}>{item.info}</Text>
+        <Text style={styles.iteminfo}>{item.small_description}</Text>
         <View style={styles.itemInfo2}>
           <AntDesign name="star" size={24} color="black" />
           <Text style={styles.itemPoint}>{item.point}</Text>

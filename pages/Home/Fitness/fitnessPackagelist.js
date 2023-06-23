@@ -1,38 +1,63 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../../supabaseClient';
 
 const ItemList = ({ items }) => {
   const navigation = useNavigation();
+  const [packages, setPackages] = useState([]);
 
-  const handleItemPress = (packet, price, shortdetail, bigdetail, image,item) => {
-    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image});
+  const handleItemPress = (packet, price, shortdetail, bigdetail, image, packetid) => {
+    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image, packetid });
   };
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('fitness_centers_packages')
+          .select('*')
+          .eq('fitness_centers_id', items.created_id); // items objesinden fitness_center_id'yi kullanarak filtreleme yapın
+        if (error) {
+          console.error(error);
+        } else {
+          setPackages(data || []);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
+    fetchPackages();
+  }, [items.id]);
+
+  console.log(packages)
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
       style={styles.item}
-      onPress={() => handleItemPress(item, items.packetsPrice[index], items.packetsDetail[index], items.packetsBigDetail[index], items.image)}
+      onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.image_url, item.id)}
     >
-      {console.log(item)}
+      {console.log(item.name)}
       <View style={styles.info}>
-        <Text style={styles.itemName}>{item}</Text>
-        <Text style={styles.itemDetail}>{items.packetsDetail[index]}</Text>
-        <Text style={styles.itemPrice}>{items.packetsPrice[index]}</Text>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={styles.itemDetail}>{item.day}</Text>
+        <Text style={styles.itemPrice}>₺{item.price}</Text>
       </View>
-      <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <Image source={{ uri: item.image_url }} style={styles.itemImage} />
     </TouchableOpacity>
   );
-
+  
+  // ...
+  
   return (
     <FlatList
       style={styles.container}
-      data={items.packets}
+      data={packages}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       showsVerticalScrollIndicator={false}
     />
   );
+  
 };
 
 const styles = StyleSheet.create({

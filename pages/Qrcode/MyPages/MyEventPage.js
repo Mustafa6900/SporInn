@@ -1,23 +1,38 @@
-import * as React from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { SafeAreaView,StyleSheet,Text,View,ScrollView,SectionList} from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import SearchButton from '../../../components/searchbutton';
 import Title from '../../../components/sportptTitle';
 import MyEventList from './myEventList';
-import mysportsdata from './mysportsdata.json';
+import { supabase } from '../../../supabaseClient';
+import { AuthContext } from '../../Auth/AuthContext';
 export default function MyEventPage({ route }) {
     const { category } = route.params;
-    const getItems = () => {
-        const categoryData = mysportsdata.find((data) => category in data);
-        if (categoryData) {
-            return categoryData[category];
-        } else {
-            return [];
-        }
-    };
+    const [items, setItems] = useState([]);
+    const { session } = useContext(AuthContext);
+    useEffect(() => {
+        const fetchItems = async () => {
+            try {
+                const { data, error } = await supabase
+                .from('users_fitness_packages')
+                .select('*,packages_id, fitness_centers_packages(id,fitness_centers_id)')
+                .eq('user_id', session.user.id)   
+                if (error) {
+                    console.error(error);
+                } else {
+                    setItems(data || []);
+                }
+
+                
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchItems();
+    }, []);
     const title = category;
-    const items = getItems();
+ 
     const sections = [
         {  data: items },
     ];

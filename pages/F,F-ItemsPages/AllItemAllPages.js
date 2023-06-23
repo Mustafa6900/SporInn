@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect,useState}from 'react';
 import { SafeAreaView, StyleSheet, SectionList,View } from 'react-native';
 import Header from '../../components/header';
 import SportsTopInfo from '../../components/sportsptTopinfo';
@@ -7,22 +7,32 @@ import BackButton from '../../components/backbutton';
 import SearchButton from '../../components/searchbutton';
 import SportTitle from '../../components/sportptTitle';
 import ItemList from './AllItemPageslist';
-import sportsdata from './sportsdata.json';
-
+import { supabase } from "../../supabaseClient.js";
 const ItemAllPage = ({ route }) => {
   const { category } = route.params;
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('fitness_centers')
+          .select('*');
+        if (error) {
+          console.error(error);
+        } else {
+          setItems(data || []);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
 
-  const getItems = () => {
-    const categoryData = sportsdata.find((data) => category in data);
-    if (categoryData) {
-      return categoryData[category];
-    } else {
-      return [];
-    }
-  };
 
   const title = category;
-  const items = getItems();
 
   const sections = [
     { title: `Tüm ${title}`, data: items },

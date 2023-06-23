@@ -12,14 +12,14 @@ const ItemDetailPage = ({ route }) => {
     console.log(item)
     return (
         <SafeAreaView style={styles.container}>
-        <Header title={item.maincategory} />
+        <Header title={item.type} />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
         <SportProfileInfo onPress={() => console.log('Image press')} />
         </View>
         <CategorySlider items = {item} />
         
-        {item.maincategory === 'Spor Salonu' || item.maincategory === 'Kişisel Antrenör' || item.maincategory === 'Diyetisyen' ?(
+        {item.type === 'Spor Salonu' || item.type === 'Kişisel Antrenör' || item.type === 'Diyetisyen' ?(
         <FitnessPackagelist items={item} />  
         ) : (
         <SportsPackageDetailPage items={item} />
