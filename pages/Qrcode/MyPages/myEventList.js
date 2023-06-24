@@ -1,11 +1,46 @@
-import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList,SafeAreaView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../../supabaseClient';
 
 const ItemList = ({ items}) => {
-  
+  const [fitness, setFitness] = useState([]);
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('fitness_centers')
+          .select('name')
+          .eq('created_id', items[0].fitness_centers_packages.fitness_centers_id);
+        if (error) {
+          console.error(error);
+        } else {
+          setFitness(data || []);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+      
+    };
+    fetchItems();
+  }, []);
+  
+  if (isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.loadingText}>Yükleniyor...</Text>
+      </SafeAreaView>
+    );
+  }
+
 
   const renderItem = ({ item }) => (
     <View style={styles.container}>
@@ -15,8 +50,8 @@ const ItemList = ({ items}) => {
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
-        <Text style={styles.itemName}>Paket kodu:{item.packages_id}</Text>
-        <Text style={styles.iteminfo}>Alınma tarihi: {item.purchase_date}</Text>
+        <Text style={styles.itemName}>{fitness[0].name}</Text>
+        <Text style={styles.iteminfo}>Kalan Gün: {item.remaining_days}</Text>
         <View style={styles.itemInfo2}> 
           <Text style={styles.iteminfo2}>{item.info2}</Text>
         </View>

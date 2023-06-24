@@ -9,13 +9,13 @@ import BackButton from '../../components/backbutton';
 import SportProfileInfo from '../../components/sportprofileinfo';
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
-    console.log(item)
+
     return (
         <SafeAreaView style={styles.container}>
         <Header title={item.type} />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
-        <SportProfileInfo onPress={() => console.log('Image press')} />
+        <SportProfileInfo items={item} />
         </View>
         <CategorySlider items = {item} />
         

@@ -1,16 +1,37 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { View, Text, FlatList,StyleSheet } from 'react-native';
-
+import { supabase } from '../supabaseClient';
 const SubCategories = ({ items, onItemPress }) => {
+  console.log("salon_id",items.created_id)
+  const [itemss, setItemss] = useState([]);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('categories')
+          .select('*')
+          .eq('created_id', items.created_id);
+        if (error) {
+          console.error(error);
+        } else {
+          setItemss(data || []);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchItems();
+  }, []);
   const renderItem = ({ item }) => (
+ 
     
-    <Text style={styles.categoryText} /*onPress={() => onItemPress(item)}*/>{item}</Text>
+    <Text style={styles.categoryText} /*onPress={() => onItemPress(item)}*/>{item.name}</Text>
   );
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.flatcontainer}
-        data={items.subcategories}
+        data={itemss}
         horizontal={true}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}

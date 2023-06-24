@@ -9,7 +9,7 @@ const MyEventDetailPage = ({ route }) => {
    const { item } = route.params;
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  
   useEffect(() => {
     const fetchItems = async () => {
       try {

@@ -11,12 +11,13 @@ export default function MyEventPage({ route }) {
     const { category } = route.params;
     const [items, setItems] = useState([]);
     const { session } = useContext(AuthContext);
+   
     useEffect(() => {
         const fetchItems = async () => {
             try {
                 const { data, error } = await supabase
                 .from('users_fitness_packages')
-                .select('*,packages_id, fitness_centers_packages(id,fitness_centers_id)')
+                .select('*,packages_id, fitness_centers_packages(id,name,fitness_centers_id))')
                 .eq('user_id', session.user.id)   
                 if (error) {
                     console.error(error);
@@ -30,12 +31,18 @@ export default function MyEventPage({ route }) {
             }
         };
         fetchItems();
+
+      
+
     }, []);
+
     const title = category;
  
     const sections = [
         {  data: items },
     ];
+
+
     
 
     return (

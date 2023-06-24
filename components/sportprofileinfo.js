@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import ItemTitleFavorite from './titleFavorite';
-const SportProfileInfo = () => {
+const SportProfileInfo = ({items}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  console.log("itemssss",items)
   const handleImagePress = () => {
     setIsModalVisible(true);
   };
@@ -16,13 +16,13 @@ const SportProfileInfo = () => {
     <View>
       <TouchableOpacity onPress={handleImagePress}>
         <Image source={require('../assets/buttonpicture.png')} style={styles.image} />
-        <ItemTitleFavorite title="Letsfit" point="4.8" />
+        <ItemTitleFavorite title={items.name} point="4.8" />
       </TouchableOpacity>
       
       {isModalVisible && (
         <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Adres: asdasdasd asdasdasdas asdasdasdasd asdasdasd asdasdasdasd asdasd asdasdasa </Text>
-          <Text style={styles.modalText}>Detayları: asdasdkjlaskljdkljasjkldjklasjkldajklsdjklaskljdjlaksljdkjlaslkjdlkjasjkldalksdadasdasdasdasdashkljdkljaskljdkjlaskdjlakjlsjkldajklslkjdajlksdjklsakjlsdkjlaasdasdasdasjkşdlaksjdkljaskjldjklajklsdkjlajklsjkldaşlsdklşaslkşdklşaslkdşaklşslkşdaklşdklşaslşkdalskdlkşaslkşdşklasdasaadskljdkjlasdkjlakjlsdsfadfadadfadfjklalkjsd </Text>
+          <Text style={styles.modalText}>Adres: {items.address} </Text>
+          <Text style={styles.modalText}>Detayları: {items.description}</Text>
         
           <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Kapat</Text>
