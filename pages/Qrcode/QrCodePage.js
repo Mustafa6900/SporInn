@@ -11,7 +11,6 @@ function Simple( {item}) {
 
 const QrCodePage = ({ route }) => {
     const { item } = route.params;
-    console.log("itemmsmsms",item.qr_code)
 
     return(
         <SafeAreaView style={styles.container}>

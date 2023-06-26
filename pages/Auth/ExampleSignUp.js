@@ -13,6 +13,7 @@ export default function SignUp({navigation}) {
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
     const [isChecked, setChecked] = useState(false);
+    const [avatar_url, setAvatarUrl] = useState("");
     const handleButtonPress = () => {
       setChecked(!isChecked);
     };
@@ -27,15 +28,16 @@ export default function SignUp({navigation}) {
                 first_name: name,
                 last_name: surname,
                 phone: phone,
-                image_url: ""
+                avatar_url: avatar_url,
               },
-              table: 'profiles'
+           
             }
           });
     
           if (error) {
             // Kayıt hatası varsa alert mesajını göster
             Alert.alert('Hata', "Kayıt bilgilerinizi kontrol ediniz.");
+            console.error(error);
           } else {
             // Kayıt başarılı olduğunda alert mesajını göster ve login sayfasına yönlendir
             Alert.alert('Kayıt Tamamlandı', 'Kaydınız başarıyla tamamlandı!', [{ text: 'Tamam', onPress: () => navigation.navigate('Tabbar') }]);

@@ -11,7 +11,7 @@ export default function MyEventPage({ route }) {
     const { category } = route.params;
     const [items, setItems] = useState([]);
     const { session } = useContext(AuthContext);
-   
+
     useEffect(() => {
         const fetchItems = async () => {
             try {
