@@ -6,6 +6,46 @@ const SportList = ({ categories, onCategoryPress }) => {
     onCategoryPress(category);
   };
 
+    /*  Sports Category List
+  const [categories, setCategories] = useState([]);
+  const [imageUrls, setImageUrls] = useState({});
+
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('sports_category')
+          .select('*');
+
+        if (error) {
+          console.error(error);
+        } else {
+          setCategories(data || []);
+
+          for (const category of data) {
+            const { data: imageData, error: imageError } = await supabase
+              .storage
+              .from('your_bucket_name')
+              .download(category.image_url);
+            if (imageError) {
+              console.error(imageError);
+            } else {
+              setImageUrls((prev) => ({
+                ...prev,
+                [category.image_url]: imageData,
+              }));
+            }
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchCategoriesData();
+  }, []);
+  */
+
   return (
     <View style={styles.container}>
       {categories.map((category, index) => (

@@ -9,7 +9,6 @@ import BackButton from '../../components/backbutton';
 import SportProfileInfo from '../../components/sportprofileinfo';
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
-
     return (
         <SafeAreaView style={styles.container}>
         <Header title={item.type} />
@@ -19,7 +18,7 @@ const ItemDetailPage = ({ route }) => {
         </View>
         <CategorySlider items = {item} />
         
-        {item.type === 'Spor Salonu' || item.type === 'Kişisel Antrenör' || item.type === 'Diyetisyen' ?(
+        {item.type === 'fitness_center' || item.type === 'personal_trainer' || item.type === 'dietitian' ?(
         <FitnessPackagelist items={item} />  
         ) : (
         <SportsPackageDetailPage items={item} />

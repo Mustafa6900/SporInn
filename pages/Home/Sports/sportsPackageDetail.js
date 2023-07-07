@@ -38,6 +38,7 @@ LocaleConfig.locales['tr'] = {
 LocaleConfig.defaultLocale = 'tr';
 
 const ItemList = ({ items, onItemPress }) => {
+  console.log(items)
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeslot, setSelectedTimeslot] = useState(null);
   const [availableTimeslots, setAvailableTimeslots] = useState([]);
@@ -51,13 +52,48 @@ const ItemList = ({ items, onItemPress }) => {
   };
 
   const getAvailableTimeslots = (selectedDate) => {
-    // Seçilen güne göre boş olan saat dilimlerini hesaplayın ve döndürün
-    // Bu, bir API isteği yaparak veya yerel olarak bir veri kümesini filtreleyerek gerçekleştirilebilir
-    // Örneğin, burada sabit bir saat dilimi listesi döndürülecek:
-    const availableTimes = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+    const openTime = items.open_time;
+    const closeTime = items.close_time;
+  
+    const availableTimes = [];
+  
+    let startTime = parseInt(openTime.replace(':', ''));
+    const endTime = parseInt(closeTime.replace(':', ''));
+  
+    while (startTime < endTime) {
+      const startHour = Math.floor(startTime / 100);
+      const startMinute = startTime % 100;
+      const endHour = Math.floor((startTime + 100) / 100);
+      const endMinute = (startTime + 100) % 100;
+  
+      const timeslot = `${formatTime(startHour, startMinute)} - ${formatTime(endHour, endMinute)}`; // Başlangıç ve bitiş saatlerini formatlayarak saat dilimini oluştur
+      availableTimes.push(timeslot); // Saat dilimini listeye ekle
+  
+      startTime = addHour(startTime); // Başlangıç saatine 1 saat ekleyerek yeni başlangıç saati hesapla
+    }
+  
     return availableTimes;
   };
-
+  
+  const addHour = (time) => {
+    let newTime = time + 100; // Başlangıç saatine 1 saat ekleniyor
+  
+    // Saat 24 olduğunda 0'a döner
+    if (newTime >= 2400) {
+      newTime = 0;
+    }
+  
+    return newTime;
+  };
+  
+  const formatTime = (hour, minute) => {
+    const formattedHour = hour < 10 ? '0' + hour : hour.toString();
+    const formattedMinute = minute < 10 ? '0' + minute : minute.toString();
+  
+    return `${formattedHour}:${formattedMinute}`;
+  };
+  
+  
   const handleAppointmentBook = (timeslot) => {
     console.log('Randevu alındı:', timeslot, selectedDate);
     setSelectedTimeslot(timeslot);
@@ -99,7 +135,7 @@ const ItemList = ({ items, onItemPress }) => {
   return (
     <View style={styles.container}>
       {!isTimeSelectionVisible ? (
-        <View>
+        <View style={{top:-10}}>
         <Calendar
           theme={calendarTheme}
           style={{ borderRadius: 7, }}
@@ -107,7 +143,9 @@ const ItemList = ({ items, onItemPress }) => {
           markedDates={{ [selectedDate]: { selected: true } }}
           disableAllTouchEventsForDisabledDays={true}
         />
+        <View style={{bottom:10}}> 
         <InformationText text="Lütfen randevu almak istediğiniz tarihi seçiniz." />
+        </View>
         </View>
       ) : (
         <View style={styles.timeSelectionContainer}>

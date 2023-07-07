@@ -21,7 +21,12 @@ const SportProfileInfo = ({items}) => {
       
       {isModalVisible && (
         <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Adres: {items.address} </Text>
+          { items.type === "fitness_center" ? (
+             <Text style={styles.modalText}>Adres: {items.address} </Text>)
+              : (
+                <Text style={styles.modalText}>Uzmanlık Alanı: {items.address} </Text>
+              )}
+         
           <Text style={styles.modalText}>Detayları: {items.description}</Text>
         
           <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
