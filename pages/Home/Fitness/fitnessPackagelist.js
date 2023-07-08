@@ -42,7 +42,7 @@ const ItemList = ({ items }) => {
         <Text style={styles.itemDetail}>{item.day}</Text>
         <Text style={styles.itemPrice}>₺{item.price}</Text>
       </View>
-      <Image source={{ uri: item.image_url }} style={styles.itemImage} />
+      <Image source={ item.image_url } style={styles.itemImage} />
     </TouchableOpacity>
   );
   

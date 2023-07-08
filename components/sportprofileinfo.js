@@ -3,7 +3,6 @@ import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import ItemTitleFavorite from './titleFavorite';
 const SportProfileInfo = ({items}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  console.log("itemssss",items)
   const handleImagePress = () => {
     setIsModalVisible(true);
   };

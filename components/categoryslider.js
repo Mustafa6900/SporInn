@@ -1,32 +1,63 @@
 import React,{useEffect,useState} from 'react';
 import { View, Text, FlatList,StyleSheet } from 'react-native';
 import { supabase } from '../supabaseClient';
+
 const SubCategories = ({ items, onItemPress }) => {
-  console.log("salon_id",items.created_id)
   const [itemss, setItemss] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const { data, error } = await supabase
-          .from('categories')
-          .select('*')
-          .eq('created_id', items.created_id);
-        if (error) {
-          console.error(error);
+        let data;
+        if (items.type === "sports_facility") {
+          const { data: sportsData, error: sportsError } = await supabase
+            .from('sports_facilities_config')
+            .select('*')
+            .eq('created_id', items.created_id);
+          if (sportsError) {
+            console.error(sportsError);
+          } else {
+            data = sportsData || [];
+          }
         } else {
-          setItemss(data || []);
+          const { data: categoryData, error: categoryError } = await supabase
+            .from('categories')
+            .select('*')
+            .eq('created_id', items.created_id);
+          if (categoryError) {
+            console.error(categoryError);
+          } else {
+            data = categoryData || [];
+          }
         }
+        setSelectedCategory(data[0]); // İlk kategoriyi seçili hale getir
+        onItemPress(data[0]); // İlk kategoriyi seçili hale getir
+        setItemss(data);
       } catch (error) {
         console.error(error);
       }
     };
     fetchItems();
-  }, []);
+  }, [items]);
+
+  const handleItemPress = (item) => {
+    setSelectedCategory(item);
+    onItemPress(item);
+  };
+
   const renderItem = ({ item }) => (
- 
-    
-    <Text style={styles.categoryText} /*onPress={() => onItemPress(item)}*/>{item.name}</Text>
+    <Text
+      style={[
+        styles.categoryText,
+        selectedCategory === item && styles.selectedCategoryText,
+      ]}
+      onPress={() => handleItemPress(item)}
+    >
+      {item.name}
+    </Text>
   );
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -42,39 +73,38 @@ const SubCategories = ({ items, onItemPress }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#AAAAAA",
-        overflow: "hidden",
-        marginTop: 25,
-        height: 50,
-        borderRadius: 3,  
-    },
-    flatcontainer: {
-      paddingLeft: 25,
-      
-    },
-    categoryText: {
-        fontSize: 14,
-        color: '#AAAAAA',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
-        letterSpacing: 0.4,
-        borderWidth: 1,
-        borderRadius: 7,
-        height: 30,
-        width:"auto",
-        padding: 5,
-       
-        marginRight: 25,
-        marginTop: 10,
-        backgroundColor: "#1F1F1F",
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    });
-
+  container: {
+    backgroundColor: "#AAAAAA",
+    overflow: "hidden",
+    marginTop: 25,
+    height: 50,
+    borderRadius: 3,
+  },
+  flatcontainer: {
+    paddingLeft: 25,
+  },
+  categoryText: {
+    fontSize: 14,
+    color: '#AAAAAA',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    letterSpacing: 0.4,
+    borderWidth: 1,
+    borderRadius: 7,
+    height: 30,
+    width: "auto",
+    padding: 5,
+    marginRight: 25,
+    marginTop: 10,
+    backgroundColor: "#1F1F1F",
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  selectedCategoryText: {
+    backgroundColor: '#FF6F25',
+    color: '#0D0D0D',
+    borderColor: '#FF6F25',
+  },
+});
 
 export default SubCategories;
-
-// Seçilen ürün için alt kategorileri gösteren component
-

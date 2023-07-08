@@ -12,7 +12,6 @@ const ItemAllPage = ({ route }) => {
   const { category } = route.params;
   console.log(category);
   const [items, setItems] = useState([]);
-  console.log(items);
   useEffect(() => {
 
     if( category === "Spor Salonları"){
@@ -38,7 +37,7 @@ const ItemAllPage = ({ route }) => {
     const fetchData = async () => {
       try {
         const { data, error } = await supabase
-          .from('sports_facilities_config')
+          .from('sports_facilities')
           .select('*');
         if (error) {
           console.error(error);

@@ -6,7 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 const ItemList = ({ items}) => {
   
   const navigation = useNavigation();
-
   const renderItem = ({ item }) => (
     <View style={styles.container}>
     <TouchableOpacity

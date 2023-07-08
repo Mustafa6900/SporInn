@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { SafeAreaView, StyleSheet,View,Image } from 'react-native';
 import Header from '../../components/header';
 import ItemTitleFavorite from '../../components/titleFavorite';
@@ -9,6 +9,13 @@ import BackButton from '../../components/backbutton';
 import SportProfileInfo from '../../components/sportprofileinfo';
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
+
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const handleCategorySelect = (selectedCategory) => {
+      setSelectedCategory(selectedCategory);
+    };
+  
     return (
         <SafeAreaView style={styles.container}>
         <Header title={item.type} />
@@ -16,12 +23,12 @@ const ItemDetailPage = ({ route }) => {
         <View style={styles.topContainer}>
         <SportProfileInfo items={item} />
         </View>
-        <CategorySlider items = {item} />
+        <CategorySlider items = {item} onItemPress={handleCategorySelect}/>
         
         {item.type === 'fitness_center' || item.type === 'personal_trainer' || item.type === 'dietitian' ?(
         <FitnessPackagelist items={item} />  
         ) : (
-        <SportsPackageDetailPage items={item} />
+        <SportsPackageDetailPage item={item} selectedCategory={selectedCategory}/>
         )}</SafeAreaView>
     );
     }

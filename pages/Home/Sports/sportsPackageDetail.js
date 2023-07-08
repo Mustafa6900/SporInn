@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import InformationText from '../../../components/informationtext';
+import * as Animatable from 'react-native-animatable';
+
+
 LocaleConfig.locales['tr'] = {
   monthNames: [
     'Ocak',
@@ -37,20 +40,43 @@ LocaleConfig.locales['tr'] = {
 };
 LocaleConfig.defaultLocale = 'tr';
 
-const ItemList = ({ items, onItemPress }) => {
-  console.log(items)
+
+const ItemList = ({ item, selectedCategory }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeslot, setSelectedTimeslot] = useState(null);
   const [availableTimeslots, setAvailableTimeslots] = useState([]);
   const [isTimeSelectionVisible, setIsTimeSelectionVisible] = useState(false);
+  const [isTransitionComplete, setIsTransitionComplete] = useState(false);  
   const [isAppointmentButtonVisible, setIsAppointmentButtonVisible] = useState(false);
+  const items = selectedCategory; 
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date.dateString);
-    setAvailableTimeslots(getAvailableTimeslots(date.dateString));
-    setIsTimeSelectionVisible(true);
-  };
+  console.log(items)
 
+const handleDateSelect = (date) => {
+  const selectedDay = date.dateString;
+  // Seçili tarih kapalıysa işlem yapma
+  if (selectedCategory && selectedCategory.closed_days && isDateDisabled(selectedDay)) {
+    return;
+  }
+  setSelectedDate(selectedDay);
+  setAvailableTimeslots(getAvailableTimeslots(selectedDay));
+  setIsTransitionComplete(false);
+  setIsTimeSelectionVisible(true);
+};
+
+const isDateDisabled = (date) => {
+  const closedDays = selectedCategory.closed_days;
+  const dayOfWeek = getDayOfWeek(date);
+  return closedDays.includes(dayOfWeek);
+};
+
+const getDayOfWeek = (date) => {
+  const dayIndex = new Date(date).getDay();
+  const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+  return dayNames[dayIndex];
+};
+
+  
   const getAvailableTimeslots = (selectedDate) => {
     const openTime = items.open_time;
     const closeTime = items.close_time;
@@ -129,26 +155,43 @@ const ItemList = ({ items, onItemPress }) => {
     textDayFontSize: 18,
     textMonthFontSize: 20,
     textDayHeaderFontSize: 16,
-   
   };
 
-  return (
-    <View style={styles.container}>
+  
+    return (
+    <View key={selectedCategory?.id} style={styles.container}>
       {!isTimeSelectionVisible ? (
-        <View style={{top:-10}}>
+        <Animatable.View
+        animation={isTimeSelectionVisible ? 'bounceOut' : 'pulse'}
+        duration={800}
+        style={{ top: -10, opacity: isTimeSelectionVisible ? 0 : 1 }}
+      >
         <Calendar
           theme={calendarTheme}
           style={{ borderRadius: 7, }}
           onDayPress={handleDateSelect}
           markedDates={{ [selectedDate]: { selected: true } }}
+          
           disableAllTouchEventsForDisabledDays={true}
+          horizontal
+          pagingEnabled
+        
+
         />
         <View style={{bottom:10}}> 
         <InformationText text="Lütfen randevu almak istediğiniz tarihi seçiniz." />
         </View>
-        </View>
+        </Animatable.View>
       ) : (
-        <View style={styles.timeSelectionContainer}>
+      <Animatable.View
+      animation="bounceIn"
+      duration={1000}
+      style={[
+        styles.timeSelectionContainer,
+        isTransitionComplete && { opacity: 1 },
+      ]}
+      onAnimationEnd={() => setIsTransitionComplete(true)}
+      >
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
             {availableTimeslots.map((timeslot) => (
               <TouchableOpacity
@@ -188,7 +231,7 @@ const ItemList = ({ items, onItemPress }) => {
               </Text>
             </TouchableOpacity>
           )}
-        </View>
+        </Animatable.View>
       )}
     </View>
   );
