@@ -59,12 +59,9 @@ const handleDateSelect = (date) => {
   setIsTransitionComplete(false);
   setIsTimeSelectionVisible(true);
 };
-if (!items || !items.closed_start_date || !items.closed_end_date) {
-  return null; // Veri henüz yüklenmediyse veya eksikse, null döndürün veya uygun bir yedek bileşen gösterebilirsiniz.
-}
 
-const closedStartDate = items.closed_start_date; // Kapalı başlangıç tarihi
-const closedEndDate = items.closed_end_date; // Kapalı bitiş tarihi
+const closedStartDate = items ? items.closed_start_date : null // Kapalı başlangıç tarihi
+const closedEndDate = items ? items.closed_end_date : null; // Kapalı bitiş tarihi
 
 // Kapalı tarih aralığını hesaplayın
 const disabledDates = {};
@@ -76,7 +73,6 @@ while (currentDate <= endDate) {
   disabledDates[formattedDate] = { disabled: true };
   currentDate.setDate(currentDate.getDate() + 1);
 }
-
 
   const getAvailableTimeslots = (selectedDate) => {
     const openTime = items.open_time;
@@ -158,7 +154,6 @@ while (currentDate <= endDate) {
     textDayHeaderFontSize: 16,
   };
 
-  
     return (
     <View key={selectedCategory?.id} style={styles.container}>
       {!isTimeSelectionVisible ? (
