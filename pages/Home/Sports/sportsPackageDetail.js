@@ -54,29 +54,30 @@ const ItemList = ({ item, selectedCategory }) => {
 
 const handleDateSelect = (date) => {
   const selectedDay = date.dateString;
-  // Seçili tarih kapalıysa işlem yapma
-  if (selectedCategory && selectedCategory.closed_days && isDateDisabled(selectedDay)) {
-    return;
-  }
   setSelectedDate(selectedDay);
   setAvailableTimeslots(getAvailableTimeslots(selectedDay));
   setIsTransitionComplete(false);
   setIsTimeSelectionVisible(true);
 };
+if (!items || !items.closed_start_date || !items.closed_end_date) {
+  return null; // Veri henüz yüklenmediyse veya eksikse, null döndürün veya uygun bir yedek bileşen gösterebilirsiniz.
+}
 
-const isDateDisabled = (date) => {
-  const closedDays = selectedCategory.closed_days;
-  const dayOfWeek = getDayOfWeek(date);
-  return closedDays.includes(dayOfWeek);
-};
+const closedStartDate = items.closed_start_date; // Kapalı başlangıç tarihi
+const closedEndDate = items.closed_end_date; // Kapalı bitiş tarihi
 
-const getDayOfWeek = (date) => {
-  const dayIndex = new Date(date).getDay();
-  const dayNames = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-  return dayNames[dayIndex];
-};
+// Kapalı tarih aralığını hesaplayın
+const disabledDates = {};
+let currentDate = new Date(closedStartDate);
+const endDate = new Date(closedEndDate);
 
-  
+while (currentDate <= endDate) {
+  const formattedDate = currentDate.toISOString().split('T')[0];
+  disabledDates[formattedDate] = { disabled: true };
+  currentDate.setDate(currentDate.getDate() + 1);
+}
+
+
   const getAvailableTimeslots = (selectedDate) => {
     const openTime = items.open_time;
     const closeTime = items.close_time;
@@ -170,13 +171,14 @@ const getDayOfWeek = (date) => {
           theme={calendarTheme}
           style={{ borderRadius: 7, }}
           onDayPress={handleDateSelect}
-          markedDates={{ [selectedDate]: { selected: true } }}
-          
+          markedDates={{
+            [selectedDate]: { selected: true },
+            ...disabledDates
+            // Devre dışı bırakmak istediğiniz diğer tarihler...
+          }}
           disableAllTouchEventsForDisabledDays={true}
           horizontal
           pagingEnabled
-        
-
         />
         <View style={{bottom:10}}> 
         <InformationText text="Lütfen randevu almak istediğiniz tarihi seçiniz." />
