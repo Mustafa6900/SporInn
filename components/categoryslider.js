@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { View, Text, FlatList,StyleSheet } from 'react-native';
 import { supabase } from '../supabaseClient';
+import * as Animatable from 'react-native-animatable';
 
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
@@ -59,16 +60,20 @@ const SubCategories = ({ items, onItemPress }) => {
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.flatcontainer}
-        data={itemss}
-        horizontal={true}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
+    <Animatable.View
+    animation="bounceIn" // İstediğiniz animasyonu buraya ekleyin
+    duration={2500} // Animasyon süresini burada ayarlayın
+    style={styles.container}
+  >
+    <FlatList
+      style={styles.flatcontainer}
+      data={itemss}
+      horizontal={true}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => index.toString()}
+      showsHorizontalScrollIndicator={false}
+    />
+  </Animatable.View>
   );
 };
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState,useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView,ActivityIndicator  } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import InformationText from '../../../components/informationtext';
 import * as Animatable from 'react-native-animatable';
-
+import { supabase } from "../../../supabaseClient.js";
+import { AuthContext } from '../../Auth/AuthContext';
 
 LocaleConfig.locales['tr'] = {
   monthNames: [
@@ -50,6 +51,8 @@ const ItemList = ({ item, selectedCategory }) => {
   const [isAppointmentButtonVisible, setIsAppointmentButtonVisible] = useState(false);
   const items = selectedCategory; 
 
+  console.log(availableTimeslots)
+  const { session } = useContext(AuthContext);
   const getDisabledDates = (closedDays) => {
     const disabledDates = {};
 
@@ -57,7 +60,6 @@ const ItemList = ({ item, selectedCategory }) => {
     const startYear = currentYear - 10; // 10 yıl öncesinden başlayarak tüm yılları kontrol edebilirsiniz
     const endYear = currentYear + 10; // 10 yıl ilerisine kadar tüm yılları kontrol edebilirsiniz
 
-    console.log('Kapalı günler:', closedDays)
     const disabledDayNumbers = closedDays && Array.isArray(closedDays)
       ? closedDays.map((dayName) => {
           switch (dayName) {
@@ -80,8 +82,6 @@ const ItemList = ({ item, selectedCategory }) => {
           }
         }).filter((dayNumber) => dayNumber !== null)
       : [];
-      console.log('Kapalı gün numaraları:', disabledDayNumbers);
-
 
     for (let year = startYear; year <= endYear; year++) {
       for (let month = 0; month < 12; month++) {
@@ -101,9 +101,7 @@ const ItemList = ({ item, selectedCategory }) => {
 
     return disabledDates;
   };
-
   const closedDays = items && items.closed_days ? JSON.parse(items.closed_days) : null;
-  console.log('Kapalı günler:', closedDays);  
   const disabledDays = getDisabledDates(closedDays);
  
   const handleDateSelect = (date) => {
@@ -113,7 +111,6 @@ const ItemList = ({ item, selectedCategory }) => {
   setIsTransitionComplete(false);
   setIsTimeSelectionVisible(true);
   };
-
   const closedStartDate = items ? items.closed_start_date : null // Kapalı başlangıç tarihi
   const closedEndDate = items ? items.closed_end_date : null; // Kapalı bitiş tarihi
 
@@ -169,10 +166,8 @@ const ItemList = ({ item, selectedCategory }) => {
   
     return `${formattedHour}:${formattedMinute}`;
   };
-  
-  
   const handleAppointmentBook = (timeslot) => {
-    console.log('Randevu alındı:', timeslot, selectedDate);
+    console.log('Seçili Randevu:', timeslot, selectedDate);
     setSelectedTimeslot(timeslot);
     setIsAppointmentButtonVisible(true);
   };
@@ -181,11 +176,46 @@ const ItemList = ({ item, selectedCategory }) => {
     setIsTimeSelectionVisible(false);
 
   };
-
-  const handleConfirmAppointment = () => {
-    console.log('Randevu onaylandı:', selectedTimeslot, selectedDate);
+  const handleConfirmAppointment = async () => {
+    const [startTime, endTime] = selectedTimeslot.split(' - ');
+    const purchaseDate = new Date(`${selectedDate}T${startTime}`);
+    const endDate = new Date(`${selectedDate}T${endTime}`);
+  
+    const generateQRCodeData = () => {
+      const data = {
+        packages_id: items.id,
+        user_id: session.user.id,
+        purchase_date: purchaseDate.toISOString(),
+        end_date: endDate.toISOString(),
+      };
+      return JSON.stringify(data);
+    };
+    try {
+      const qrCodeData = generateQRCodeData();
+      const { data, error } = await supabase
+        .from('users_appointments')
+        .insert([
+          {
+            user_id: session.user.id,
+            packages_id: items.id,
+            purchase_date: purchaseDate.toISOString(),
+            end_date: endDate.toISOString(),
+            created_at: new Date().toISOString(),
+            qr_code: qrCodeData,
+          },
+        ]);
+        
+      if (error) {
+        console.error(error);
+        return;
+      }
+  
+      console.log('Appointment created successfully:', data);
+    } catch (error) {
+      console.error(error);
+    }
   };
-
+  
   const calendarTheme = {
     backgroundColor: '#000000',
     calendarBackground: '#AAAAAA',
@@ -210,6 +240,7 @@ const ItemList = ({ item, selectedCategory }) => {
 
     return (
     <View key={selectedCategory?.id} style={styles.container}>
+      
       {!isTimeSelectionVisible ? (
         <Animatable.View
         animation={isTimeSelectionVisible ? 'bounceOut' : 'pulse'}
@@ -222,7 +253,7 @@ const ItemList = ({ item, selectedCategory }) => {
           onDayPress={handleDateSelect}
           markedDates={{
             [selectedDate]: { selected: true },
-             // ...disabledDates,
+            ...disabledDates,
             ...disabledDays,
             // Devre dışı bırakmak istediğiniz diğer tarihler...
           }}
@@ -290,6 +321,7 @@ const ItemList = ({ item, selectedCategory }) => {
 };
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     width: '90%',
@@ -352,7 +384,7 @@ const styles = StyleSheet.create({
   confirmButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#0D0D0D',
     textAlign: 'center',
     marginTop:5,
     marginBottom: 5,
@@ -360,7 +392,7 @@ const styles = StyleSheet.create({
   confirmButtonText2: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#0D0D0D',
+    color: '#FFFFFF',
     textAlign: 'center',
   
   },
