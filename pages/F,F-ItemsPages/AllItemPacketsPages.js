@@ -7,9 +7,9 @@ import FitnessPackagelist from '../Home/Fitness/fitnessPackagelist';
 import SportsPackageDetailPage from '../Home/Sports/sportsPackageDetail';
 import BackButton from '../../components/backbutton';
 import SportProfileInfo from '../../components/sportprofileinfo';
+
 const ItemDetailPage = ({ route }) => {
     const { item } = route.params;
-
     const [selectedCategory, setSelectedCategory] = useState(null);
 
     const handleCategorySelect = (selectedCategory) => {
@@ -18,7 +18,8 @@ const ItemDetailPage = ({ route }) => {
   
     return (
         <SafeAreaView style={styles.container}>
-        <Header title={item.type} />
+        
+        <Header title={item.name} />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
         <SportProfileInfo items={item} />

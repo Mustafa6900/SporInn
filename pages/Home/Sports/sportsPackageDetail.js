@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import InformationText from '../../../components/informationtext';
@@ -50,29 +50,83 @@ const ItemList = ({ item, selectedCategory }) => {
   const [isAppointmentButtonVisible, setIsAppointmentButtonVisible] = useState(false);
   const items = selectedCategory; 
 
-  console.log(items)
+  const getDisabledDates = (closedDays) => {
+    const disabledDates = {};
 
-const handleDateSelect = (date) => {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 10; // 10 yıl öncesinden başlayarak tüm yılları kontrol edebilirsiniz
+    const endYear = currentYear + 10; // 10 yıl ilerisine kadar tüm yılları kontrol edebilirsiniz
+
+    console.log('Kapalı günler:', closedDays)
+    const disabledDayNumbers = closedDays && Array.isArray(closedDays)
+      ? closedDays.map((dayName) => {
+          switch (dayName) {
+            case 'Pazartesi':
+              return 1;
+            case 'Salı':
+              return 2;
+            case 'Çarşamba':
+              return 3;
+            case 'Perşembe':
+              return 4;
+            case 'Cuma':
+              return 5;
+            case 'Cumartesi':
+              return 6;
+            case 'Pazar':
+              return 0;
+            default:
+              return null;
+          }
+        }).filter((dayNumber) => dayNumber !== null)
+      : [];
+      console.log('Kapalı gün numaraları:', disabledDayNumbers);
+
+
+    for (let year = startYear; year <= endYear; year++) {
+      for (let month = 0; month < 12; month++) {
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
+
+        for (let day = firstDayOfMonth.getDate(); day <= lastDayOfMonth.getDate(); day++) {
+          const currentDate = new Date(year, month, day);
+
+          if (disabledDayNumbers.includes(currentDate.getDay())) {
+            const disabledDateString = currentDate.toISOString().split('T')[0];
+            disabledDates[disabledDateString] = { disabled: true };
+          }
+        }
+      }
+    }
+
+    return disabledDates;
+  };
+
+  const closedDays = items && items.closed_days ? JSON.parse(items.closed_days) : null;
+  console.log('Kapalı günler:', closedDays);  
+  const disabledDays = getDisabledDates(closedDays);
+ 
+  const handleDateSelect = (date) => {
   const selectedDay = date.dateString;
   setSelectedDate(selectedDay);
   setAvailableTimeslots(getAvailableTimeslots(selectedDay));
   setIsTransitionComplete(false);
   setIsTimeSelectionVisible(true);
-};
+  };
 
-const closedStartDate = items ? items.closed_start_date : null // Kapalı başlangıç tarihi
-const closedEndDate = items ? items.closed_end_date : null; // Kapalı bitiş tarihi
+  const closedStartDate = items ? items.closed_start_date : null // Kapalı başlangıç tarihi
+  const closedEndDate = items ? items.closed_end_date : null; // Kapalı bitiş tarihi
 
-// Kapalı tarih aralığını hesaplayın
-const disabledDates = {};
-let currentDate = new Date(closedStartDate);
-const endDate = new Date(closedEndDate);
+  // Kapalı tarih aralığını hesaplayın
+  const disabledDates = {};
+  let currentDate = new Date(closedStartDate);
+  const endDate = new Date(closedEndDate);
 
-while (currentDate <= endDate) {
+  while (currentDate <= endDate) {
   const formattedDate = currentDate.toISOString().split('T')[0];
   disabledDates[formattedDate] = { disabled: true };
   currentDate.setDate(currentDate.getDate() + 1);
-}
+  }
 
   const getAvailableTimeslots = (selectedDate) => {
     const openTime = items.open_time;
@@ -168,7 +222,8 @@ while (currentDate <= endDate) {
           onDayPress={handleDateSelect}
           markedDates={{
             [selectedDate]: { selected: true },
-            ...disabledDates
+             // ...disabledDates,
+            ...disabledDays,
             // Devre dışı bırakmak istediğiniz diğer tarihler...
           }}
           disableAllTouchEventsForDisabledDays={true}
