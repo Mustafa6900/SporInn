@@ -196,12 +196,10 @@ const ItemList = ({ item, selectedCategory }) => {
   const handleAppointmentBook = (timeslot) => {
     setSelectedTimeslot(timeslot);
     setIsAppointmentButtonVisible(true);
-    console.log(selectedCategory.id);
     const appointmentsMades = appointmentsMade
       .filter(appointment => appointment.packages_id === selectedCategory.id)
       .map(appointment => appointment.purchase_date);
       
-    console.log(appointmentsMades);
     
     const [startTime, endTime] = timeslot.split(' - ');
     
@@ -258,7 +256,7 @@ const ItemList = ({ item, selectedCategory }) => {
         return;
       }
   
-      console.log('Appointment created successfully:');
+      console.log('Appointment created successfully');
     } catch (error) {
       console.error(error);
     }
