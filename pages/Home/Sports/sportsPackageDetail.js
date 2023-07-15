@@ -1,4 +1,4 @@
-import React, { useState,useContext } from 'react';
+import React, { useState,useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView,ActivityIndicator  } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import InformationText from '../../../components/informationtext';
@@ -49,10 +49,36 @@ const ItemList = ({ item, selectedCategory }) => {
   const [isTimeSelectionVisible, setIsTimeSelectionVisible] = useState(false);
   const [isTransitionComplete, setIsTransitionComplete] = useState(false);  
   const [isAppointmentButtonVisible, setIsAppointmentButtonVisible] = useState(false);
+  const [isAppointmentTaken, setIsAppointmentTaken] = useState(false);
+  const [appointmentsMade, setAppointmentsMade] = useState([]);
   const items = selectedCategory; 
-
-  console.log(availableTimeslots)
   const { session } = useContext(AuthContext);
+
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const { data: appointments, error } = await supabase
+        .from('users_appointments')
+        .select('*')
+      if (error) {
+        console.error(error);
+        return;
+      }
+      setAppointmentsMade(appointments);
+      
+    };
+    fetchAppointments();
+  }, []); 
+
+  useEffect(() => {
+    setIsTimeSelectionVisible(false);
+    setSelectedTimeslot('');
+    setIsAppointmentButtonVisible(false);
+    setIsAppointmentTaken(false);
+    setSelectedDate(null);
+  }, [selectedCategory]);
+  
+
   const getDisabledDates = (closedDays) => {
     const disabledDates = {};
 
@@ -126,6 +152,7 @@ const ItemList = ({ item, selectedCategory }) => {
   }
 
   const getAvailableTimeslots = (selectedDate) => {
+
     const openTime = items.open_time;
     const closeTime = items.close_time;
   
@@ -167,9 +194,30 @@ const ItemList = ({ item, selectedCategory }) => {
     return `${formattedHour}:${formattedMinute}`;
   };
   const handleAppointmentBook = (timeslot) => {
-    console.log('Seçili Randevu:', timeslot, selectedDate);
     setSelectedTimeslot(timeslot);
     setIsAppointmentButtonVisible(true);
+    console.log(selectedCategory.id);
+    const appointmentsMades = appointmentsMade
+      .filter(appointment => appointment.packages_id === selectedCategory.id)
+      .map(appointment => appointment.purchase_date);
+      
+    console.log(appointmentsMades);
+    
+    const [startTime, endTime] = timeslot.split(' - ');
+    
+    const startDate = new Date(`${selectedDate}T${startTime}`);
+    const formattedStartDate = startDate.toJSON();
+    const formattedStartDateUTC = new Date(formattedStartDate).toISOString();
+    const purchaseDatesUTC = appointmentsMades.map(appointment => new Date(appointment).toISOString());
+    const isAppointmentTaken = purchaseDatesUTC.includes(formattedStartDateUTC);
+    
+    if (isAppointmentTaken) {
+      console.log("Randevu alınmış");
+      setIsAppointmentTaken(true);
+    } else {
+      console.log("Randevu alınmamış");
+      setIsAppointmentTaken(false);
+    }
   };
 
   const handleGoBack = () => {
@@ -179,7 +227,7 @@ const ItemList = ({ item, selectedCategory }) => {
   const handleConfirmAppointment = async () => {
     const [startTime, endTime] = selectedTimeslot.split(' - ');
     const purchaseDate = new Date(`${selectedDate}T${startTime}`);
-    const endDate = new Date(`${selectedDate}T${endTime}`);
+    const endDate = new Date(`${selectedDate}T${endTime}`); 
   
     const generateQRCodeData = () => {
       const data = {
@@ -210,7 +258,7 @@ const ItemList = ({ item, selectedCategory }) => {
         return;
       }
   
-      console.log('Appointment created successfully:', data);
+      console.log('Appointment created successfully:');
     } catch (error) {
       console.error(error);
     }
@@ -237,7 +285,7 @@ const ItemList = ({ item, selectedCategory }) => {
     textMonthFontSize: 20,
     textDayHeaderFontSize: 16,
   };
-
+ 
     return (
     <View key={selectedCategory?.id} style={styles.container}>
       
@@ -282,6 +330,7 @@ const ItemList = ({ item, selectedCategory }) => {
                 style={[
                   styles.timeslotButton,
                   selectedTimeslot === timeslot && styles.timeslotButtonSelected,
+                  isAppointmentTaken && selectedTimeslot === timeslot && { backgroundColor: '#0d0d0d' },
                 ]}
                 onPress={() => handleAppointmentBook(timeslot)}
               >
@@ -298,22 +347,34 @@ const ItemList = ({ item, selectedCategory }) => {
           </ScrollView>
           <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
             <Text style={styles.backButtonText}>Geri</Text>
-          </TouchableOpacity>
-          {!isAppointmentButtonVisible && (
-            <View style={{ bottom:15,right:20 }} >
-            <InformationText text="Lütfen randevu almak istediğiniz saati seçiniz." />
-            </View>
-          )}
-          {isAppointmentButtonVisible && (
-            <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmAppointment}>
-              <Text style={styles.confirmButtonText}>
-                Randevu Tarihi: {selectedDate} {selectedTimeslot}
-              </Text>
-              <Text style={styles.confirmButtonText2}>
-              Randevuyu Al 
-              </Text>
-            </TouchableOpacity>
-          )}
+          </TouchableOpacity> 
+          {!isAppointmentButtonVisible && !isAppointmentTaken && (
+  <View style={{ bottom: 15, right: 20 }}>
+    <InformationText text="Lütfen randevu almak istediğiniz saati seçiniz." />
+  </View>
+)}
+
+{isAppointmentButtonVisible && !isAppointmentTaken && (
+  <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmAppointment}>
+    <Text style={styles.confirmButtonText}>
+      Randevu Tarihi: {selectedDate} {selectedTimeslot}
+    </Text>
+    <Text style={styles.confirmButtonText2}>
+      Randevuyu Al
+    </Text>
+  </TouchableOpacity>
+)}
+
+{isAppointmentTaken && (
+  <View style={[styles.confirmButton, { backgroundColor: '#0d0d0d'}]}>
+    <Text style={[styles.confirmButtonText,{ color:"#AAAAAA" }]}>
+      Seçtiğiniz Randevu Tarihi Dolu, Lütfen Başka Bir Tarih Seçiniz.
+    </Text>
+  </View>
+)}
+
+
+         
         </Animatable.View>
       )}
     </View>
