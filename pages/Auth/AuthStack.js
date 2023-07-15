@@ -47,7 +47,6 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   const { session } = useContext(AuthContext);
-
   return (
     <Stack.Navigator screenOptions={{headerShown: false,navigationBarHidden: true,}}>
        {session === null ? (

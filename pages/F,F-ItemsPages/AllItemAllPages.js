@@ -12,6 +12,7 @@ const ItemAllPage = ({ route }) => {
   const { category } = route.params;
   console.log(category);
   const [items, setItems] = useState([]);
+  const [title, setTitle] = useState("");
   useEffect(() => {
 
     if( category === "Spor Salonları"){
@@ -24,6 +25,7 @@ const ItemAllPage = ({ route }) => {
           console.error(error);
         } else {
           setItems(data || []);
+          setTitle(category);
         }
       } catch (error) {
         console.error(error);
@@ -32,29 +34,27 @@ const ItemAllPage = ({ route }) => {
   
     fetchData();
   } 
-
-  if( category === "Havuz Tesisleri"){
+  else {
     const fetchData = async () => {
       try {
         const { data, error } = await supabase
           .from('sports_facilities')
-          .select('*');
+          .select('*')
+          .eq('sports_category_id', category.id);
         if (error) {
           console.error(error);
         } else {
           setItems(data || []);
+          setTitle(category.name);
         }
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
-  }
-  }, []);
-  
 
+  }}, []);
 
-  const title = category;
 
   const sections = [
     { title: `Tüm ${title}`, data: items },

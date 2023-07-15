@@ -24,9 +24,9 @@ const Sports = ({ navigation }) => {
   ];
   const navigations = useNavigation();
   const handleCategoryPress = (category) => {
-    navigations.navigate('AllItemAllPages', { category: category.name });
- };
-
+    navigations.navigate('AllItemAllPages', { category });
+  };
+  
 
   return (
     <SafeAreaView style={styles.container}>
