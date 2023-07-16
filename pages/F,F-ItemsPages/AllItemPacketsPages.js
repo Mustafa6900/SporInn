@@ -27,7 +27,7 @@ const ItemDetailPage = ({ route }) => {
         <CategorySlider items = {item} onItemPress={handleCategorySelect}/>
         
         {item.type === 'fitness_center' || item.type === 'personal_trainer' || item.type === 'dietitian' ?(
-        <FitnessPackagelist items={item} />  
+        <FitnessPackagelist items={item} selectedCategory={selectedCategory} />  
         ) : (
         <SportsPackageDetailPage item={item} selectedCategory={selectedCategory}/>
         )}</SafeAreaView>

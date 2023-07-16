@@ -3,40 +3,43 @@ import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../../supabaseClient';
 
-const ItemList = ({ items }) => {
+const ItemList = ({ items, selectedCategory }) => {
   const navigation = useNavigation();
   const [packages, setPackages] = useState([]);
-
+  const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
   const handleItemPress = (packet, price, shortdetail, bigdetail, image, packetid) => {
     navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image, packetid });
   };
   useEffect(() => {
     const fetchPackages = async () => {
       try {
+        if (!selectedCategory) return; // Eğer seçili kategori yoksa, verileri getirme
+
         const { data, error } = await supabase
           .from('fitness_centers_packages')
           .select('*')
-          .eq('fitness_centers_id', items.created_id); // items objesinden fitness_center_id'yi kullanarak filtreleme yapın
-        if (error) {
+          .eq('fitness_centers_id', items.created_id) // items objesinden fitness_center_id'yi kullanarak filtreleme yapın
+          .eq('categoryid,', selectCategory) // selectCategory değişkenini kullanarak filtreleme yapın')
+          if (error) {
+            console.error(error);
+          } else {
+            setPackages(data || []);
+          }
+        } catch (error) {
           console.error(error);
-        } else {
-          setPackages(data || []);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+      };
+  
+      fetchPackages();
+    }, [items.created_id, selectCategory ]);
 
-    fetchPackages();
-  }, [items.id]);
-
-  console.log(packages)
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
+    
       style={styles.item}
       onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.image_url, item.id)}
     >
-      {console.log(item.name)}
+   
       <View style={styles.info}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.itemDetail}>{item.day}</Text>
@@ -49,7 +52,8 @@ const ItemList = ({ items }) => {
   // ...
   
   return (
-    <FlatList
+    <FlatList 
+
       style={styles.container}
       data={packages}
       renderItem={renderItem}

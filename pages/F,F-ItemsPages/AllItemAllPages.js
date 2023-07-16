@@ -10,7 +10,6 @@ import ItemList from './AllItemPageslist';
 import { supabase } from "../../supabaseClient.js";
 const ItemAllPage = ({ route }) => {
   const { category } = route.params;
-  console.log(category);
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   useEffect(() => {
