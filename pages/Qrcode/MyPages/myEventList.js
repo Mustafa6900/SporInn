@@ -4,15 +4,17 @@ import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../../supabaseClient';
 
-const ItemList = ({ items}) => {
+const ItemList = ({ items , category}) => {
   const [fitness, setFitness] = useState([]);
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
 
-
-
+  console.log(category)
+  console.log(items)
   useEffect(() => {
-    const fetchItems = async () => {
+
+    if(category === 'Spor Salonlarım'){
+    const fetchFitnessItems = async () => {
       try {
         const { data, error } = await supabase
           .from('fitness_centers')
@@ -28,18 +30,57 @@ const ItemList = ({ items}) => {
       } finally {
         setIsLoading(false);
       }
-      
     };
-    fetchItems();
+    fetchFitnessItems();
+  }
+  else if(category === 'Randevularım'){
+ 
+    const fetchFacilityItems = async () => {
+      try{
+      const { data, error } = await supabase
+      .from('sports_facilities')
+      .select('name')
+      .eq('created_id', items[0].sports_facilities_config.created_id);
+      if (error) {
+        console.error(error);
+      }
+      else {
+        setFitness(data || []);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+    fetchFacilityItems();
+  }
   }, []);
   
   if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.loadingText}>Yükleniyor...</Text>
+       
       </SafeAreaView>
     );
   }
+
+  const formatDate = (startDateString, endDateString) => {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    const startHours = String(startDate.getHours()).padStart(2, '0');
+    const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+    const endHours = String(endDate.getHours()).padStart(2, '0');
+    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+    const monthNames = new Intl.DateTimeFormat('tr', { month: 'long' }).format;
+    const startMonth = monthNames(startDate);
+    const formattedStartDate = `${startDate.getDate()} ${startMonth} ${startDate.getFullYear()}`;
+
+    return `${startHours}:${startMinutes} - ${endHours}:${endMinutes}  /  ${formattedStartDate}`;
+  };
+  
+  
 
 
   const renderItem = ({ item }) => (
@@ -50,11 +91,24 @@ const ItemList = ({ items}) => {
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
+        {category === 'Spor Salonlarım' && (
+         <>
         <Text style={styles.itemName}>{fitness[0].name}</Text>
         <Text style={styles.iteminfo}>Kalan Gün: {item.remaining_days}</Text>
         <View style={styles.itemInfo2}> 
           <Text style={styles.iteminfo2}>{item.info2}</Text>
         </View>
+        </>
+        )}
+        {category === 'Randevularım' && (
+          <>
+        <Text style={styles.itemName}>{fitness[0].name} ( {item.sports_facilities_config.name} )</Text>
+        <Text style={styles.iteminfo}>Randevu Tarihi: {formatDate(item.purchase_date,item.end_date)}</Text>
+        <View style={styles.itemInfo2}>
+          <Text style={styles.iteminfo2}>{item.info2}</Text>
+        </View>
+        </>
+        )}
       </View>
     </TouchableOpacity>
     </View>

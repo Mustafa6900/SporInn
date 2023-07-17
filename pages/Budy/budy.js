@@ -21,18 +21,21 @@ export default function Budy({ navigation }) {
                 backgroundImage={require('../../assets/budypic/diet.png')}
                 style={{marginBottom: 30}}
                 />
-                <PictureButton 
-                title="Müzik"
-                onPress={() => Alert.alert("Müzik Açılmadı","Lütfen tasarımda olan butonları çok kurcalamayın!") }
-                backgroundImage={require('../../assets/budypic/music.png')}
-                style={{marginBottom: 30}}
-                />
+            
                 <PictureButton 
                 title="Challenge"
                 onPress={() => navigation.navigate('ChallengePage',{ category: "Challenge" }) }
                 backgroundImage={require('../../assets/budypic/challenge.png')}
                 style={{marginBottom: 30}}
                 />
+                
+                <PictureButton 
+                title="Sport AI"
+                onPress={() => Alert.alert("Yapay Zeka Açılmadı","Şuan Tasarımda!") }
+                backgroundImage={require('../../assets/budypic/music.png')}
+                style={{marginBottom: 30}}
+                />
+
                 </View>
                 </ScrollView>
                 </SafeAreaView>

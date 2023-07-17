@@ -11,9 +11,10 @@ export default function MyEventPage({ route }) {
     const { category } = route.params;
     const [items, setItems] = useState([]);
     const { session } = useContext(AuthContext);
-
+ 
     useEffect(() => {
-        const fetchItems = async () => {
+        if (category === 'Spor Salonlarım') {
+        const fetchFitnessItems = async () => {
             try {
                 const { data, error } = await supabase
                 .from('users_fitness_packages')
@@ -30,11 +31,32 @@ export default function MyEventPage({ route }) {
                 console.error(error);
             }
         };
-        fetchItems();
+        fetchFitnessItems();
+    }
+    else if (category === 'Randevularım') {
+        const fetchFacilityItems = async () => {
+            try{
+                const { data, error } = await supabase
+                .from('users_appointments')
+                .select('*,packages_id, sports_facilities_config(id,name,created_id))')
+                .eq('user_id', session.user.id)
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    setItems(data || []);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-      
+        fetchFacilityItems();
+        
+    }
 
     }, []);
+
 
     const title = category;
  
@@ -52,7 +74,7 @@ export default function MyEventPage({ route }) {
         <View>
         <SectionList
         sections={sections}
-        renderItem={({ item }) => <MyEventList items={[item]} />}
+        renderItem={({ item }) => <MyEventList items={[item]} category={category} />}
         renderSectionHeader={({ section }) => (
             <>
             
