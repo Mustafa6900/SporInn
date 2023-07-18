@@ -55,6 +55,26 @@ export default function MyEventPage({ route }) {
         
     }
 
+    else{
+        const fetchChallengeItems = async () => {
+            try{
+                const { data, error } = await supabase
+                .from('users_challenge')
+                .select('*,challenge_id, challenges(id,name,created_id,small_description,description)')
+                .eq('user_id', session.user.id)
+                if (error) {
+                    console.error(error);
+                }
+                else {
+                    setItems(data || []);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            };
+            fetchChallengeItems();
+    }
+
     }, []);
 
 

@@ -5,12 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../../supabaseClient';
 
 const ItemList = ({ items , category}) => {
-  const [fitness, setFitness] = useState([]);
+  const [Data, setData] = useState([]);
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(category)
-  console.log(items)
   useEffect(() => {
 
     if(category === 'Spor Salonlarım'){
@@ -23,7 +21,7 @@ const ItemList = ({ items , category}) => {
         if (error) {
           console.error(error);
         } else {
-          setFitness(data || []);
+          setData(data || []);
         }
       } catch (error) {
         console.error(error);
@@ -45,7 +43,7 @@ const ItemList = ({ items , category}) => {
         console.error(error);
       }
       else {
-        setFitness(data || []);
+        setData(data || []);
       }
     }
     catch (error) {
@@ -56,6 +54,11 @@ const ItemList = ({ items , category}) => {
   };
     fetchFacilityItems();
   }
+  else{
+    setData(items);
+    setIsLoading(false);}
+ 
+ 
   }, []);
   
   if (isLoading) {
@@ -80,34 +83,56 @@ const ItemList = ({ items , category}) => {
     return `${startHours}:${startMinutes} - ${endHours}:${endMinutes}  /  ${formattedStartDate}`;
   };
   
-  
+  const formatdate2 = (startDateString, endDateString) => {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    const startHours = String(startDate.getHours()).padStart(2, '0');
+    const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+    const endHours = String(endDate.getHours()).padStart(2, '0');
+    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+    const monthNames = new Intl.DateTimeFormat('tr', { month: 'long' }).format;
+    const startMonth = monthNames(startDate);
+    const endMonth = monthNames(endDate);
+    const formattedStartDate = `${startDate.getDate()} ${startMonth} ${startDate.getFullYear()}`;
+    const formattedEndDate = `${endDate.getDate()} ${endMonth} ${endDate.getFullYear()}`;
+
+    return `(${startHours}:${startMinutes} / ${formattedStartDate})\n                       ↓\n (${endHours}:${endMinutes} / ${formattedEndDate})`;
+
+  };
 
 
   const renderItem = ({ item }) => (
     <View style={styles.container}>
     <TouchableOpacity
       style={styles.Item}
-      onPress={() =>  navigation.navigate('MyEventDetailPage', { item })}
+      onPress={() =>  navigation.navigate('MyEventDetailPage', { item , category })}
     >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         {category === 'Spor Salonlarım' && (
          <>
-        <Text style={styles.itemName}>{fitness[0].name}</Text>
+        <Text style={styles.itemName}>{Data[0].name}</Text>
         <Text style={styles.iteminfo}>Kalan Gün: {item.remaining_days}</Text>
-        <View style={styles.itemInfo2}> 
-          <Text style={styles.iteminfo2}>{item.info2}</Text>
-        </View>
+       
         </>
         )}
         {category === 'Randevularım' && (
           <>
-        <Text style={styles.itemName}>{fitness[0].name} ( {item.sports_facilities_config.name} )</Text>
+        <Text style={styles.itemName}>{Data[0].name} ( {item.sports_facilities_config.name} )</Text>
         <Text style={styles.iteminfo}>Randevu Tarihi: {formatDate(item.purchase_date,item.end_date)}</Text>
-        <View style={styles.itemInfo2}>
-          <Text style={styles.iteminfo2}>{item.info2}</Text>
-        </View>
+       
         </>
+        )}
+        {category === 'Challenge' && (
+          <>
+
+          <Text style={styles.itemName}>{item.challenges.name}</Text>
+          <Text style={styles.iteminfo}>{item.challenges.small_description}</Text>
+
+          <View style={styles.itemInfo2}>
+            <Text style={styles.iteminfo2}> {formatdate2(item.start_date,item.end_date)}</Text>
+            </View>
+            </>
         )}
       </View>
     </TouchableOpacity>
@@ -159,7 +184,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         position: "absolute",
         flexDirection: 'row',
-        marginLeft: "70%",
+        marginLeft: "62%",
         marginTop: "6%", 
     },
     itemName: {
@@ -175,9 +200,9 @@ const styles = StyleSheet.create({
       
     },
     iteminfo2: {
-      fontSize: 20,
+      fontSize: 10,
       fontWeight: '900',
-      color: "#292929",
+      color: "#0d0d0d",
     },
    
   });
