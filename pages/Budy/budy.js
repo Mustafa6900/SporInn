@@ -32,7 +32,7 @@ export default function Budy({ navigation }) {
                 <PictureButton 
                 title="Sport AI"
                 onPress={() => Alert.alert("Yapay Zeka Açılmadı","Şuan Tasarımda!") }
-                backgroundImage={require('../../assets/budypic/music.png')}
+                backgroundImage={require('../../assets/budypic/sportsAi.jpg')}
                 style={{marginBottom: 30}}
                 />
 

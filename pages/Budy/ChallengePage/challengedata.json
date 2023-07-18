@@ -1,8 +1,0 @@
-[
-    {
-        'Challenge': [
-            { id: 1, adress:"Carsı mah. yukarı sk. no:4 Bayburt",person:"15",name: 'Farkını Göster', time: '15:00 / 24 Mayıs 2023',event: '150 Şınav', imagepath: '../../assets/buttonpicture.png', point: 4.3,maincategory: 'Basketbol Sahası',packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',]   },
-            { id: 2, adress:"Asagı mah. saray sk. no:30 Bayburt",person:"100",name: 'Savaşçı Mısın?', time: '12:00 / 27 Mayıs 2023', event: '100 Mekik',imagepath: '../../assets/buttonpicture.png', point: 4.6,maincategory: 'Basketbol Sahası',packetsBigDetail:[  'detadetayı cok uzun her sey vardetayı cok uzun her sey vardetayı cok uzun her sey var',]   },
-      ] 
-    },
-]

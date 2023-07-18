@@ -6,8 +6,14 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+console.log("asdasd",items[0].name)
 
   useEffect(() => {
+
+    if (items[0].name === "İçerik"){
+      setItemss(items)
+    }
+    else{
     const fetchItems = async () => {
       try {
         let data;
@@ -39,13 +45,16 @@ const SubCategories = ({ items, onItemPress }) => {
         console.error(error);
       }
     };
-    fetchItems();
+    fetchItems();}
   }, [items]);
 
   const handleItemPress = (item) => {
-    setSelectedCategory(item);
-    onItemPress(item);
+    if (item.name !== "İçerik") {
+      setSelectedCategory(item);
+      onItemPress(item);
+    }
   };
+  
 
   const renderItem = ({ item }) => (
     <Text

@@ -1,12 +1,65 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { View, Text, StyleSheet,Image,SafeAreaView } from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import Categoryslider from '../../../components/categoryslider';
 import OutputText from '../../../components/outputText';
 import CustomButton from '../../../components/custombutton';
+import { AuthContext } from '../../Auth/AuthContext';
+import { supabase } from '../../../supabaseClient';
 const ChallengeDetailPage = ({ route }) => {
-  const { eventName, person, event,adress,bigdetail,eventTime } = route.params;
+  const { eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime } = route.params;
+  const { session } = useContext(AuthContext);
+  console.log(session.user.id)
+
+console.log(eventId)
+const handleConfirmChallenge = async () => {
+const generateQRCodeData = () => {
+  const data = {
+    challenge_id: eventId,
+    user_id: session.user.id,
+    purchase_date: eventStartTime,
+    end_date: eventEndTime,
+  };
+  return JSON.stringify(data);
+};
+  try{
+    const qrCodeData = generateQRCodeData();
+    const { data, error } = await supabase
+    .from('users_challenge')
+    .insert([{ user_id: session.user.id, created_at: new Date(),challenge_id: eventId, start_date: eventStartTime, end_date: eventEndTime,qr_code: qrCodeData }]);
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    console.log("Challenge'a katıldınız");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+  
+  const categories = [
+    // Diğer kategorileri buraya ekleyin
+    { name: 'İçerik' }, // İçerik kategorisini diziye ekledik
+  ];
+
+  const formatDate = (startDateString, endDateString) => {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    const startHours = String(startDate.getHours()).padStart(2, '0');
+    const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+    const endHours = String(endDate.getHours()).padStart(2, '0');
+    const endMinutes = String(endDate.getMinutes()).padStart(2, '0');
+    const monthNames = new Intl.DateTimeFormat('tr', { month: 'long' }).format;
+    const startMonth = monthNames(startDate);
+    const endMonth = monthNames(endDate);
+    const formattedStartDate = `${startDate.getDate()} ${startMonth} ${startDate.getFullYear()}`;
+    const formattedEndDate = `${endDate.getDate()} ${endMonth} ${endDate.getFullYear()}`;
+
+    return `(${startHours}:${startMinutes} / ${formattedStartDate})\n(${endHours}:${endMinutes} / ${formattedEndDate})`;
+  };
   return (
     
     <SafeAreaView style={styles.container}>
@@ -19,9 +72,13 @@ const ChallengeDetailPage = ({ route }) => {
       <Text style={styles.title}> {event}</Text>
       </View>
         </View>
-        <Categoryslider items = {{ subcategories: ['İçerik'] }} />
-        <OutputText text={"Kişi sayısı limiti: "+person+"\n\n"+adress+"\n\n"+eventTime+"\n\n"+bigdetail+"\n\n"} />
-        <CustomButton style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Challenge'a Katıl" />
+        <Categoryslider items = {categories} />
+        <OutputText text={  "\n"+ bigdetail + "\n\n" +
+          "Kişi sayısı limiti: " + person + "\n\n" +
+          "Etkinlik süresi:"+"\n\n" +formatDate(eventStartTime, eventEndTime) + "\n\n" +
+          adress + "\n\n"}
+        />
+        <CustomButton style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Challenge'a Katıl" onPress={handleConfirmChallenge}/>
     </SafeAreaView>
   );
 };

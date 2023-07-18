@@ -1,28 +1,42 @@
-import * as React from 'react';
+import React,{useEffect,useState} from 'react';
 import { SafeAreaView,StyleSheet,Text,View,ScrollView,SectionList} from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import SearchButton from '../../../components/searchbutton';
 import Title from '../../../components/sportptTitle';
 import ChallengeList from './challengeList';
-import ChallengeData from './challengedata.json';
-export default function ChallengePage({ route }) {
-    const { category } = route.params;
-    const getItems = () => {
-        const categoryData = ChallengeData.find((data) => category in data);
-        if (categoryData) {
-            return categoryData[category];
-        } else {
-            return [];
-        }
-    };
-    const title = category;
-    const items = getItems();
-    const sections = [
-        {  data: items },
-    ];
-    
+import { supabase } from '../../../supabaseClient';
 
+export default function ChallengePage({ route }) {
+    const [challenges, setChallenges] = useState([]);
+
+    const { category } = route.params;
+    useEffect(() => {
+        const fetchChallengeData = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('challenges')
+                    .select('*');
+                if (error) {
+                    console.error(error);
+                } else {
+                    setChallenges(data || []);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchChallengeData();
+    }, []);
+    const title = category;
+    const sections = [
+        {
+            title: 'Tümü',
+            data: challenges,
+        },
+    ];
+
+    console.log(challenges)
     return (
         <SafeAreaView style={styles.container}>
             <Header title={title} />

@@ -7,21 +7,33 @@ const ItemList = ({ items}) => {
   
     const navigation = useNavigation();
 
-    const handleItemPress = (eventName, person, event,adress,bigdetail,eventTime) => {
-      navigation.navigate('ChallengeDetailPage', { eventName, person, event,adress,bigdetail,eventTime});
+    const handleItemPress = (eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime) => {
+      navigation.navigate('ChallengeDetailPage', {eventId, eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime});
     };
+
+    const formatDate = (startDateString, endDateString) => {
+      const startDate = new Date(startDateString);
+      const startHours = String(startDate.getHours()).padStart(2, '0');
+      const startMinutes = String(startDate.getMinutes()).padStart(2, '0');
+      const monthNames = new Intl.DateTimeFormat('tr', { month: 'long' }).format;
+      const startMonth = monthNames(startDate);
+      const formattedStartDate = `${startDate.getDate()} ${startMonth} ${startDate.getFullYear()}`;
+  
+      return `${startHours}:${startMinutes} /  ${formattedStartDate}`;
+    };
+    console.log(items)
   const renderItem = ({ item }) => (
     <View style={styles.container}>
     <TouchableOpacity
       style={styles.Item}
-      onPress={() => handleItemPress(item.name,item.person, item.event,item.adress,item.packetsBigDetail,item.time)}
+      onPress={() => handleItemPress(item.id,item.name,item.capacity, item.small_description,item.map_url,item.description,item.start_date,item.end_date)}
       >
       <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.iteminfo}>{item.event}</Text>
+        <Text style={styles.iteminfo}>{item.small_description}</Text>
         <View style={styles.itemInfo2}> 
-          <Text style={styles.iteminfo2}>{item.time}</Text>
+          <Text style={styles.iteminfo2}>{formatDate(item.start_date,item.end_date)}</Text>
         </View>
       </View>
     </TouchableOpacity>
