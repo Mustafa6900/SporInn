@@ -10,9 +10,7 @@ import { supabase } from '../../../supabaseClient';
 const ChallengeDetailPage = ({ route }) => {
   const { eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime } = route.params;
   const { session } = useContext(AuthContext);
-  console.log(session.user.id)
 
-console.log(eventId)
 const handleConfirmChallenge = async () => {
 const generateQRCodeData = () => {
   const data = {
