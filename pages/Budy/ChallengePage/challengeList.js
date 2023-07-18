@@ -21,7 +21,6 @@ const ItemList = ({ items}) => {
   
       return `${startHours}:${startMinutes} /  ${formattedStartDate}`;
     };
-    console.log(items)
   const renderItem = ({ item }) => (
     <View style={styles.container}>
     <TouchableOpacity

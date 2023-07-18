@@ -9,7 +9,6 @@ const MyEventDetailPage = ({ route }) => {
    const { item, category } = route.params;
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(items)
   useEffect(() => {
     if (category === 'Spor Salonlarım') {
     const fetchItems = async () => {

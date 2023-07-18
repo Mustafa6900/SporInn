@@ -12,7 +12,6 @@ export default function PaymentMethods(){
  
     const navigation = useNavigation();
     const { session } = useContext(AuthContext);
-    console.log("session payment ",session);
 
     return(
         <SafeAreaView style={styles.container}>

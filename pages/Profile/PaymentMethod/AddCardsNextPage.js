@@ -8,7 +8,6 @@ const AddCardsNextPage = () => {
     const navigation = useNavigation();
 
     const [phoneCode, setPhoneCode] = useState("")
-    console.log(phoneCode, "phoneCode");
 
     const handleGoBack = () => {
         Alert.alert(

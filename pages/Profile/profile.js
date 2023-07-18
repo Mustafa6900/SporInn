@@ -9,7 +9,6 @@ import { AuthContext } from '../Auth/AuthContext';
 
 export default function Profile({ navigation }) {
     const { session } = useContext(AuthContext);
-    console.log("session profile ",session);
     
     return (
         <SafeAreaView style={styles.container}>
