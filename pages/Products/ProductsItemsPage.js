@@ -20,6 +20,14 @@ export default function ProductsItems({ route }) {
           }
         };
         const items = getItems();
+
+        const categories = [
+          // Diğer kategorileri buraya ekleyin
+          { name: 'İçerik' },
+          { name: 'İçerik 1' },
+          { name: 'İçerik 2' },
+             // İçerik kategorisini diziye ekledik
+        ];
     return (
         <SafeAreaView style={styles.container}>
         <Header title={category} />
@@ -27,8 +35,9 @@ export default function ProductsItems({ route }) {
         <View style={{ top:-15 }}>
         <SearchButton placeholder={`${category} Ara`} />
         </View>
-      
-        <CategorySlider items = {{ subcategories: ['kategori 1', 'kategori 2', 'kategori 3'] }}/>
+        <CategorySlider items = {categories}/>
+
+        { /*<CategorySlider items = {{ subcategories: ['kategori 1', 'kategori 2', 'kategori 3'] }}/>*/}
       
  
         <ScrollView showsVerticalScrollIndicator={false}>
