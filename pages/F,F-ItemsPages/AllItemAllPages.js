@@ -12,6 +12,7 @@ const ItemAllPage = ({ route }) => {
   const { category } = route.params;
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
+  console.log(title)
   useEffect(() => {
 
     if( category === "Spor Salonları"){

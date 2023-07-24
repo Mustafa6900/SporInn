@@ -49,6 +49,14 @@
       }
     };
 
+    const categories = [
+      // Diğer kategorileri buraya ekleyin
+      { name: 'İçerik' },
+      { name: 'Yorumlar' },
+      { name: 'Google Yorumları' },
+         // İçerik kategorisini diziye ekledik
+    ];
+
 
     return (
       <SafeAreaView style={styles.container}>
@@ -63,7 +71,7 @@
         <Text style={styles.detail}>{shortdetail}</Text>
         </View>
           </View>
-          <Categoryslider items = {{ subcategories: ['İçerik', 'Yorumlar','Google Yorumları'] }} />
+          <Categoryslider items = {categories} />
           <OutputText text={bigdetail} />
           <CustomButton 
           style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}

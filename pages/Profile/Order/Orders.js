@@ -12,7 +12,7 @@ export default function Cart({route}){
         <Header title="Siparişlerim" />
         <BackButton left={15} top={43} />
         <SearchButton placeholder="Ürün ismi veya Marka ara"right={15} top={43} />
-        <CategorySlider items = {{ subcategories: ['Tümü',"Devam Edenler","iadeler"] }}/>
+        <CategorySlider items = {{ name: ['Tümü',"Devam Edenler","iadeler"] }}/>
         <OrderList item={item}/>
         </SafeAreaView> 
     )

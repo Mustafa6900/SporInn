@@ -6,11 +6,11 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  console.log(items)
   useEffect(() => {
 
-    if (items[0].name === "İçerik"){
-      setItemss(items)
+    if (items && items[0]?.name === "İçerik") {
+      setItemss(items);
     }
     else{
     const fetchItems = async () => {

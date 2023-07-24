@@ -28,7 +28,6 @@ const ProductDetailPage = ({ route }) => {
       </View>
         </View>
         <Categoryslider items = {categories} />
-        {/*<Categoryslider items = {{ subcategories: ['İçerik', 'Yorumlar','Google Yorumları'] }} />*/}
         <OutputText text={bigdetail} />
         <CustomButton style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Sepete Ekle" />
     </SafeAreaView>
