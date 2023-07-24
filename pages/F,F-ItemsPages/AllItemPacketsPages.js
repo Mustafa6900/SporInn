@@ -16,7 +16,6 @@ const ItemDetailPage = ({ route }) => {
       setSelectedCategory(selectedCategory);
     };
   
-    console.log("asdasd",item);
     return (
         <SafeAreaView style={styles.container}>
         

@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const QrButton = ({ item }) => {
     const navigation = useNavigation();
-    console.log(item)
     return (
         <View >
         <TouchableOpacity

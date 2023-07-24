@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
 const ProductList = ({ items }) => {
     const navigation = useNavigation();
 
