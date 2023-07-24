@@ -6,7 +6,6 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  console.log(items.created_id);
   useEffect(() => {
 
     if (items && items[0]?.name === "İçerik") {
@@ -35,7 +34,6 @@ const SubCategories = ({ items, onItemPress }) => {
             console.error(categoryError);
           } else {
             data = categoryData || [];
-            console.log(data);
           }
         }
         setSelectedCategory(data[0]); // İlk kategoriyi seçili hale getir
