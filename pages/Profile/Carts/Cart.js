@@ -1,30 +1,90 @@
-import React from "react";
+import React,{useState,useContext,useEffect} from "react";
 import { Text, StyleSheet, TouchableOpacity, View, SafeAreaView } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import Cartitemlist from "./cartitemlist";
 import CustomButton from "../../../components/custombutton";
 import { useNavigation } from '@react-navigation/native';
-export default function Cart({route}){
-    const { item } = route.params;
+import { supabase } from "../../../supabaseClient";
+import { AuthContext } from '../../Auth/AuthContext';
+
+export default function Cart(){
+    const { session } = useContext(AuthContext);
     const navigation = useNavigation();
-    return(
-        <SafeAreaView style={styles.container}>
+    const [item, setItem] = useState([]);
+    const [itemSeller, setItemSeller] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [checkedStates, setCheckedStates] = useState([]); // Yeni state
+
+
+useEffect(() => {
+    const fetchCartProducts = async () => {
+        try {
+            const { data, error } = await supabase
+                .from('users_carts')
+                .select('product_id,products(id,*)')
+                .eq('created_id', session.user.id);
+            if (error) {
+                console.error(error);
+            } else {
+                setItem(data || []);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    fetchCartProducts(); // Fetch cart products first
+}, []);
+
+useEffect(() => {
+    const fetchCartProductsSellers = async () => {
+        try {
+            if (item.length > 0) {
+                const { data, error } = await supabase
+                    .from('product_sellers')
+                    .select('name')
+                    .eq('created_id', item[0].products.created_id); // Use item after it's set
+                if (error) {
+                    console.error(error);
+                } else {
+                    setItemSeller(data || []);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    fetchCartProductsSellers(); // Fetch cart products sellers
+}, [item]);
+
+useEffect(() => {
+    // Calculate the total price based on the checked items
+    const totalPrice = item.reduce((total, cartItem, index) => {
+        if (checkedStates[index]) {
+            return total + cartItem.products.price;
+        }
+        return total;
+    }, 0);
+    setTotalPrice(totalPrice);
+}, [item, checkedStates]);
+
+return (
+    <SafeAreaView style={styles.container}>
         <Header title="Sepetim" />
         <BackButton left={15} top={43} />
-        <Cartitemlist item={item}/>
+        <Cartitemlist item={item} itemSeller={itemSeller} checkedStates={checkedStates} setCheckedStates={setCheckedStates} />
         <View style={styles.bottombar}>
             <View style={styles.price} >
-                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '500',color:"white" }}>Toplam Tutar:</Text>
-                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900',color:"#FF6F25" }}>₺{item.totalPrice}</Text>
-                </View>
-            <CustomButton title="Sepeti Onayla  " onPress={() => navigation.navigate("PaymentProducts",{ item })} />
+                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '500', color: "white" }}>Toplam Tutar:</Text>
+                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900', color: "#FF6F25" }}>₺ {totalPrice.toFixed(2)} </Text>
+            </View>
+            <CustomButton title="Sepeti Onayla  " onPress={() => navigation.navigate("PaymentProducts", { item })} />
         </View>
-        </SafeAreaView>
-    )
-
+    </SafeAreaView>
+)
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

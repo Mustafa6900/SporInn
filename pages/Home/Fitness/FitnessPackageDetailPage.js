@@ -5,11 +5,9 @@
   import Categoryslider from '../../../components/categoryslider';
   import OutputText from '../../../components/outputText';
   import CustomButton from '../../../components/custombutton';
-  import FavoriteButton from '../../../components/favoritebutton';
   import { useNavigation } from '@react-navigation/native';
   import { AuthContext } from '../../Auth/AuthContext';
   import { supabase } from '../../../supabaseClient';
-  import QRCode from 'react-native-qrcode-svg';
 
   const FitnessPackageDetailPage = ({ route }) => {
     const navigation = useNavigation();
@@ -62,7 +60,6 @@
       <SafeAreaView style={styles.container}>
           <Header title="Ürün Detayı" />
           <BackButton left={15} top={43} />
-          <FavoriteButton left={345} top={45} />
           <View style={styles.topContainer}>
           <Image source={require('../../../assets/buttonpicture.png') } style={styles.topContainerImage} />
           <View style={styles.info}>

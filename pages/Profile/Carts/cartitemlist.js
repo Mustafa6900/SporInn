@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CheckButton from '../../../components/checkbutton';
 
-const Cartitemlist = ({ item }) => {
-  const [checkedStates, setCheckedStates] = useState(Array(item.cart.length).fill(true));
+const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates }) => {
+  useEffect(() => {
+      // Başlangıçta tüm ürünleri işaretli olarak ayarla
+      setCheckedStates(Array(item.length).fill(true));
+  }, [item]);
 
   const handleButtonPress = (index) => {
-    const updatedCheckedStates = [...checkedStates];
-    updatedCheckedStates[index] = !updatedCheckedStates[index];
-    setCheckedStates(updatedCheckedStates);
+      const updatedCheckedStates = [...checkedStates];
+      updatedCheckedStates[index] = !updatedCheckedStates[index];
+      setCheckedStates(updatedCheckedStates);
   };
+
 
   return (
     <ScrollView style={styles.container}>
-      {item.cart.map((cart, index) => (
-        <TouchableOpacity style={styles.button} key={index}>
+      {item.map((cartItem, index) => (
+        <TouchableOpacity style={styles.button} key={cartItem.product_id}>
           <View style={styles.allinfo}>
             <View style={styles.dealer}>
-              <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900' }}>{cart.dealerName}</Text>
+              <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900' }}>{itemSeller[0]?.name}</Text>
             </View>
             <View style={styles.info}>
               <View style={{ marginLeft: 13 }}>
@@ -32,10 +36,10 @@ const Cartitemlist = ({ item }) => {
               </View>
               <Image source={require('../../../assets/productcategoriespic/supplementblack.png')} style={{ width: 80, height: 80, marginLeft: 10 }} />
               <View style={styles.infodetail}>
-                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900' }}>{cart.name}</Text>
-                <Text style={{ fontSize: 15, marginLeft: 20, width: 150 }}>{cart.description}</Text>
+                <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: '900' }}>{cartItem.products.name}</Text>
+                <Text style={{ fontSize: 15, marginLeft: 20, width: 150 }}>{cartItem.products.description}</Text>
               </View>
-              <Text style={styles.price}>₺{cart.price}</Text>
+              <Text style={styles.price}>₺{cartItem.products.price}</Text>
             </View>
           </View>
         </TouchableOpacity>

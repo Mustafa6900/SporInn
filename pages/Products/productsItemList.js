@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 const ProductList = ({ items }) => {
     const navigation = useNavigation();
 
-    const handleItemPress = (packet, price, shortdetail,bigdetail) => {
-      navigation.navigate('ProductDetailPage', { packet, price, shortdetail,bigdetail});
+    const handleItemPress = (item) => {
+      navigation.navigate('ProductDetailPage', { item});
     };
 
   return (
@@ -15,7 +15,7 @@ const ProductList = ({ items }) => {
           <TouchableOpacity
             key={index}
             style={styles.item}
-            onPress={() => handleItemPress(item.name,item.price, item.detail,item.bigdetail)}
+            onPress={() => handleItemPress(item)}
             >
                 
             <Image source={ require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />

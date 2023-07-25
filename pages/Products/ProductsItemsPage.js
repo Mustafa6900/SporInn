@@ -4,14 +4,12 @@ import Header from '../../components/header';
 import BackButton from '../../components/backbutton';
 import SearchButton from '../../components/searchbutton';
 import CategorySlider from '../../components/categoryslider';
-import productsdata from './productsdata.json';
 import ProductList from './productsItemList';
 import { supabase } from '../../supabaseClient';
 export default function ProductsItems({ route }) {
         const { category } = route.params;
         const [items, setItems] = useState([]);
         const [selectedCategory, setSelectedCategory] = useState(null);
-
     const handleCategorySelect = (selectedCategory) => {
       setSelectedCategory(selectedCategory);
     };
@@ -27,6 +25,8 @@ export default function ProductsItems({ route }) {
                 console.error(error);
               } else {
                 setItems(data || []);
+
+                
               }
             } catch (error) {
               console.error(error);
@@ -36,6 +36,7 @@ export default function ProductsItems({ route }) {
           
         }, []);
 
+
     return (
         <SafeAreaView style={styles.container}>
         <Header title={category} />
@@ -43,13 +44,10 @@ export default function ProductsItems({ route }) {
         <View >
         <SearchButton placeholder={`${category} Ara`} />
         </View>
-        {items.map((item) => (
-        <CategorySlider key={item.id} items = {item} onItemPress={handleCategorySelect}/>
-      ))}
-        <ScrollView showsVerticalScrollIndicator={false}>
-        <ProductList items={items} />
-        </ScrollView>
-      
+          <CategorySlider items={items[0]} onItemPress={handleCategorySelect} />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <ProductList items={items} />
+          </ScrollView>
         </SafeAreaView>
     );
 }

@@ -1,30 +1,57 @@
-import React from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../../supabaseClient';
+import { AuthContext } from '../../Auth/AuthContext';
 
-const MyFavoriteproductlist = ({ item }) => {
+const MyFavoriteproductlist = () => {
+    const { session } = useContext(AuthContext);
+    const [item, setItem] = useState([]);
     
+    useEffect(() => {
+        const fetchFavoriteProducts = async () => {
+          try {
+            const { data, error } = await supabase
+              .from('users_favorite_products')
+              .select('product_id,products(id,*)')
+              .eq('created_id', session.user.id);
+            if (error) {
+              console.error(error);
+            } else {
+              setItem(data || []);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchFavoriteProducts();
+      }, []);
+
+
+
+
     const navigation = useNavigation();
 
-    const handleItemPress = (packet, price, shortdetail,bigdetail) => {
-      navigation.navigate('PackageDetailPage', { packet, price, shortdetail,bigdetail});
+    const handleItemPress = (product) => {
+      navigation.navigate('ProductDetailPage', {item: product });
     };
 
   return (
     <View style={styles.container}>
-      {item.favoriteProducts.map((favoriteProducts, index) => ( 
+      {item.map((favoriteProduct) => (
           <TouchableOpacity
-            key={index}
+            key={favoriteProduct.product_id}
             style={styles.item}
-            onPress={() => handleItemPress(favoriteProducts.name,favoriteProducts.price, "","")}
+            onPress={() => handleItemPress(favoriteProduct.products)}
             >
                 
             <Image source={ require('../../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
             <View style={styles.itemInfo}>
-              <Text style={styles.itemName}>{favoriteProducts.name}</Text>
+              <Text style={styles.itemName}>{favoriteProduct.products.name}</Text>
             </View>
           </TouchableOpacity>
       ))}
+     
     </View>
   );
 };

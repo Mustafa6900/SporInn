@@ -3,13 +3,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity,SafeAreaView } from "re
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import MyFavoriteProductList from "./myFavoriteproductlist";
-const FavoriteProducts = ({ route }) => {
-    const { item } = route.params;
+const FavoriteProducts = () => {
     return (
         <SafeAreaView style={styles.container}>
         <Header title="Favori Ürünlerim" />
         <BackButton left={15} top={43} />
-        <MyFavoriteProductList item={item}/>
+        <MyFavoriteProductList />
         </SafeAreaView>
     );
 }

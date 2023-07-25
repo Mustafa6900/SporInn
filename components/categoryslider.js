@@ -6,6 +6,7 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
 
     if (items && items[0]?.name === "İçerik") {
@@ -25,7 +26,8 @@ const SubCategories = ({ items, onItemPress }) => {
           } else {
             data = sportsData || [];
           }
-        } else {
+        } 
+        else {
           const { data: categoryData, error: categoryError } = await supabase
             .from('categories')
             .select('*')
