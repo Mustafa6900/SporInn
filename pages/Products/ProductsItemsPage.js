@@ -44,10 +44,17 @@ export default function ProductsItems({ route }) {
         <View >
         <SearchButton placeholder={`${category} Ara`} />
         </View>
+        {items.length > 0 ? (
+        <>
           <CategorySlider items={items[0]} onItemPress={handleCategorySelect} />
           <ScrollView showsVerticalScrollIndicator={false}>
             <ProductList items={items} />
           </ScrollView>
+        </>
+      ) : (
+        null
+      )}
+      
         </SafeAreaView>
     );
 }
