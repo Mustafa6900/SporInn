@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-picker/picker": "^2.4.10",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
@@ -27,6 +28,7 @@
     "react-native-dotenv": "^3.4.8",
     "react-native-fs": "^2.20.0",
     "react-native-image-slider-box": "^2.0.7",
+    "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-modal": "^13.0.1",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-select-dropdown": "^3.3.3",

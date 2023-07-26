@@ -7,7 +7,6 @@ const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
-  console.log(items)
   useEffect(() => {
 
     if (items && items[0]?.name === "İçerik") {

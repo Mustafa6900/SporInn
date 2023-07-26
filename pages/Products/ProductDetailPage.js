@@ -8,9 +8,12 @@ import CustomButton from '../../components/custombutton';
 import FavoriteButton from '../../components/favoritebutton';
 import { supabase } from '../../supabaseClient';
 import { AuthContext } from '../Auth/AuthContext';
+import { Picker } from '@react-native-picker/picker';
 const ProductDetailPage = ({ route }) => {
   const { item } = route.params;
   const { session } = useContext(AuthContext);
+  const [quantityDropdown, setQuantityDropdown] = useState(1);
+
   const categories = [
     // Diğer kategorileri buraya ekleyin
     { name: 'İçerik' },
@@ -18,27 +21,54 @@ const ProductDetailPage = ({ route }) => {
     { name: 'Google Yorumları' },   // İçerik kategorisini diziye ekledik
   ];
 
+  const handleQuantityChange = (value) => {
+    setQuantityDropdown(value);
+  };
   const handleCartsProduct = async () => {
     try {
-      const { data, error } = await supabase
+      // Ürünü sepete eklemek için önce sepette aynı ürünün olup olmadığını kontrol edin
+      const { data: existingProduct, error: fetchError } = await supabase
         .from('users_carts')
-        .insert([
-          {
-            created_id: session.user.id,
-            product_id: item.id,
-            created_at: new Date(),
-            quantity : 1
-          },
-        ]);
-      if (error) {
-        console.error(error);
+        .select('*')
+        .eq('created_id', session.user.id)
+        .eq('product_id', item.id);
+  
+      if (fetchError) {
+        console.error(fetchError);
       } else {
+        if (existingProduct && existingProduct.length > 0) {
+          // Eğer ürün zaten sepette varsa quantity değerini artırın
+          const updatedQuantity = existingProduct[0].quantity + quantityDropdown;
+          await supabase
+            .from('users_carts')
+            .update({ quantity: updatedQuantity })
+            .eq('created_id', session.user.id)
+            .eq('product_id', item.id);
+        } else {
+          // Eğer ürün sepette yoksa yeni bir ürün olarak ekleyin
+          const { data: newProduct, error: insertError } = await supabase
+            .from('users_carts')
+            .insert([
+              {
+                created_id: session.user.id,
+                product_id: item.id,
+                created_at: new Date(),
+                quantity: quantityDropdown,
+              },
+            ]);
+  
+          if (insertError) {
+            console.error(insertError);
+          }
+        }
+  
         Alert.alert('Sepete Eklendi');
       }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
 
   return (
@@ -56,7 +86,21 @@ const ProductDetailPage = ({ route }) => {
         </View>
         <Categoryslider items = {categories} />
         <OutputText text={item.description} />
-        <CustomButton style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Sepete Ekle"  onPress={handleCartsProduct} />
+        {item.type == "products" ?
+        <View style={{ width: '22%', marginLeft: 'auto', marginRight: 'auto', color: '#AAA', marginTop: 20, borderWidth:1,borderColor:"#AAA",borderRadius:7 }}>
+
+            <Picker
+            style={{ width: '105%', fontWeight: "bold", color: "#AAA" }}
+            selectedValue={quantityDropdown}
+            onValueChange={(value) => handleQuantityChange(value)}
+          >
+            {Array.from({ length: 10 }, (_, i) => (
+              <Picker.Item key={i} label={`${i + 1}`} value={i + 1} />
+            ))}
+          </Picker>
+      </View>  : null}
+
+        <CustomButton style={{marginTop:10,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Sepete Ekle"  onPress={handleCartsProduct} />
     </SafeAreaView>
   );
 };
