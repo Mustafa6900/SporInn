@@ -48,7 +48,7 @@ export default function ProductsItems({ route }) {
         <>
           <CategorySlider items={items[0]} onItemPress={handleCategorySelect} />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ProductList items={items} />
+            <ProductList items={items} selectedCategory={selectedCategory}/>
           </ScrollView>
         </>
       ) : (

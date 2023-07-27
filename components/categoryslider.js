@@ -6,7 +6,6 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
   useEffect(() => {
 
     if (items && items[0]?.name === "İçerik") {
@@ -25,9 +24,17 @@ const SubCategories = ({ items, onItemPress }) => {
             console.error(sportsError);
           } else {
             data = sportsData || [];
+            setSelectedCategory(data[0]); // İlk kategoriyi seçili hale getir
+            onItemPress(data[0]); // İlk kategoriyi seçili hale getir
+            setItemss(data);
           }
         } 
-        else {
+        else if (items.type === "fitness_center") {
+          const tumuKategori = {
+            id: 0, 
+            name: "Tümü", 
+            created_id: 1 
+          };
           const { data: categoryData, error: categoryError } = await supabase
             .from('categories')
             .select('*')
@@ -36,11 +43,32 @@ const SubCategories = ({ items, onItemPress }) => {
             console.error(categoryError);
           } else {
             data = categoryData || [];
+            const categoryList = [tumuKategori, ...data];
+            setSelectedCategory(tumuKategori);
+            onItemPress(tumuKategori); 
+            setItemss(categoryList); 
           }
         }
-        setSelectedCategory(data[0]); // İlk kategoriyi seçili hale getir
-        onItemPress(data[0]); // İlk kategoriyi seçili hale getir
-        setItemss(data);
+        else if (items.main_category === "Supplement") {
+          const tumuKategori = {
+            id: 0, 
+            name: "Tümü", 
+            created_id: 1 
+          };
+          const { data: categoryData, error: categoryError } = await supabase
+            .from('categories')
+            .select('*')
+            .eq('created_id',1);
+          if (categoryError) {
+            console.error(categoryError);
+          } else {
+            data = categoryData || [];
+            const categoryList = [tumuKategori, ...data];
+            setSelectedCategory(tumuKategori);
+            onItemPress(tumuKategori); 
+            setItemss(categoryList); 
+          }
+        }
       } catch (error) {
         console.error(error);
       }
@@ -108,7 +136,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: "auto",
     padding: 5,
-    marginRight: 25,
+    marginRight: 35,
     marginTop: 10,
     backgroundColor: "#1F1F1F",
     paddingLeft: 15,

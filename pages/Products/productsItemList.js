@@ -1,32 +1,69 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-const ProductList = ({ items }) => {
+import { supabase } from '../../supabaseClient';
+const ProductList = ({ items, selectedCategory }) => {
     const navigation = useNavigation();
-
+    const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
+    const [products, setProducts] = useState([]);
+    console.log(products)
     const handleItemPress = (item) => {
       navigation.navigate('ProductDetailPage', { item});
     };
 
-  return (
-    <View style={styles.container}>
-      {items.map((item, index) => {
-        return (
-          <TouchableOpacity
+    useEffect(() => {
+      const fetchProducts = async () => {
+        try {
+          if (!selectedCategory) return; // Eğer seçili kategori yoksa, verileri getirme
+
+          const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .eq('categoryid', selectCategory) // selectCategory değişkenini kullanarak filtreleme yapın')
+            if (error) {
+              console.error(error);
+            } else {
+              setProducts(data || []);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchProducts();
+      }, [selectCategory]);
+
+      return (
+        <View style={styles.container}>
+          {selectCategory === 0 ? (
+            items.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.item}
+                onPress={() => handleItemPress(item)}
+              >
+                <Image source={require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
+                <View style={styles.itemInfo}>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+            ))
+          ) : (
+             products.map((item, index) => (
+            <TouchableOpacity 
             key={index}
             style={styles.item}
             onPress={() => handleItemPress(item)}
             >
-                
-            <Image source={ require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
-            <View style={styles.itemInfo}>
-              <Text style={styles.itemName}>{item.name}</Text>
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
-  );
+               <Image source={require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
+                <View style={styles.itemInfo}>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                </View>
+              </TouchableOpacity>
+              ))
+          )}
+        </View>
+    );
+    
 };
 
 const styles = StyleSheet.create({

@@ -6,6 +6,8 @@ import { supabase } from '../../../supabaseClient';
 const ItemList = ({ items, selectedCategory }) => {
   const navigation = useNavigation();
   const [packages, setPackages] = useState([]);
+  const [allPackages, setAllPackages] = useState([]); // Tüm paketleri tutacak state
+  console.log(items)
   const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
   const handleItemPress = (packet, price, shortdetail, bigdetail, image, packetid) => {
     navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image, packetid });
@@ -29,37 +31,64 @@ const ItemList = ({ items, selectedCategory }) => {
           console.error(error);
         }
       };
-  
       fetchPackages();
+
+      const fetchAllPackages = async () => {
+        try {
+          if (!selectedCategory) return; // Eğer seçili kategori yoksa, verileri getirme
+
+          const { data, error } = await supabase
+            .from('fitness_centers_packages')
+            .select('*')
+            .eq('fitness_centers_id', items.created_id) // items objesinden fitness_center_id'yi kullanarak filtreleme yapın')
+          if (error) {
+            console.error(error);
+          } else {
+            setAllPackages(data || []);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchAllPackages();
     }, [items.created_id, selectCategory ]);
 
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
+    const renderItem = ({ item, index }) => (
+        <TouchableOpacity
+          style={styles.item}
+          onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.image_url, item.id)}
+        >
+          <View style={styles.info}>
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemDetail}>{item.day}</Text>
+            <Text style={styles.itemPrice}>₺{item.price}</Text>
+          </View>
+          <Image source={{   }} style={styles.itemImage} />
+        </TouchableOpacity>
+    );
     
-      style={styles.item}
-      onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.image_url, item.id)}
-    >
-   
-      <View style={styles.info}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemDetail}>{item.day}</Text>
-        <Text style={styles.itemPrice}>₺{item.price}</Text>
-      </View>
-      <Image source={ item.image_url } style={styles.itemImage} />
-    </TouchableOpacity>
-  );
   
   // ...
   
   return (
+    selectCategory !== 0 ? (
     <FlatList 
-
       style={styles.container}
       data={packages}
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       showsVerticalScrollIndicator={false}
     />
+    ) : (
+      <FlatList
+        style={styles.container}
+        data={allPackages}
+        renderItem={renderItem}
+        keyExtractor={(item, index) => index.toString()}
+        showsVerticalScrollIndicator={false}
+      />
+    )
+
   );
   
 };
