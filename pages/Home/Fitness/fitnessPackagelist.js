@@ -7,7 +7,6 @@ const ItemList = ({ items, selectedCategory }) => {
   const navigation = useNavigation();
   const [packages, setPackages] = useState([]);
   const [allPackages, setAllPackages] = useState([]); // Tüm paketleri tutacak state
-  console.log(items)
   const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
   const handleItemPress = (packet, price, shortdetail, bigdetail, image, packetid) => {
     navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image, packetid });

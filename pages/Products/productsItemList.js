@@ -6,7 +6,6 @@ const ProductList = ({ items, selectedCategory }) => {
     const navigation = useNavigation();
     const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
     const [products, setProducts] = useState([]);
-    console.log(products)
     const handleItemPress = (item) => {
       navigation.navigate('ProductDetailPage', { item});
     };
