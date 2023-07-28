@@ -8,6 +8,20 @@ export default function Budy({ navigation }) {
                 <Header title="Budy" />
                 <ScrollView  >
                  <View style={{ alignItems:"center", paddingTop:10,paddingBottom:100}}>
+    
+                <PictureButton 
+                title="Challenge"
+                onPress={() => navigation.navigate('ChallengePage',{ category: "Challenge" }) }
+                backgroundImage={require('../../assets/budypic/challenge.png')}
+                style={{top:30, marginBottom: 60}}
+                />
+
+                <Text style={{color:"#AAA"}}>
+                Kişisel Antrenör , Diyetisyen ve Sport AI {"\n"}                  Yakında Hizmetinizde...
+                </Text>
+
+                {/*
+
                 <PictureButton 
                 title="Kişisel Antrenör"
                 onPress={() => navigation.navigate('PtDtitemPages',{ category: "Kişisel Antrenör" }) }
@@ -21,13 +35,6 @@ export default function Budy({ navigation }) {
                 backgroundImage={require('../../assets/budypic/diet.png')}
                 style={{marginBottom: 30}}
                 />
-            
-                <PictureButton 
-                title="Challenge"
-                onPress={() => navigation.navigate('ChallengePage',{ category: "Challenge" }) }
-                backgroundImage={require('../../assets/budypic/challenge.png')}
-                style={{marginBottom: 30}}
-                />
                 
                 <PictureButton 
                 title="Sport AI"
@@ -35,6 +42,8 @@ export default function Budy({ navigation }) {
                 backgroundImage={require('../../assets/budypic/sportsAi.jpg')}
                 style={{marginBottom: 30}}
                 />
+
+                */}
 
                 </View>
                 </ScrollView>

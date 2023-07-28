@@ -1,18 +1,23 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const ItemList = ({ items}) => {
+
+
   
   const navigation = useNavigation();
+ 
+  
   const renderItem = ({ item }) => (
     <View style={styles.container}>
+      
     <TouchableOpacity
       style={styles.Item}
       onPress={() => navigation.navigate('ItemPackagePage', { item })}
     >
-      <Image source={require('../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <Image source={{ uri: item.imageData?.publicUrl }} style={styles.itemImage} /> 
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.iteminfo}>{item.small_description}</Text>

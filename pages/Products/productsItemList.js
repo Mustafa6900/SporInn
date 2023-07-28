@@ -22,7 +22,23 @@ const ProductList = ({ items, selectedCategory }) => {
             if (error) {
               console.error(error);
             } else {
-              setProducts(data || []);
+              const updatedData = await Promise.all(data.map(async (item) => {
+                if (item.image_url) {
+                  const { data: imageData, error: imageError } = await supabase.storage
+                    .from('productsimage')
+                    .getPublicUrl(item.image_url);
+    
+                  if (imageError) {
+                    console.log('Resim alınamadı:', imageError.message);
+                  } else {
+                    if (imageData) {
+                      item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                    }
+                  }
+                }
+                return item;
+              }));
+              setProducts(updatedData || []);
             }
           } catch (error) {
             console.error(error);
@@ -40,7 +56,7 @@ const ProductList = ({ items, selectedCategory }) => {
                 style={styles.item}
                 onPress={() => handleItemPress(item)}
               >
-                <Image source={require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
+                <Image source={{uri: item.imageData?.publicUrl}} style={styles.itemImage} />
                 <View style={styles.itemInfo}>
                   <Text style={styles.itemName}>{item.name}</Text>
                 </View>
@@ -53,7 +69,7 @@ const ProductList = ({ items, selectedCategory }) => {
             style={styles.item}
             onPress={() => handleItemPress(item)}
             >
-               <Image source={require('../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
+               <Image source={{uri: item.imageData?.publicUrl}} style={styles.itemImage} />
                 <View style={styles.itemInfo}>
                   <Text style={styles.itemName}>{item.name}</Text>
                 </View>

@@ -6,17 +6,17 @@ const ProductCategoryList = ({ categories, onCategoryPress }) => {
     onCategoryPress(category);
   };
 
+  console.log(categories)
   return (
     <View style={styles.container}>
       {categories.map((category, index) => {
-        const imageSource = category.image ? category.image : require('../../assets/productcategoriespic/supplement.png');
         return (
           <TouchableOpacity
             key={index}
             style={styles.category}
             onPress={() => handleCategoryPress(category)}
           >
-            <Image source={imageSource} style={styles.categoryImage} />
+            <Image source={{uri:category.imageData?.publicUrl}} style={styles.categoryImage} />
             <View style={styles.categoryInfo}>
               <Text style={styles.categoryName}>{category.name}</Text>
             </View>

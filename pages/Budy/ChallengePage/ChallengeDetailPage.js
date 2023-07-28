@@ -8,7 +8,7 @@ import CustomButton from '../../../components/custombutton';
 import { AuthContext } from '../../Auth/AuthContext';
 import { supabase } from '../../../supabaseClient';
 const ChallengeDetailPage = ({ route }) => {
-  const { eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime } = route.params;
+  const { eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime,eventImage } = route.params;
   const { session } = useContext(AuthContext);
 
 const handleConfirmChallenge = async () => {
@@ -64,7 +64,7 @@ const generateQRCodeData = () => {
         <Header title="Ürün Detayı" />
         <BackButton left={15} top={43} />
         <View style={styles.topContainer}>
-        <Image source={require('../../../assets/buttonpicture.png') } style={styles.topContainerImage} />
+        <Image source={{uri:eventImage} } style={styles.topContainerImage} />
         <View style={styles.info}>
         <Text style={styles.price}>{eventName}</Text>
       <Text style={styles.title}> {event}</Text>

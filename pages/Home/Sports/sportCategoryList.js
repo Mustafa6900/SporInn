@@ -1,14 +1,12 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
-
-const SportList = ({ categories, onCategoryPress }) => {
+import { supabase } from '../../../supabaseClient';
+const SportList = ({onCategoryPress }) => {
   const handleCategoryPress = (category) => {
     onCategoryPress(category);
   };
 
-    /*  Sports Category List
   const [categories, setCategories] = useState([]);
-  const [imageUrls, setImageUrls] = useState({});
 
   useEffect(() => {
     const fetchCategoriesData = async () => {
@@ -20,22 +18,23 @@ const SportList = ({ categories, onCategoryPress }) => {
         if (error) {
           console.error(error);
         } else {
-          setCategories(data || []);
+          const updatedData = await Promise.all(data.map(async (item) => {
+            if (item.image_url) {
+              const { data: imageData, error: imageError } = await supabase.storage
+                .from('sportscategory')
+                .getPublicUrl(item.image_url);
 
-          for (const category of data) {
-            const { data: imageData, error: imageError } = await supabase
-              .storage
-              .from('your_bucket_name')
-              .download(category.image_url);
-            if (imageError) {
-              console.error(imageError);
-            } else {
-              setImageUrls((prev) => ({
-                ...prev,
-                [category.image_url]: imageData,
-              }));
+              if (imageError) {
+                console.log('Resim alınamadı:', imageError.message);
+              } else {
+                if (imageData) {
+                  item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                }
+              }
             }
-          }
+            return item;
+          }));
+          setCategories(updatedData || []);
         }
       } catch (error) {
         console.error(error);
@@ -44,7 +43,7 @@ const SportList = ({ categories, onCategoryPress }) => {
 
     fetchCategoriesData();
   }, []);
-  */
+  
 
   return (
     <View style={styles.container}>
@@ -54,7 +53,7 @@ const SportList = ({ categories, onCategoryPress }) => {
           style={styles.category}
           onPress={() => handleCategoryPress(category)}
         >
-          <Image source={category.image} style={styles.categoryImage} />
+          <Image source={{uri: category.imageData?.publicUrl}} style={styles.categoryImage} />
           <View style={styles.categoryInfo}>
             <Text style={styles.categoryName}>{category.name}</Text>
           </View>

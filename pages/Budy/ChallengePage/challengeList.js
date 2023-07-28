@@ -7,8 +7,8 @@ const ItemList = ({ items}) => {
   
     const navigation = useNavigation();
 
-    const handleItemPress = (eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime) => {
-      navigation.navigate('ChallengeDetailPage', {eventId, eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime});
+    const handleItemPress = (eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime,eventImage) => {
+      navigation.navigate('ChallengeDetailPage', {eventId, eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime,eventImage });
     };
 
     const formatDate = (startDateString, endDateString) => {
@@ -25,9 +25,9 @@ const ItemList = ({ items}) => {
     <View style={styles.container}>
     <TouchableOpacity
       style={styles.Item}
-      onPress={() => handleItemPress(item.id,item.name,item.capacity, item.small_description,item.map_url,item.description,item.start_date,item.end_date)}
+      onPress={() => handleItemPress(item.id,item.name,item.capacity, item.small_description,item.map_url,item.description,item.start_date,item.end_date,item.imageData?.publicUrl)}
       >
-      <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
+      <Image source={{ uri: item.imageData?.publicUrl }} style={styles.itemImage} />
       <View style={styles.itemInfo}>
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.iteminfo}>{item.small_description}</Text>

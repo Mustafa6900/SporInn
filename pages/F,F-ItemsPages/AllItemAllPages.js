@@ -14,25 +14,41 @@ const ItemAllPage = ({ route }) => {
   const [title, setTitle] = useState("");
   useEffect(() => {
 
-    if( category === "Spor Salonları"){
-    const fetchData = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('fitness_centers')
-          .select('*');
-        if (error) {
-          console.error(error);
-        } else {
-          setItems(data || []);
-          setTitle(category);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    if (category === "Spor Salonları") {
+      const fetchData = async () => {
+        try {
+          const { data, error } = await supabase
+            .from('fitness_centers')
+            .select('*');
+          if (error) {
+            console.error(error);
+          } else {
+            setTitle(category);
+            const updatedData = await Promise.all(data.map(async (item) => {
+              if (item.image_url) {
+                const { data: imageData, error: imageError } = await supabase.storage
+                  .from('fitnesscenterimage')
+                  .getPublicUrl(item.image_url);
   
-    fetchData();
-  } 
+                if (imageError) {
+                  console.log('Resim alınamadı:', imageError.message);
+                } else {
+                  if (imageData) {
+                    item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                  }
+                }
+              }
+              return item;
+            }));
+  
+            setItems(updatedData);
+          }
+        } catch (error) {
+          console.error("catch",error);
+        }
+      };
+    fetchData(); 
+  }
   else {
     const fetchData = async () => {
       try {
@@ -43,8 +59,26 @@ const ItemAllPage = ({ route }) => {
         if (error) {
           console.error(error);
         } else {
-          setItems(data || []);
+          const { image_url } = data[0];
           setTitle(category.name);
+          const updatedData = await Promise.all(data.map(async (item) => {
+            if (item.image_url) {
+              const { data: imageData, error: imageError } = await supabase.storage
+                .from('fitnesscenterimage')
+                .getPublicUrl(item.image_url);
+
+              if (imageError) {
+                console.log('Resim alınamadı:', imageError.message);
+              } else {
+                if (imageData) {
+                  item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                }
+              }
+            }
+            return item;
+          }));
+
+          setItems(updatedData);
         }
       } catch (error) {
         console.error(error);

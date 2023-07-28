@@ -11,10 +11,12 @@ const SportProfileInfo = ({items}) => {
     setIsModalVisible(false);
   };
 
+  console.log("topinfo",items)
+
   return (
     <View>
       <TouchableOpacity onPress={handleImagePress}>
-        <Image source={require('../assets/buttonpicture.png')} style={styles.image} />
+        <Image source={{uri: items.imageData?.publicUrl}} style={styles.image} />
         <ItemTitleFavorite title={items.name} point="4.8" />
       </TouchableOpacity>
       

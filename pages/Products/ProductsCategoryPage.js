@@ -1,20 +1,52 @@
-import * as React from 'react';
+import React,{useEffect,useState} from 'react';
 import {View,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
 import SearchButton from '../../components/searchbutton';
 import Title from '../../components/sportptTitle';
 import ProductCategoryList from './productCategoryList';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../supabaseClient';
 
 export default function Products({ navigation }) {
-    const categories = [
-        { id: 1, name: 'Supplement', image: require('../../assets/productcategoriespic/supplement.png') },
-        { id: 2, name: 'Spor Giyim', image: require('../../assets/productcategoriespic/clothes.png') },
-        { id: 3, name: 'Spor Ekipmanları', image: require('../../assets/productcategoriespic/sportEquipment.png') },
-        { id: 4, name: 'Spor  Beslenme', image: require('../../assets/productcategoriespic/sportNutrition.png') },
-        { id: 5, name: 'Elektronik Spor Aletleri', image: require('../../assets/productcategoriespic/electronicSportsEquipment.png') },
-        { id: 6, name: 'Spor Çantaları ve Saklama', image: require('../../assets/productcategoriespic/sportsBagsandStorage.png') },  
-      ];
+
+    const [categories, setCategories] = useState([]);
+    console.log(categories)
+
+      useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('products_category')
+                    .select('*');
+                if (error) {
+                    console.error(error);
+                } else {
+                    const updatedData = await Promise.all(data.map(async (item) => {
+                        if (item.image_url) {
+                          const { data: imageData, error: imageError } = await supabase.storage
+                            .from('productscategoryimage')
+                            .getPublicUrl(item.image_url);
+            
+                        if (imageError) {
+                            console.log('Resim alınamadı:', imageError.message);
+                        } else {
+                        if (imageData) {
+                            item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                        }
+                        }
+                    }
+                    return item;
+                    }));
+            
+                    setCategories(updatedData);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchCategories();
+    }, []);
+
 
       const navigations = useNavigation();
       const handleCategoryPress = (category) => {

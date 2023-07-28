@@ -11,7 +11,7 @@
 
   const FitnessPackageDetailPage = ({ route }) => {
     const navigation = useNavigation();
-    const { packet, price, shortdetail,bigdetail,image,packetid } = route.params;
+    const { packet, price, shortdetail,bigdetail,packetid,image } = route.params;
     const { session } = useContext(AuthContext);
 
     const generateQRCodeData = () => {
@@ -61,7 +61,7 @@
           <Header title="Ürün Detayı" />
           <BackButton left={15} top={43} />
           <View style={styles.topContainer}>
-          <Image source={require('../../../assets/buttonpicture.png') } style={styles.topContainerImage} />
+          <Image source={{uri:image}} style={styles.topContainerImage} />
           <View style={styles.info}>
           <Text style={styles.price}>Fiyat: ₺{price}</Text>
         <Text style={styles.title}>{packet}</Text>

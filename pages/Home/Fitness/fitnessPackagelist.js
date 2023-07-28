@@ -8,9 +8,10 @@ const ItemList = ({ items, selectedCategory }) => {
   const [packages, setPackages] = useState([]);
   const [allPackages, setAllPackages] = useState([]); // Tüm paketleri tutacak state
   const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
-  const handleItemPress = (packet, price, shortdetail, bigdetail, image, packetid) => {
-    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, image, packetid });
+  const handleItemPress = (packet, price, shortdetail, bigdetail, packetid,image) => {
+    navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, packetid,image });
   };
+  console.log(allPackages)
   useEffect(() => {
     const fetchPackages = async () => {
       try {
@@ -24,8 +25,26 @@ const ItemList = ({ items, selectedCategory }) => {
           if (error) {
             console.error(error);
           } else {
-            setPackages(data || []);
+            const updatedData = await Promise.all(data.map(async (item) => {
+              if (item.image_url) {
+                const { data: imageData, error: imageError } = await supabase.storage
+                  .from('fcpackagesimage')
+                  .getPublicUrl(item.image_url);
+  
+                if (imageError) {
+                  console.log('Resim alınamadı:', imageError.message);
+                } else {
+                  if (imageData) {
+                    item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                  }
+                }
+              }
+              return item;
+            }));
+  
+            setPackages(updatedData);
           }
+          
         } catch (error) {
           console.error(error);
         }
@@ -43,7 +62,24 @@ const ItemList = ({ items, selectedCategory }) => {
           if (error) {
             console.error(error);
           } else {
-            setAllPackages(data || []);
+            const updatedData = await Promise.all(data.map(async (item) => {
+              if (item.image_url) {
+                const { data: imageData, error: imageError } = await supabase.storage
+                  .from('fcpackagesimage')
+                  .getPublicUrl(item.image_url);
+    
+                if (imageError) {
+                  console.log('Resim alınamadı:', imageError.message);
+                } else {
+                  if (imageData) {
+                    item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                  }
+                }
+              }
+              return item;
+            }));
+    
+            setAllPackages(updatedData || []); // updatedData undefined ise boş array olarak setPackages'e gönderin
           }
         } catch (error) {
           console.error(error);
@@ -55,14 +91,14 @@ const ItemList = ({ items, selectedCategory }) => {
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
           style={styles.item}
-          onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.image_url, item.id)}
+          onPress={() => handleItemPress(item.name, item.price, item.day, item.description, item.id, item.imageData?.publicUrl)}
         >
           <View style={styles.info}>
             <Text style={styles.itemName}>{item.name}</Text>
             <Text style={styles.itemDetail}>{item.day}</Text>
             <Text style={styles.itemPrice}>₺{item.price}</Text>
           </View>
-          <Image source={{   }} style={styles.itemImage} />
+          <Image source={{  uri: item.imageData?.publicUrl }} style={styles.itemImage} />
         </TouchableOpacity>
     );
     

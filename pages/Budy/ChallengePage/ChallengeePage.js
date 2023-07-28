@@ -20,7 +20,23 @@ export default function ChallengePage({ route }) {
                 if (error) {
                     console.error(error);
                 } else {
-                    setChallenges(data || []);
+                    const updatedData = await Promise.all(data.map(async (item) => {
+                        if (item.image_url) {
+                          const { data: imageData, error: imageError } = await supabase.storage
+                            .from('challengeimage')
+                            .getPublicUrl(item.image_url);
+            
+                          if (imageError) {
+                            console.log('Resim alınamadı:', imageError.message);
+                          } else {
+                            if (imageData) {
+                              item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                            }
+                          }
+                        }
+                        return item;
+                      }));
+                    setChallenges(updatedData);
                 }
             } catch (error) {
                 console.error(error);

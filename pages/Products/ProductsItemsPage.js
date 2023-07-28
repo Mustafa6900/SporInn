@@ -24,7 +24,23 @@ export default function ProductsItems({ route }) {
               if (error) {
                 console.error(error);
               } else {
-                setItems(data || []);
+                const updatedData = await Promise.all(data.map(async (item) => {
+                  if (item.image_url) {
+                    const { data: imageData, error: imageError } = await supabase.storage
+                      .from('productsimage')
+                      .getPublicUrl(item.image_url);
+      
+                    if (imageError) {
+                      console.log('Resim alınamadı:', imageError.message);
+                    } else {
+                      if (imageData) {
+                        item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                      }
+                    }
+                  }
+                  return item;
+                }));
+                setItems(updatedData);
 
                 
               }

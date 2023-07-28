@@ -77,7 +77,7 @@ const ProductDetailPage = ({ route }) => {
         <BackButton left={15} top={43} />
         <FavoriteButton left={345} top={45} item_id={item.id}/>
         <View style={styles.topContainer}>
-        <Image source={require('../../assets/buttonpicture.png') } style={styles.topContainerImage} />
+        <Image source={{uri: item.imageData?.publicUrl} } style={styles.topContainerImage} />
         <View style={styles.info}>
         <Text style={styles.price}>Fiyat: {item.price}</Text>
       <Text style={styles.title}>{item.name}</Text>
