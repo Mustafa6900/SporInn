@@ -6,7 +6,6 @@ const ProductCategoryList = ({ categories, onCategoryPress }) => {
     onCategoryPress(category);
   };
 
-  console.log(categories)
   return (
     <View style={styles.container}>
       {categories.map((category, index) => {

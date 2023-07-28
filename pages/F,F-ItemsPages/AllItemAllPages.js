@@ -59,7 +59,6 @@ const ItemAllPage = ({ route }) => {
         if (error) {
           console.error(error);
         } else {
-          const { image_url } = data[0];
           setTitle(category.name);
           const updatedData = await Promise.all(data.map(async (item) => {
             if (item.image_url) {

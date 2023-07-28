@@ -23,7 +23,32 @@ export default function MyEventPage({ route }) {
                 if (error) {
                     console.error(error);
                 } else {
-                    setItems(data || []);
+                
+                    const fitnessWithImage = await Promise.all(data.map(async (item) => {
+                        // 'sports_facilities_config' bilgisini almak için yeni bir istek yapın
+                        const { data: newdata, error: newdataError } = await supabase
+                          .from('fitness_centers')
+                          .select('*')
+                          .eq('created_id', item.fitness_centers_packages.fitness_centers_id);
+                        if (newdataError) {
+                          console.error(newdataError);
+                        } else {
+                          const { data: imageData, error: imageError } = await supabase.storage
+                            .from('fitnesscenterimage')
+                            .getPublicUrl(newdata[0]?.image_url);
+                      
+                          if (imageError) {
+                            console.log('Resim alınamadı:', imageError.message);
+                          } else {
+                            item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                          }
+                        }
+                        return item;
+                      }));
+                      
+                      setItems(fitnessWithImage || []);
+                      
+                    
                 }
 
                 
@@ -35,39 +60,78 @@ export default function MyEventPage({ route }) {
     }
     else if (category === 'Randevularım') {
         const fetchFacilityItems = async () => {
-            try{
-                const { data, error } = await supabase
-                .from('users_appointments')
-                .select('*,packages_id, sports_facilities_config(id,name,created_id))')
-                .eq('user_id', session.user.id)
-                if (error) {
-                    console.error(error);
+          try {
+            const { data, error } = await supabase
+              .from('users_appointments')
+              .select('*,packages_id, sports_facilities_config(id,name,created_id)')
+              .eq('user_id', session.user.id);
+      
+            if (error) {
+              console.error(error);
+            } else {
+              const appointmentsWithImage = await Promise.all(data.map(async (item) => {
+                // 'sports_facilities_config' bilgisini almak için yeni bir istek yapın
+                const { data: newdata, error: newdataError } = await supabase
+                  .from('sports_facilities')
+                  .select('*')
+                  .eq('created_id', item.sports_facilities_config.created_id);
+                
+                if (newdataError) {
+                  console.error(newdataError);
+                } else {
+                    const { data: imageData, error: imageError } = await supabase.storage
+                    .from('sportsfacilityimage')
+                    .getPublicUrl(newdata[0]?.image_url);
+                    
+                  if (imageError) {
+                    console.log('Resim alınamadı:', imageError.message);
+                  } else {
+                    
+                      item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                  }
                 }
-                else {
-                    setItems(data || []);
-                }
-            } catch (error) {
-                console.error(error);
+                return item;
+              }));
+      
+              setItems(appointmentsWithImage || []);
             }
+          } catch (error) {
+            console.error(error);
+          }
         };
-
+      
         fetchFacilityItems();
-        
-    }
-
+      }
     else{
         const fetchChallengeItems = async () => {
             try{
                 const { data, error } = await supabase
                 .from('users_challenge')
-                .select('*,challenge_id, challenges(id,name,created_id,small_description,description)')
+                .select('*,challenge_id, challenges(id,name,created_id,small_description,description,image_url)')
                 .eq('user_id', session.user.id)
                 if (error) {
                     console.error(error);
                 }
                 else {
-                    setItems(data || []);
-                }
+                    const updatedData = await Promise.all(data.map(async (item) => {
+                        if (item.challenges?.image_url) {
+                          const { data: imageData, error: imageError } = await supabase.storage
+                            .from('challengeimage')
+                            .getPublicUrl(item.challenges.image_url);
+            
+                          if (imageError) {
+                            console.log('Resim alınamadı:', imageError.message);
+                          } else {
+                            if (imageData) {                            
+                              item.challenges.imageData = imageData; // Temizlenmiş URL'yi challenges objesine ekleyin
+                            }
+                          }
+                        }
+                        return item;
+                      }));
+            
+                      setItems(updatedData || []);
+                    }
             } catch (error) {
                 console.error(error);
             }

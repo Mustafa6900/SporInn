@@ -10,7 +10,6 @@ import { supabase } from '../../supabaseClient';
 export default function Products({ navigation }) {
 
     const [categories, setCategories] = useState([]);
-    console.log(categories)
 
       useEffect(() => {
         const fetchCategories = async () => {

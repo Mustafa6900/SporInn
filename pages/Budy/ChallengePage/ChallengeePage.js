@@ -52,7 +52,6 @@ export default function ChallengePage({ route }) {
         },
     ];
 
-    console.log(challenges)
     return (
         <SafeAreaView style={styles.container}>
             <Header title={title} />

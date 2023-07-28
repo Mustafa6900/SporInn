@@ -18,7 +18,24 @@ const MyFavoriteproductlist = () => {
             if (error) {
               console.error(error);
             } else {
-              setItem(data || []);
+              const updatedData = await Promise.all(data.map(async (item) => {
+                if (item.products.image_url) {
+                  const { data: imageData, error: imageError } = await supabase.storage
+                    .from('productsimage')
+                    .getPublicUrl(item.products.image_url);
+    
+                  if (imageError) {
+                    console.log('Resim alınamadı:', imageError.message);
+                  } else {
+                    if (imageData) {
+                      item.products.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                    }
+                  }
+                }
+                return item;
+              }));
+    
+              setItem(updatedData);
             }
           } catch (error) {
             console.error(error);
@@ -27,14 +44,12 @@ const MyFavoriteproductlist = () => {
         fetchFavoriteProducts();
       }, []);
 
-
-
-
     const navigation = useNavigation();
 
     const handleItemPress = (product) => {
       navigation.navigate('ProductDetailPage', {item: product });
     };
+
 
   return (
     <View style={styles.container}>
@@ -44,8 +59,7 @@ const MyFavoriteproductlist = () => {
             style={styles.item}
             onPress={() => handleItemPress(favoriteProduct.products)}
             >
-                
-            <Image source={ require('../../../assets/productcategoriespic/supplement.png')} style={styles.itemImage} />
+            <Image source={{ uri: favoriteProduct.products.imageData?.publicUrl }} style={styles.itemImage} />
             <View style={styles.itemInfo}>
               <Text style={styles.itemName}>{favoriteProduct.products.name}</Text>
             </View>

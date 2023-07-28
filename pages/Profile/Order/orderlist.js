@@ -22,9 +22,9 @@ const OrderList = ({ item }) => {
           <View style={styles.info2}>
             <Text style={styles.status}>Teslim Edildi</Text>
             <View style={{ flexDirection: "row" }}>
-                <Image  source={require("../../../assets/productcategoriespic/supplementblack.png")} style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
-                <Image  source={require("../../../assets/productcategoriespic/supplementblack.png")} style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
-                <Image  source={require("../../../assets/productcategoriespic/supplementblack.png")} style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
+                <Image  source={require("../../../assets/buttonpicture.png")} style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
+                <Image  source={require("../../../assets/buttonpicture.png")}style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
+                <Image  source={require("../../../assets/buttonpicture.png")} style={{ width: 80, height: 80, marginLeft: 10, marginTop: 30 }} />
             </View>
             <Text style={styles.delivery}>3 ürün teslim edildi</Text>
           </View>

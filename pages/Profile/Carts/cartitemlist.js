@@ -122,7 +122,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
                   styletip={{ backgroundColor: '#AAAAAA'}}
                 />
               </View>
-              <Image source={require('../../../assets/productcategoriespic/supplementblack.png')} style={{ width: 80, height: 80, left: 10 }} />
+              <Image source={{ uri: cartItem.imageData?.publicUrl }} style={{ width: 80, height: 80, left: 10 }} />
               <View style={styles.infodetail}>
                 <Text style={{ fontSize: 20, left: 20, fontWeight: '900' }}>{cartItem.products.name}</Text>
                 <Text style={{ fontSize: 15, left: 20, width: 150 }}>{cartItem.products.description}</Text>

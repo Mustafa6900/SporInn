@@ -36,7 +36,24 @@ useEffect(() => {
             if (error) {
                 console.error(error);
             } else {
-                setItem(data || []);
+                const updatedData = await Promise.all(data.map(async (item) => {
+                    if (item.products.image_url) {
+                      const { data: imageData, error: imageError } = await supabase.storage
+                        .from('productsimage')
+                        .getPublicUrl(item.products.image_url);
+        
+                      if (imageError) {
+                        console.log('Resim alınamadı:', imageError.message);
+                      } else {
+                        if (imageData) {
+                          item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                        }
+                      }
+                    }
+                    return item;
+                  }));
+        
+                  setItem(updatedData);
                 setItemLoaded(true); 
             }
         } catch (error) {

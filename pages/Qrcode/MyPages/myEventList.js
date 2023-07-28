@@ -107,7 +107,17 @@ const ItemList = ({ items , category}) => {
       style={styles.Item}
       onPress={() =>  navigation.navigate('MyEventDetailPage', { item , category })}
     >
-      <Image source={require('../../../assets/buttonpicture.png')} style={styles.itemImage} />
+
+      {category === 'Spor Salonlarım' && (
+      <Image source={{ uri: item.imageData?.publicUrl }} style={styles.itemImage} />
+      )}
+      {category === 'Randevularım' && (
+      <Image source={{ uri: item.imageData?.publicUrl }} style={styles.itemImage} />
+      
+      )}
+      {category === 'Challenge' && (
+      <Image source={{ uri: item.challenges.imageData?.publicUrl }} style={styles.itemImage} />
+      )}
       <View style={styles.itemInfo}>
         {category === 'Spor Salonlarım' && (
          <>
@@ -125,7 +135,6 @@ const ItemList = ({ items , category}) => {
         )}
         {category === 'Challenge' && (
           <>
-
           <Text style={styles.itemName}>{item.challenges.name}</Text>
           <Text style={styles.iteminfo}>{item.challenges.small_description}</Text>
 

@@ -11,7 +11,6 @@ const SportProfileInfo = ({items}) => {
     setIsModalVisible(false);
   };
 
-  console.log("topinfo",items)
 
   return (
     <View>

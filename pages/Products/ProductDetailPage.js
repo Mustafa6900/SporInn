@@ -69,8 +69,6 @@ const ProductDetailPage = ({ route }) => {
     }
   };
   
-
-
   return (
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
