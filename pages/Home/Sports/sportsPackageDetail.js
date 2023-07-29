@@ -1,10 +1,10 @@
-import React, { useState,useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView,ActivityIndicator  } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import InformationText from '../../../components/informationtext';
 import * as Animatable from 'react-native-animatable';
 import { supabase } from "../../../supabaseClient.js";
-import { AuthContext } from '../../Auth/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 LocaleConfig.locales['tr'] = {
   monthNames: [
@@ -42,7 +42,7 @@ LocaleConfig.locales['tr'] = {
 LocaleConfig.defaultLocale = 'tr';
 
 
-const ItemList = ({ item, selectedCategory }) => {
+const ItemList = ({selectedCategory }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTimeslot, setSelectedTimeslot] = useState(null);
   const [availableTimeslots, setAvailableTimeslots] = useState([]);
@@ -51,10 +51,11 @@ const ItemList = ({ item, selectedCategory }) => {
   const [isAppointmentButtonVisible, setIsAppointmentButtonVisible] = useState(false);
   const [isAppointmentTaken, setIsAppointmentTaken] = useState(false);
   const [appointmentsMade, setAppointmentsMade] = useState([]);
-  const items = selectedCategory; 
-  const { session } = useContext(AuthContext);
+  const items = selectedCategory;
+  const navigation = useNavigation();
 
-
+  
+  
   useEffect(() => {
     const fetchAppointments = async () => {
       const { data: appointments, error } = await supabase
@@ -225,41 +226,10 @@ const ItemList = ({ item, selectedCategory }) => {
   const handleConfirmAppointment = async () => {
     const [startTime, endTime] = selectedTimeslot.split(' - ');
     const purchaseDate = new Date(`${selectedDate}T${startTime}`);
-    const endDate = new Date(`${selectedDate}T${endTime}`); 
-  
-    const generateQRCodeData = () => {
-      const data = {
-        packages_id: items.id,
-        user_id: session.user.id,
-        purchase_date: purchaseDate.toISOString(),
-        end_date: endDate.toISOString(),
-      };
-      return JSON.stringify(data);
-    };
-    try {
-      const qrCodeData = generateQRCodeData();
-      const { data, error } = await supabase
-        .from('users_appointments')
-        .insert([
-          {
-            user_id: session.user.id,
-            packages_id: items.id,
-            purchase_date: purchaseDate.toISOString(),
-            end_date: endDate.toISOString(),
-            created_at: new Date().toISOString(),
-            qr_code: qrCodeData,
-          },
-        ]);
-        
-      if (error) {
-        console.error(error);
-        return;
-      }
-  
-      console.log('Appointment created successfully');
-    } catch (error) {
-      console.error(error);
-    }
+    const endDate = new Date(`${selectedDate}T${endTime}`);
+    const purchaseDateUTC = purchaseDate.toISOString();
+    const endDateUTC = endDate.toISOString();
+    navigation.navigate('PaymentSports',  { items, purchaseDateUTC, endDateUTC });
   };
   
   const calendarTheme = {

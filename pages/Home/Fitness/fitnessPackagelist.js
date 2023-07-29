@@ -11,7 +11,6 @@ const ItemList = ({ items, selectedCategory }) => {
   const handleItemPress = (packet, price, shortdetail, bigdetail, packetid,image) => {
     navigation.navigate('PackageDetailPage', { packet, price, shortdetail, bigdetail, packetid,image });
   };
-  console.log(allPackages)
   useEffect(() => {
     const fetchPackages = async () => {
       try {

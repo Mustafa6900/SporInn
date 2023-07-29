@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Text, StyleSheet, TouchableOpacity, View, ScrollView, Image, Alert } from "react-native";
 import Header from "../../components/header";
 import BackButton from "../../components/backbutton";
@@ -7,17 +7,95 @@ import SelectDropdown from "react-native-select-dropdown";
 import CustomButton from "../../components/custombutton";
 import { FontAwesome } from "react-native-vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../Auth/AuthContext';
+import { supabase } from "../../supabaseClient";
 
 export default function Payment({ route }) {
-    const { packet, price, shortdetail,bigdetail } = route.params;
-    const [item, setItem] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [adresses, setAdresses] = useState([]);
+  const { packet, price, shortdetail,packetid,image } = route.params;
   const [creditCard, setCreditCard] = useState([]);
   const [selectedCreditCard, setSelectedCreditCard] = useState(null);
   const [isCheckedCreditCard, setIsCheckedCreditCard] = useState(true);
   const [isCheckedSporInn, setIsCheckedSporInn] = useState(false);
   const [isCheckedAgreement, setIsCheckedAgreement] = useState(false);
+  const { session } = useContext(AuthContext);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchCreditCards = async () => {
+      try { 
+        const  { data, error } = await supabase
+          .from("credit_cards")
+          .select("*")
+          .eq("user_id", session.user.id);
+        if (error) {
+          console.error(error);
+        } else {
+          // Diziyi kredi kartı objesiyle doldurun
+          setCreditCard(data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCreditCards();
+  }, []);
+
+  const generateQRCodeData = () => {
+    const data = {
+      packages_id: packetid,
+      user_id: session.user.id,
+      purchase_date: new Date(),
+    };
+    return JSON.stringify(data);  
+  };
+
+  const handlePurchase = async () => {
+    try {
+      const qrCodeData = generateQRCodeData();
+      const { data, error } = await supabase
+        .from('users_fitness_packages')
+        .insert([
+          {
+            user_id: session.user.id,
+            packages_id: packetid,
+            qr_code: qrCodeData,
+            purchase_date : new Date(),
+            created_at: new Date(),
+          },
+        ]);
+      if (error) {
+        console.error(error);
+      } else {
+        const { data, error } = await supabase
+          .from('orders')
+          .insert([
+            {
+              order_date : new Date(),
+              user_id: session.user.id,
+              total_amount: price,
+              credit_cards_id : selectedCreditCard.id,
+              fitness_centers_packages_id : packetid,
+              created_at: new Date(),
+              status: "Onaylandı",
+            },
+          ]);
+        if (error) {
+          console.error(error);
+        }
+        else
+        {
+          Alert.alert('Sipariş Alındı');
+          navigation.navigate('Tabbar');
+          
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+         
 
   const handleCreditCardPress = () => {
     if (!isCheckedCreditCard) {
@@ -37,33 +115,18 @@ export default function Payment({ route }) {
     setIsCheckedAgreement(!isCheckedAgreement);
   };
 
-  useEffect(() => {
-    if (item && item.adresses) {
-      const addressNames = item.adresses.map((address) => address.adressName);
-      setAdresses(addressNames);
-    }
-    if (item && item.creditCard) {
-      const creditCardNames = item.creditCard.map((credit) => credit.cardName);
-      setCreditCard(creditCardNames);
-    }
-  }, [item]);
 
   const handleSelect = (option) => {
-    const selectedAddress = item.adresses.find((address) => address.adressName === option);
-    if (selectedAddress) {
-      const { adressName, city, district } = selectedAddress;
-      const formattedOption = `${adressName}        (${city} ${district})`;
-      console.log("Selected Address:", selectedAddress);
-      setSelectedOption(formattedOption);
-    }
-    const selectedCreditCard = item.creditCard.find((credit) => credit.cardName === option);
-    if (selectedCreditCard) {
-      const { cardName, cardNo } = selectedCreditCard;
-      const formattedOption = `${cardName}\n${cardNo}`;
-      console.log("Selected Credit Card:", selectedCreditCard);
-      setSelectedCreditCard(formattedOption);
+    // Seçilen kredi kartının tüm bilgilerini almak için
+    if (creditCard && creditCard.length > 0) {
+      const selectedCreditCardData = creditCard.find((card) => card.card_name === option);
+      if (selectedCreditCardData) {
+        setSelectedCreditCard(selectedCreditCardData);
+      }
     }
   };
+  
+  
 
   return (
     <View style={styles.container}>
@@ -73,12 +136,15 @@ export default function Payment({ route }) {
         <View style={styles.andresinfotitle}>
           <Text style={styles.text}>Paket İçeriği</Text>
         </View>
+        
         <View style={styles.andresinfodesc}>
-            <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: "700", maxWidth: 250,marginBottom:"auto",marginTop:5 }}>{packet}</Text>
-            <Text style={{ fontSize: 12, marginLeft: 10, fontWeight: "400", maxWidth: 350,maxHeight:60,marginBottom:"auto" }} >
-                {bigdetail}
-            </Text>
-      
+          <View style={{flexDirection:"row"}}>
+        <Image source={{ uri: image }} style={{ width: 85, height: 85, marginLeft: 10, marginTop:0,borderRadius:7 }} />
+          <View >
+            <Text style={{ fontSize: 15, marginLeft: 20, fontWeight: "700", maxWidth: 250,marginBottom:"auto",marginTop:0 }}>{packet}</Text>
+            <Text style={{ fontSize: 12, marginLeft: 20, fontWeight: "400", maxWidth: 350,maxHeight:60,marginBottom:"auto" }} >{shortdetail}</Text>
+          </View>
+          </View>
         </View>
       </View>
       <View style={styles.paymentinfo}>
@@ -94,10 +160,10 @@ export default function Payment({ route }) {
                 checked={isCheckedCreditCard}
                 styletip={{ marginLeft: 15, backgroundColor: "#AAAAAA" }}
               />
-              <Image source={require("../../assets/paymentpic/mastercard.png")} style={{ width: 30, height: 30, marginLeft: 15 }} />
-              <Text style={{ fontSize: 15, marginLeft: 15, marginRight: 10, fontWeight: "500", maxWidth: 125 }}>{selectedCreditCard}</Text>
+              <Image source={require("../../assets/paymentpic/mastercard.png")} style={{ width: 30, height: 30, marginLeft: 15,marginRight:15 }} />
+              
               <SelectDropdown
-                data={creditCard}
+                data={creditCard.map((card) => card.card_name)} 
                 onSelect={handleSelect}
                 defaultButtonText="Kart Değiştir"
                 buttonStyle={{ backgroundColor: "#0D0D0D", padding: 10, borderRadius: 7, maxWidth: 140 }}
@@ -111,6 +177,13 @@ export default function Payment({ route }) {
                   return <FontAwesome name={isOpened ? "chevron-up" : "chevron-down"} color={"#444"} size={18} />;
                 }}
               />
+              <TouchableOpacity 
+              style={{ marginLeft: 20 }}
+              onPress={() => navigation.navigate("AddCreditCardPage")}
+              >
+                <AntDesign name="pluscircleo" size={30} color="black" />
+              </TouchableOpacity>
+
             </View>
           </View>
 
@@ -132,13 +205,13 @@ export default function Payment({ route }) {
         </View>
         <View style={styles.cartprice}>
           <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 10, marginBottom: 3, backgroundColor: "#AAAAAA" }}>
-            <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: "700", maxWidth: 250 }}>Bitiş Zamanı</Text>
+            <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: "700", maxWidth: 250 }}>Paket Adı:</Text>
             <Text style={{ fontSize: 15, marginRight: 10, fontWeight: "700", maxWidth: 250 }}>{packet}</Text>
           </View>
         
           <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 10, backgroundColor: "#AAAAAA", marginBottom: 10, borderBottomLeftRadius: 7, borderBottomRightRadius: 7 }}>
             <Text style={{ fontSize: 15, marginLeft: 10, fontWeight: "700", maxWidth: 250,color:"#FF6F25" }}>Toplam Tutar:</Text>
-            <Text style={{ fontSize: 15, marginRight: 10, fontWeight: "700", maxWidth: 250,color:"#FF6F25" }}>₺1500</Text>
+            <Text style={{ fontSize: 15, marginRight: 10, fontWeight: "700", maxWidth: 250,color:"#FF6F25" }}>₺{price}</Text>
           </View>
           <View style={{ flexDirection: "row", padding: 10, backgroundColor: "#AAAAAA", borderRadius: 7 }}>
             <CheckButton
@@ -154,10 +227,10 @@ export default function Payment({ route }) {
       <View style={styles.bottombar}>
         <View style={styles.price}>
           <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: "500", color: "white" }}>Toplam Tutar:</Text>
-          <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: "900", color: "#FF6F25" }}>₺1500</Text>
+          <Text style={{ fontSize: 20, marginLeft: 20, fontWeight: "900", color: "#FF6F25" }}>₺{price}</Text>
         </View>
         {isCheckedAgreement ? (
-          <CustomButton title="Ödeme Yap" onPress={() => Alert.alert("Sipariş Alındı")} />
+          <CustomButton title="Ödeme Yap" onPress={() => handlePurchase()} />
         ) : (
           <CustomButton title="Ödeme Yap" onPress={() => Alert.alert("Ön bilgilendirme formu ve Mesafeli Satış Sözleşmesi'ni onaylayın.")} />
         )}

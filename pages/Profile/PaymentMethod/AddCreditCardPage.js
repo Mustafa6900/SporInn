@@ -77,6 +77,7 @@ const AddAdressPage = () => {
               color="#FFFFFF"
               style={styles.textinputmax}
               value={cardNo}
+              maxLength={16}
               onChangeText={setCardNo}
             />
           </View>

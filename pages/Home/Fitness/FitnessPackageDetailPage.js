@@ -6,46 +6,11 @@
   import OutputText from '../../../components/outputText';
   import CustomButton from '../../../components/custombutton';
   import { useNavigation } from '@react-navigation/native';
-  import { AuthContext } from '../../Auth/AuthContext';
-  import { supabase } from '../../../supabaseClient';
+
 
   const FitnessPackageDetailPage = ({ route }) => {
     const navigation = useNavigation();
     const { packet, price, shortdetail,bigdetail,packetid,image } = route.params;
-    const { session } = useContext(AuthContext);
-
-    const generateQRCodeData = () => {
-      const data = {
-        packages_id: packetid,
-        user_id: session.user.id,
-        purchase_date: new Date(),
-      };
-      return JSON.stringify(data);  
-    };
-
-    const handlePurchase = async () => {
-      try {
-        const qrCodeData = generateQRCodeData();
-        const { data, error } = await supabase
-          .from('users_fitness_packages')
-          .insert([
-            {
-              user_id: session.user.id,
-              packages_id: packetid,
-              qr_code: qrCodeData,
-              purchase_date : new Date(),
-              created_at: new Date(),
-            },
-          ]);
-        if (error) {
-          console.error(error);
-        } else {
-          Alert.alert('Satın Alındı');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
     const categories = [
       // Diğer kategorileri buraya ekleyin
@@ -73,7 +38,7 @@
           <CustomButton 
           style={{marginTop:20,width:"75%",marginLeft:"auto",marginRight:"auto"}}
           title="Satın Al" 
-          onPress={handlePurchase}  // onPress={() => navigation.navigate('PaymentFtPtDt', { packet, price, shortdetail,bigdetail})}
+          onPress={() => navigation.navigate('PaymentFtPtDt', { packet, price, shortdetail,bigdetail,packetid,image})}
           />
       </SafeAreaView>
     );
