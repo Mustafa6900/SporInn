@@ -30,8 +30,6 @@ const generateQRCodeData = () => {
       console.error(error);
       return;
     }
-
-    console.log("Challenge'a katıldınız");
   } catch (error) {
     console.error(error);
   }

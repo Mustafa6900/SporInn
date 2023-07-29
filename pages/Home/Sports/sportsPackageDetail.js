@@ -211,10 +211,8 @@ const ItemList = ({selectedCategory }) => {
     const isAppointmentTaken = purchaseDatesUTC.includes(formattedStartDateUTC);
     
     if (isAppointmentTaken) {
-      console.log("Randevu alınmış");
       setIsAppointmentTaken(true);
     } else {
-      console.log("Randevu alınmamış");
       setIsAppointmentTaken(false);
     }
   };

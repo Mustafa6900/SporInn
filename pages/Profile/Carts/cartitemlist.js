@@ -37,7 +37,6 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
       if (error) {
         console.error(error);
       } else {
-        console.log('Ürün güncellendi');
         const { data: updatedData, error: fetchError } = await supabase
           .from('users_carts')
           .select('*,product_id,products(id,*)')
@@ -66,9 +65,6 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
       if (error) {
         console.error(error);
       } else {
-        console.log('Ürün silindi');
-  
-    
         const { data: updatedData, error: fetchError } = await supabase
           .from('users_carts')
           .select('*,product_id,products(id,*)')

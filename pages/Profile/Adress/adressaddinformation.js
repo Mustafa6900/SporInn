@@ -39,9 +39,7 @@ const AddressAddInformation = ({ session }) => {
   if (error) {
     console.log("Hata", error);
   } else {
-    console.log("Adres eklendi");
     navigation.replace('Adresses');
-
   }
 };
 

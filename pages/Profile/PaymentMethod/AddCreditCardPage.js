@@ -42,7 +42,6 @@ const AddAdressPage = () => {
     if (error) {
       console.log("Hata", error);
     } else {
-      console.log("Kart eklendi");
       navigation.replace('PaymentMethods');
     }
   };
