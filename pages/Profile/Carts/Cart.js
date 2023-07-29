@@ -53,7 +53,7 @@ useEffect(() => {
                     return item;
                   }));
         
-                  setItem(updatedData);
+                setItem(updatedData);
                 setItemLoaded(true); 
             }
         } catch (error) {

@@ -85,7 +85,7 @@ const ProductDetailPage = ({ route }) => {
         <Categoryslider items = {categories} />
         <OutputText text={item.description} />
         {item.type == "products" ?
-        <View style={{ width: '22%', marginLeft: 'auto', marginRight: 'auto', color: '#AAA', marginTop: 20, borderWidth:1,borderColor:"#AAA",borderRadius:7 }}>
+        <View style={{ width: '22%', marginLeft: 'auto', marginRight: 'auto', color: '#AAA', marginTop: 15, borderWidth:1,borderColor:"#AAA",borderRadius:7 }}>
 
             <Picker
             style={{ width: '105%', fontWeight: "bold", color: "#AAA" }}
@@ -98,7 +98,7 @@ const ProductDetailPage = ({ route }) => {
           </Picker>
       </View>  : null}
 
-        <CustomButton style={{marginTop:10,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Sepete Ekle"  onPress={handleCartsProduct} />
+        <CustomButton style={{marginTop:15,width:"75%",marginLeft:"auto",marginRight:"auto"}}title="Sepete Ekle"  onPress={handleCartsProduct} />
     </SafeAreaView>
   );
 };
