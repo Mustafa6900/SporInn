@@ -40,7 +40,7 @@ const AddAdressPage = () => {
         },
       ])
     if (error) {
-      console.log("Hata", error);
+      console.error(error);
     } else {
       navigation.replace('PaymentMethods');
     }

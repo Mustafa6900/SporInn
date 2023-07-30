@@ -11,6 +11,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
   const { session } = useContext(AuthContext);
   const [quantityDropdown, setQuantityDropdown] = useState({});
 
+
   useEffect(() => {
       // Başlangıçta tüm ürünleri işaretli olarak ayarla
       setCheckedStates(Array(item.length).fill(true));
@@ -41,11 +42,26 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
           .from('users_carts')
           .select('*,product_id,products(id,*)')
           .eq('created_id', session.user.id);
-  
         if (fetchError) {
           console.error(fetchError);
         } else {
-          setItemss(updatedData || []); 
+          const newupdatedData = await Promise.all(updatedData.map(async (item) => {
+            if (item.products.image_url) {
+              const { data: imageData, error: imageError } = await supabase.storage
+                .from('productsimage')
+                .getPublicUrl(item.products.image_url);
+
+              if (imageError) {
+                console.log('Resim alınamadı:', imageError.message);
+              } else {
+                if (imageData) {
+                  item.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                }
+              }
+            }
+            return item;
+          }));
+          setItemss(newupdatedData || []); 
         }
       }
     } catch (error) {

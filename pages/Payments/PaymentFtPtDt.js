@@ -53,7 +53,8 @@ export default function Payment({ route }) {
   const handlePurchase = async () => {
     try {
       const qrCodeData = generateQRCodeData();
-      const { data, error } = await supabase
+      if (selectedCreditCard ) { 
+      const { data: packagesdata, error : packagesError } = await supabase
         .from('users_fitness_packages')
         .insert([
           {
@@ -63,10 +64,7 @@ export default function Payment({ route }) {
             purchase_date : new Date(),
             created_at: new Date(),
           },
-        ]);
-      if (error) {
-        console.error(error);
-      } else {
+        ]); 
         const { data, error } = await supabase
           .from('orders')
           .insert([
@@ -80,17 +78,19 @@ export default function Payment({ route }) {
               status: "Onaylandı",
             },
           ]);
-        if (error) {
-          console.error(error);
+        if (error || packagesError) {
+          console.error(error , packagesError);
         }
         else
         {
           Alert.alert('Sipariş Alındı');
-          navigation.navigate('Tabbar');
-          
+          navigation.navigate('Tabbar'); 
         }
-      }
-    } catch (error) {
+      } else {
+        Alert.alert('Lütfen kredi kartı seçiniz');
+     }
+      } 
+     catch (error) {
       console.error(error);
     }
   };

@@ -1,14 +1,13 @@
-import React, { useState, useEffect,useContext } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View, SafeAreaView } from "react-native";
+import React, { useContext } from 'react';
+import { StyleSheet,SafeAreaView } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
 import AddressAddInformation from "./adressaddinformation";
-import { useNavigation } from "@react-navigation/native";
-import { supabase } from "../../../supabaseClient";
 import { AuthContext } from '../../Auth/AuthContext';
+
 const AddAdressPage = () => {
-    const navigation = useNavigation();
     const { session } = useContext(AuthContext);
+    
     return (
         <SafeAreaView style={styles.container}>
         <Header title="Adres Ekle" />

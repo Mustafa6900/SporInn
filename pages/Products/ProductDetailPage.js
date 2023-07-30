@@ -1,18 +1,25 @@
 import React,{useState,useContext} from 'react';
-import { View, Text, StyleSheet,Image,SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet,Image,SafeAreaView,Alert,TouchableOpacity } from 'react-native';
 import Header from '../../components/header';
 import BackButton from '../../components/backbutton';
 import Categoryslider from '../../components/categoryslider';
 import OutputText from '../../components/outputText';
 import CustomButton from '../../components/custombutton';
 import FavoriteButton from '../../components/favoritebutton';
+import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '../../supabaseClient';
 import { AuthContext } from '../Auth/AuthContext';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 const ProductDetailPage = ({ route }) => {
   const { item } = route.params;
   const { session } = useContext(AuthContext);
   const [quantityDropdown, setQuantityDropdown] = useState(1);
+  const navigation = useNavigation();
+
+  const navigateToCart = () => {
+    navigation.navigate('Cart');
+  };
 
   const categories = [
     // Diğer kategorileri buraya ekleyin
@@ -73,7 +80,10 @@ const ProductDetailPage = ({ route }) => {
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
         <BackButton left={15} top={43} />
-        <FavoriteButton left={345} top={45} item_id={item.id}/>
+        <FavoriteButton left={360} top={45} item_id={item.id}/>
+        <TouchableOpacity onPress={navigateToCart} style={{ left: 310, top: 45, position: "absolute" }}>
+        <Ionicons name="cart-outline" size={40} />        
+        </TouchableOpacity>
         <View style={styles.topContainer}>
         <Image source={{uri: item.imageData?.publicUrl} } style={styles.topContainerImage} />
         <View style={styles.info}>

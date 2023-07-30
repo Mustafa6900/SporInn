@@ -37,7 +37,7 @@ const AddressAddInformation = ({ session }) => {
     ])
     
   if (error) {
-    console.log("Hata", error);
+    console.error(error);
   } else {
     navigation.replace('Adresses');
   }
@@ -142,9 +142,10 @@ const AddressAddInformation = ({ session }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     borderRadius: 3,
     backgroundColor: "#AAAAAA",
-    paddingBottom: 20,
+    marginBottom: 20,
     marginTop: 20,
   },
   title: {
