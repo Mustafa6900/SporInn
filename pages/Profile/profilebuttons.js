@@ -12,21 +12,10 @@ const ProfileButtons = () => {
             navigation.navigate('FavoriteProducts');
         }
         else if(name=="Sepetim"){
-            navigation.navigate('Cart' ); 
+            navigation.navigate('Cart'); 
         }
         else if(name=="Siparişlerim"){
-            //navigation.navigate('Orders');
-            Alert.alert(
-                'Siparişlerim',
-                'Bu özellik şu anda tasarım aşamasında.',
-                [
-                    {
-                        text: 'Tamam',
-                        style: 'cancel',
-                    },
-                ],
-            );
-            
+            navigation.navigate('Orders'); 
         }
         else if(name=="Ödeme Yöntemlerim"){
             navigation.navigate('PaymentMethods');

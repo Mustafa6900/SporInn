@@ -8,7 +8,7 @@ const SubCategories = ({ items, onItemPress }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   useEffect(() => {
 
-    if (items && items[0]?.name === "İçerik") {
+    if (items && items[0]?.name === "İçerik" ) {
       setItemss(items);
     }
     else{

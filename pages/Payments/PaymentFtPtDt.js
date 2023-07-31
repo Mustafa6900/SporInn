@@ -75,7 +75,7 @@ export default function Payment({ route }) {
               credit_cards_id : selectedCreditCard.id,
               fitness_centers_packages_id : packetid,
               created_at: new Date(),
-              status: "Onaylandı",
+              status: "Teslim Edildi",
             },
           ]);
         if (error || packagesError) {

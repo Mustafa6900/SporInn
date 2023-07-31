@@ -122,7 +122,7 @@ export default function Payment({ route }) {
               credit_cards_id: selectedCreditCard.id,
               sports_facilities_config_id: items.id,
               created_at: new Date(),
-              status: "Onaylandı",
+              status: "Teslim Edildi",
             },
           ]);
         if (error) {
