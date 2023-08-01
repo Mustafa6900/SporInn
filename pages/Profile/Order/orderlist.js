@@ -28,29 +28,26 @@ const OrderList = () => {
       return order;
     });
   };
-  
+
   const mergeOrdersWithSportsFacilitiesData = () => {
-    // Diziyi tek bir düz diziye indirme
-    const updatedDataFlat = ordersSportsFacilities.flat();
-    // orders dizisindeki her sipariş nesnesine uygun spor tesisleri verilerini ekleyin
     const mergedOrders = orders.map((order) => {
       if (order.sports_facilities_config_id !== null) {
         // ordersSportsFacilities dizisinde uygun veriyi bulma
-        const sportsFacilitiesData = updatedDataFlat.find(
-          (sportsFacilitiesItem) => sportsFacilitiesItem.id === order.sports_facilities_config_id 
+        const sportsData = ordersSportsFacilities.find(
+          (sportsItem) => sportsItem.id === order.sports_facilities_config_id
         );
-        console.log(sportsFacilitiesData)
-        // sportsFacilitiesData bulunduysa, order nesnesine ekleyin
-        if (sportsFacilitiesData) {
-          order.sportsData = sportsFacilitiesData;
+
+        // sportsData bulunduysa, order nesnesine ekleyin
+        if (sportsData) {
+          order.sportsData = sportsData;
         }
       }
       return order;
     });
-  
   };
 
   mergeOrdersWithSportsFacilitiesData();
+
   mergeOrdersWithFitnessData();
 
   useEffect(() => {
@@ -172,59 +169,48 @@ const OrderList = () => {
             .map(async (order) => {
               const { data, error } = await supabase
                 .from("sports_facilities_config")
-                .select("created_id")
+                .select("*,sports_facilities(id,*)")
                 .eq("id", order.sports_facilities_config_id)
                 .order("created_at", { ascending: false });
               if (error) {
                 console.error(error);
+                return [];
               } else {
                 const updatedData = await Promise.all(
                   data.map(async (item) => {
-                    const { data: sportsData, error: sportsError } = await supabase
-                      .from("sports_facilities")
-                      .select("*")
-                      .eq("created_id", item.created_id)
-                      .order("created_at", { ascending: false });
-                    if (sportsError) {
-                      console.error(sportsError);
-                    } else {
-                      if (sportsData && sportsData.length > 0) {
-                        const sportsItem = sportsData[0]; // İlk öğeyi alıyoruz
-                        if (sportsItem.image_url) {
-                          const { data: imageData, error: imageError } = await supabase.storage
-                            .from("sportsfacilityimage")
-                            .getPublicUrl(sportsItem.image_url);
-                          if (imageError) {
-                            console.error("Resim alınamadı:", imageError.message);
-                          } else {
-                            if (imageData) {
-                              sportsItem.imageData = imageData; // imageData verisini sportsData verisine ekleyin
-                            }
-                          }
+                    if (item.sports_facilities.image_url) {
+                      const { data: imageData, error: imageError } = await supabase.storage
+                        .from("sportsfacilityimage")
+                        .getPublicUrl(item.sports_facilities.image_url);
+  
+                      if (imageError) {
+                        console.log("Resim alınamadı:", imageError.message);
+                      } else {
+                        if (imageData) {
+                          item.sports_facilities.imageData = imageData; // imageData verisini tesis verisine ekleyin
                         }
                       }
-                      return { ...item, sportsData: sportsData[0] }; // İlgili sportsData nesnesini döndürüyoruz
                     }
-                  })
+                    return item;
+                  }
+                  )
                 );
-  
                 return updatedData;
               }
             })
         );
-  
         // Flatten the array of arrays into a single array
         const updatedDataFlat = updatedDataArray.flat();
         setOrdersSportsFacilities(updatedDataFlat);
-      };
-  
+    }
       fetchOrdersWithSportsFacilitiesItems();
     } catch (error) {
       console.error(error);
     }
   }, [orders]);
-  
-  
+
+
+
 
   const renderItem = ({ item }) => {
     return (
@@ -272,21 +258,22 @@ const OrderList = () => {
                 />
                 <Text style={styles.description}>{item.fitnessData.description}</Text>
                 </View>
-                <Text style={styles.delivery}>{item.fitnessData.name}</Text>
+                <Text style={styles.delivery}>{item.
+                fitnessData.name}</Text>
             </View>
             )}
-            {item.sportsData && item.sportsData.imageData && (
+            {item.sportsData && item.sportsData.sports_facilities.imageData && (
             <View>
-              {console.log(item)}
+            
                 <View style={{flexDirection:"row"}}>
-           
+               {console.log(item.sportsData.sports_facilities.imageData.publicUrl)}
                 <Image
-                  source={{ uri: item.sportsData.imageData.publicUrl }}
+                  source={{ uri: item.sportsData.sports_facilities.imageData.publicUrl }}
                   style={{ width: 80, height: 80, marginLeft: 10, marginTop: 15,borderRadius: 7 }}
                 />
-                <Text style={styles.description}>{item.sportsData.description}</Text>
+                <Text style={styles.description}>{item.sportsData.sports_facilities.description}</Text>
                 </View>
-                <Text style={styles.delivery}>{item.sportsData.name}</Text>
+                <Text style={styles.delivery}>{item.sportsData.sports_facilities.name}</Text>
             </View>
                 )}    
           </View>
