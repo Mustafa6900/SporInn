@@ -7,11 +7,6 @@ const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   useEffect(() => {
-
-    if (items && items[0]?.name === "İçerik" ) {
-      setItemss(items);
-    }
-    else{
     const fetchItems = async () => {
       try {
         let data;
@@ -69,18 +64,24 @@ const SubCategories = ({ items, onItemPress }) => {
             setItemss(categoryList); 
           }
         }
+        else if (items[0]?.name  === "Tümü")
+        {
+         
+          setItemss(items);
+          }
+        else if (items[0]?.name === "İçerik" ) {
+          setItemss(items);
+        }
       } catch (error) {
         console.error(error);
       }
     };
-    fetchItems();}
+    fetchItems();
   }, [items]);
 
   const handleItemPress = (item) => {
-    if (item.name !== "İçerik") {
       setSelectedCategory(item);
       onItemPress(item);
-    }
   };
   
 

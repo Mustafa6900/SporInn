@@ -266,7 +266,6 @@ const OrderList = () => {
             <View>
             
                 <View style={{flexDirection:"row"}}>
-               {console.log(item.sportsData.sports_facilities.imageData.publicUrl)}
                 <Image
                   source={{ uri: item.sportsData.sports_facilities.imageData.publicUrl }}
                   style={{ width: 80, height: 80, marginLeft: 10, marginTop: 15,borderRadius: 7 }}
