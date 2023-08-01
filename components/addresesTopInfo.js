@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, ImageBackground, View } from 'react-native';
 import CustomButton from './custombutton';
 
-const SportsTopInfo = ({ navigation }) => {
+const AddresesTopInfo = ({ navigation }) => {
 
     return (
         <ImageBackground source={require(".././assets/sliderpic/e.jpg")} style={styles.container}>
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
 
 });
 
-export default SportsTopInfo;
+export default AddresesTopInfo;
 
 // Spor sayfasının üst kısmında bulunan adres belirle veya seç ve listeler butonları için kullanılan component

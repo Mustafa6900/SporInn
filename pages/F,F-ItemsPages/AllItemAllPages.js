@@ -1,7 +1,7 @@
 import React,{useEffect,useState}from 'react';
 import { SafeAreaView, StyleSheet, SectionList,View } from 'react-native';
 import Header from '../../components/header';
-import SportsTopInfo from '../../components/sportsptTopinfo';
+import AddresesTopInfo from '../../components/addresesTopInfo';
 import InformationText from '../../components/informationtext';
 import BackButton from '../../components/backbutton';
 import SearchButton from '../../components/searchbutton';
@@ -104,7 +104,7 @@ const ItemAllPage = ({ route }) => {
           <>
          
            
-            <SportsTopInfo />
+            <AddresesTopInfo />
             <InformationText  text={`Şehrinizdeki ${title}  listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
             <SearchButton placeholder={title+" Ara"} />
             <SportTitle title={`Tüm ${title}`} />
