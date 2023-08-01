@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import ItemTitleFavorite from './titleFavorite';
+import { FontAwesome } from "react-native-vector-icons";
+
 const SportProfileInfo = ({items}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleImagePress = () => {
@@ -16,7 +18,7 @@ const SportProfileInfo = ({items}) => {
     <View>
       <TouchableOpacity onPress={handleImagePress}>
         <Image source={{uri: items.imageData?.publicUrl}} style={styles.image} />
-        <ItemTitleFavorite title={items.name} point="4.8" />
+        <ItemTitleFavorite title={items.name} point="4.8" visible={isModalVisible} />
       </TouchableOpacity>
       
       {isModalVisible && (
@@ -30,7 +32,8 @@ const SportProfileInfo = ({items}) => {
           <Text style={styles.modalText}>Detayları: {items.description}</Text>
         
           <TouchableOpacity onPress={closeModal} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Kapat</Text>
+          <FontAwesome name={"angle-double-up"} color={"#444"} size={30} style={{left:"3%",top:"1%"}}/>
+
           </TouchableOpacity>
         </View>
       )}
@@ -64,9 +67,8 @@ const styles = StyleSheet.create({
   
     },
   closeButton: {
-    backgroundColor: '#0D0D0D',
-    padding: 10,
-    borderRadius: 7,
+   
+   
     marginTop: 10,
     alignSelf: 'center',
   },
