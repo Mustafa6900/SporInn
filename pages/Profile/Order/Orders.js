@@ -9,7 +9,7 @@ export default function Cart(){
 
     const categories = [
         // Diğer kategorileri buraya ekleyin
-        { name: 'Tümü' },
+        { name: 'Tüm Siparişler' },
         { name: 'Devam Edenler' },
         { name: 'Tamamlananlar' },
         { name: 'İadeler' },

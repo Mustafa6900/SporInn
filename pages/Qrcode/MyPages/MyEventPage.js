@@ -38,7 +38,7 @@ export default function MyEventPage({ route }) {
                             .getPublicUrl(newdata[0]?.image_url);
                       
                           if (imageError) {
-                            console.log('Resim alınamadı:', imageError.message);
+                            console.error('Resim alınamadı:', imageError.message);
                           } else {
                             item.imageData = imageData; // imageData verisini tesis verisine ekleyin
                           }
@@ -84,7 +84,7 @@ export default function MyEventPage({ route }) {
                     .getPublicUrl(newdata[0]?.image_url);
                     
                   if (imageError) {
-                    console.log('Resim alınamadı:', imageError.message);
+                    console.error('Resim alınamadı:', imageError.message);
                   } else {
                     
                       item.imageData = imageData; // imageData verisini tesis verisine ekleyin
@@ -120,7 +120,7 @@ export default function MyEventPage({ route }) {
                             .getPublicUrl(item.challenges.image_url);
             
                           if (imageError) {
-                            console.log('Resim alınamadı:', imageError.message);
+                            console.error('Resim alınamadı:', imageError.message);
                           } else {
                             if (imageData) {                            
                               item.challenges.imageData = imageData; // Temizlenmiş URL'yi challenges objesine ekleyin

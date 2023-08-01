@@ -25,7 +25,7 @@ const MyFavoriteproductlist = () => {
                     .getPublicUrl(item.products.image_url);
     
                   if (imageError) {
-                    console.log('Resim alınamadı:', imageError.message);
+                    console.error('Resim alınamadı:', imageError.message);
                   } else {
                     if (imageData) {
                       item.products.imageData = imageData; // imageData verisini tesis verisine ekleyin

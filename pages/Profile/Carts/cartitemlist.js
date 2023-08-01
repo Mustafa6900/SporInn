@@ -52,7 +52,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
                 .getPublicUrl(item.products.image_url);
 
               if (imageError) {
-                console.log('Resim alınamadı:', imageError.message);
+                console.error('Resim alınamadı:', imageError.message);
               } else {
                 if (imageData) {
                   item.imageData = imageData; // imageData verisini tesis verisine ekleyin
@@ -112,7 +112,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
                 [
                   {
                     text: 'İptal',
-                    onPress: () => console.log('Cancel Pressed'),
+                    onPress: () => console.error('Cancel Pressed'),
                     style: 'cancel'
                   },
                   { text: 'Evet', onPress: () => handleDeleteProduct(cartItem.product_id) }

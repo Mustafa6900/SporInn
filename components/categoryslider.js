@@ -64,7 +64,7 @@ const SubCategories = ({ items, onItemPress }) => {
             setItemss(categoryList); 
           }
         }
-        else if (items[0]?.name  === "Tümü")
+        else if (items[0]?.name  === "Tüm Siparişler")
         {
          
           setItemss(items);
@@ -80,8 +80,10 @@ const SubCategories = ({ items, onItemPress }) => {
   }, [items]);
 
   const handleItemPress = (item) => {
+    if (item.name !== "İçerik" && item.name !== "Tüm Siparişler") {
       setSelectedCategory(item);
       onItemPress(item);
+    }
   };
   
 

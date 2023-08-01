@@ -83,7 +83,7 @@ const OrderList = () => {
                             .from("productsimage")
                             .getPublicUrl(product.image_url);
                           if (imageError) {
-                            console.log("Resim alınamadı:", imageError.message);
+                            console.error("Resim alınamadı:", imageError.message);
                           } else {
                             if (imageData) {
                               product.imageData = imageData; // imageData verisini tesis verisine ekleyin
@@ -133,7 +133,7 @@ const OrderList = () => {
                         .getPublicUrl(item.image_url);
   
                       if (imageError) {
-                        console.log("Resim alınamadı:", imageError.message);
+                        console.error("Resim alınamadı:", imageError.message);
                       } else {
                         if (imageData) {
                           item.imageData = imageData; // imageData verisini tesis verisine ekleyin
@@ -184,7 +184,7 @@ const OrderList = () => {
                         .getPublicUrl(item.sports_facilities.image_url);
   
                       if (imageError) {
-                        console.log("Resim alınamadı:", imageError.message);
+                        console.error("Resim alınamadı:", imageError.message);
                       } else {
                         if (imageData) {
                           item.sports_facilities.imageData = imageData; // imageData verisini tesis verisine ekleyin

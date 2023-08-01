@@ -15,8 +15,6 @@
     const categories = [
       // Diğer kategorileri buraya ekleyin
       { name: 'İçerik' },
-      { name: 'Yorumlar' },
-      { name: 'Google Yorumları' },
          // İçerik kategorisini diziye ekledik
     ];
 

@@ -31,7 +31,7 @@ const ItemAllPage = ({ route }) => {
                   .getPublicUrl(item.image_url);
   
                 if (imageError) {
-                  console.log('Resim alınamadı:', imageError.message);
+                  console.error('Resim alınamadı:', imageError.message);
                 } else {
                   if (imageData) {
                     item.imageData = imageData; // imageData verisini tesis verisine ekleyin
@@ -67,7 +67,7 @@ const ItemAllPage = ({ route }) => {
                 .getPublicUrl(item.image_url);
 
               if (imageError) {
-                console.log('Resim alınamadı:', imageError.message);
+                console.error('Resim alınamadı:', imageError.message);
               } else {
                 if (imageData) {
                   item.imageData = imageData; // imageData verisini tesis verisine ekleyin

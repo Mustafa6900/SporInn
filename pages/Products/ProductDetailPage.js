@@ -25,7 +25,7 @@ const ProductDetailPage = ({ route }) => {
     // Diğer kategorileri buraya ekleyin
     { name: 'İçerik' },
     { name: 'Yorumlar' },
-    { name: 'Google Yorumları' },   // İçerik kategorisini diziye ekledik
+    // İçerik kategorisini diziye ekledik
   ];
 
   const handleQuantityChange = (value) => {
@@ -87,7 +87,7 @@ const ProductDetailPage = ({ route }) => {
         <View style={styles.topContainer}>
         <Image source={{uri: item.imageData?.publicUrl} } style={styles.topContainerImage} />
         <View style={styles.info}>
-        <Text style={styles.price}>Fiyat: {item.price}</Text>
+        <Text style={styles.price}>Fiyat: ₺{item.price}</Text>
       <Text style={styles.title}>{item.name}</Text>
       <Text style={styles.detail}>{item.small_description}</Text>
       </View>
@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto',
         fontWeight: '600',
         letterSpacing: 0.4,
+        marginTop:5,
         },
    
 
