@@ -8,7 +8,7 @@ const ItemTitleFavorite = ({ title,point}) => {
         <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         
-        <AntDesign name="star" size={24} color="black" style={{left:320,position:"absolute"}} />
+        <AntDesign name="star" size={24} color="#FF6F25" style={{left:320,position:"absolute"}} />
         <Text style={{fontSize:20,fontWeight:"800",left:350,fontFamily:'Roboto',position:"absolute"}}>{point}</Text>
      
         </View>

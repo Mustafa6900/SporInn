@@ -1,6 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList,SafeAreaView } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../../supabaseClient';
 

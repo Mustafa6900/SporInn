@@ -94,7 +94,7 @@ const ItemList = ({ items, selectedCategory }) => {
         >
           <View style={styles.info}>
             <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemDetail}>{item.day}</Text>
+            <Text style={styles.itemDetail}>{item.day} Gün</Text>
             <Text style={styles.itemPrice}>₺{item.price}</Text>
           </View>
           <Image source={{  uri: item.imageData?.publicUrl }} style={styles.itemImage} />

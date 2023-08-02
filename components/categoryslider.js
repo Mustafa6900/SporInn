@@ -101,8 +101,8 @@ const SubCategories = ({ items, onItemPress }) => {
 
   return (
     <Animatable.View
-    animation="bounceIn" // İstediğiniz animasyonu buraya ekleyin
-    duration={2500} // Animasyon süresini burada ayarlayın
+    animation="zoomIn" // İstediğiniz animasyonu buraya ekleyin
+    duration={1000} // Animasyon süresini burada ayarlayın
     style={styles.container}
   >
     <FlatList

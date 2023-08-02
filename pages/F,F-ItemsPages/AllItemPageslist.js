@@ -22,7 +22,7 @@ const ItemList = ({ items}) => {
         <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.iteminfo}>{item.small_description}</Text>
         <View style={styles.itemInfo2}>
-          <AntDesign name="star" size={24} color="black" />
+          <AntDesign name="star" size={24} color="#FF6F25" />
           <Text style={styles.itemPoint}>{item.point}</Text>
         </View>
       </View>
