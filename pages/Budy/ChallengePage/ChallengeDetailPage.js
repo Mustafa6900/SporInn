@@ -1,5 +1,5 @@
 import React,{useContext} from 'react';
-import { View, Text, StyleSheet,Image,SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet,Image,SafeAreaView,Alert } from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
 import Categoryslider from '../../../components/categoryslider';
@@ -26,9 +26,13 @@ const generateQRCodeData = () => {
     const { data, error } = await supabase
     .from('users_challenge')
     .insert([{ user_id: session.user.id, created_at: new Date(),challenge_id: eventId, start_date: eventStartTime, end_date: eventEndTime,qr_code: qrCodeData }]);
+
     if (error) {
       console.error(error);
       return;
+    }
+    else{
+      Alert.alert("Challenge'a katıldınız!");
     }
   } catch (error) {
     console.error(error);
