@@ -3,7 +3,6 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react
 import { FontAwesome } from "react-native-vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 const CommentList = ({ item }) => {
   const [comments, setComments] = useState([]);

@@ -7,14 +7,14 @@ import * as Animatable from 'react-native-animatable';
 import { MaterialIcons } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
 import { AuthContext } from '../pages/Auth/AuthContext';
-import StarRating from 'react-native-star-rating';
+import StarRating from 'react-native-star-rating-fixed-viewproptype';
 
 const SportProfileInfo = ({ items }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [newComment, setNewComment] = useState('');
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(3);
   const { session } = useContext(AuthContext);
 
   const userName = session.user?.user_metadata?.first_name;
@@ -181,9 +181,11 @@ const SportProfileInfo = ({ items }) => {
             disabled={false}
             maxStars={5}
             rating={rating}
+
             selectedStar={(rating) => setRating(rating)}
             fullStarColor="#FF6F25"
             starSize={30}
+            starStyle={{ marginHorizontal: 5 }}
           />
           <TextInput
             style={styles.commentInput}

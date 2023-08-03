@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView,ActivityIndicator  } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import InformationText from '../../../components/informationtext';
+import InformationText2 from '../../../components/informationtext2';
 import * as Animatable from 'react-native-animatable';
 import { supabase } from "../../../supabaseClient.js";
 import { useNavigation } from '@react-navigation/native';
@@ -276,7 +276,7 @@ const ItemList = ({selectedCategory }) => {
           pagingEnabled
         />
         <View style={{bottom:10}}> 
-        <InformationText text="Lütfen randevu almak istediğiniz tarihi seçiniz." />
+        <InformationText2 text="Lütfen randevu almak istediğiniz tarihi seçiniz." />
         </View>
         </Animatable.View>
       ) : (
@@ -316,7 +316,7 @@ const ItemList = ({selectedCategory }) => {
           </TouchableOpacity> 
           {!isAppointmentButtonVisible && !isAppointmentTaken && (
   <View style={{ bottom: 15, right: 20 }}>
-    <InformationText text="Lütfen randevu almak istediğiniz saati seçiniz." />
+    <InformationText2 text="Lütfen randevu almak istediğiniz saati seçiniz." />
   </View>
 )}
 
