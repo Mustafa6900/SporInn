@@ -3,13 +3,16 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react
 import { FontAwesome } from "react-native-vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const CommentList = ({ item }) => {
   const [comments, setComments] = useState([]);
   const [selectedComment, setSelectedComment] = useState(null);
   const [selectedCommentUser, setSelectedCommentUser] = useState(null);
-  console.log(comments)
+
+  
   useEffect(() => {
+    if(item.type === 'fitness_center'){
     const fetchComments = async () => {
       const { data: fetchedComments, error } = await supabase
         .from('comments')
@@ -22,6 +25,21 @@ const CommentList = ({ item }) => {
       }
     };
     fetchComments();
+  }
+  else if(item.type === 'sports_facility'){
+    const fetchComments = async () => {
+      const { data: fetchedComments, error } = await supabase
+        .from('comments')
+        .select('*,profiles(first_name,last_name)') 
+        .eq('sports_facilities_id', item.id);
+      if (error) {
+        console.error(error);
+      } else {
+        setComments(fetchedComments);
+      }
+    }
+    fetchComments();
+  }
   }, []);
 
 
@@ -31,7 +49,6 @@ const CommentList = ({ item }) => {
         <FontAwesome name={"comment"} color={"#AAAAAA"} size={20} style={{ marginRight: 10, marginLeft: 10 }} />
         <Text style={styles.commentText}>{item.comments_text}</Text>
         <AntDesign name="star" size={24} color="#FF6F25" style={{ left: "79%", position: "absolute" }} />
-     
         <Text style={{ fontSize: 20, fontWeight: "800", left: "87%", fontFamily: 'Roboto', position: "absolute", color: "#AAAAAA" }}>{item.rating}.0</Text>
       </View>
     </TouchableOpacity>
@@ -39,29 +56,34 @@ const CommentList = ({ item }) => {
 
   return (
     <View style={styles.container}>
+    {comments.length > 0 ? (
       <FlatList
         data={comments}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         showsVerticalScrollIndicator={false}
       />
+    ) : (
+      <Text style={styles.noCommentText}>Henüz gösterilebilecek bir yorum yok</Text>
+    )}
 
-      {/* Modal */}
-      <Modal visible={selectedComment !== null} transparent animationType="fade">
-        <View style={styles.modalContainer}>
-           <Text style={styles.modalUserText}>{selectedCommentUser}</Text>
-          <Text style={styles.modalText}>{selectedComment}</Text>
-          <TouchableOpacity onPress={() => setSelectedComment(null)} style={styles.closeButton}>
-            <FontAwesome name={"close"} color={"#0D0D0D"} size={40} />
-          </TouchableOpacity>
-        </View>
-      </Modal>
-    </View>
+
+    <Modal visible={selectedComment !== null} transparent animationType="fade">
+      <View style={styles.modalContainer}>
+        <Text style={styles.modalUserText}>{selectedCommentUser}</Text>
+        <Text style={styles.modalText}>{selectedComment}</Text>
+        <TouchableOpacity onPress={() => setSelectedComment(null)} style={styles.closeButton}>
+          <FontAwesome name={"close"} color={"#0D0D0D"} size={40} />
+        </TouchableOpacity>
+      </View>
+    </Modal>
+  </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    minHeight: 175,
     maxHeight: 175,
     borderRadius: 7,
     borderColor: '#FF6F25',
@@ -78,6 +100,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#AAAAAA',
     width: "65%",
+  },
+  noCommentText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#AAAAAA',
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 10,
   },
   modalContainer: {
     flex: 1,

@@ -8,7 +8,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
 import { AuthContext } from '../pages/Auth/AuthContext';
 import StarRating from 'react-native-star-rating';
-import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
 const SportProfileInfo = ({ items }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,6 +19,7 @@ const SportProfileInfo = ({ items }) => {
 
   const userName = session.user?.user_metadata?.first_name;
   const lastName = session.user?.user_metadata?.last_name;
+
 
   const handleImagePress = () => {
     setIsModalVisible(true);
@@ -34,11 +34,11 @@ const SportProfileInfo = ({ items }) => {
   };
 
   const handleNewCommentPress = () => {
-    console.log("Yorum Yap");
     setIsCommentModalVisible(true); // Yorum yap popup'ını açmak için modalı görünür yap
   };
 
   const handleNewCommentSubmit = async () => {
+    if(items.type === "fitness_center"){
     try {
         const { data, error } = await supabase.from('comments').insert({
           created_at: new Date(),
@@ -51,7 +51,6 @@ const SportProfileInfo = ({ items }) => {
         if (error) {
           console.error("Error inserting comment:", error.message);
         } else {
-          console.log("Comment inserted successfully");
           Alert.alert("Yorumunuz başarıyla eklendi!");
         }
         setNewComment('');
@@ -61,6 +60,29 @@ const SportProfileInfo = ({ items }) => {
     } catch (error) {
       console.error("Error:", error.message);
     }
+  }
+  else if(items.type === "sports_facility"){
+    try {
+      const { data, error } = await supabase.from('comments').insert({
+        created_at: new Date(),
+        sports_facilities_id: items.id,
+        created_id: session.user.id,
+        rating: rating,
+        comments_text: newComment,
+      });
+      if (error) {
+        console.error("Error inserting comment:", error.message);
+      } else {
+        Alert.alert("Yorumunuz başarıyla eklendi!");
+      }
+      setNewComment('');
+      setRating(0);
+      setIsCommentModalVisible(false);
+    
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+  };
   };
 
 
@@ -116,8 +138,16 @@ const SportProfileInfo = ({ items }) => {
               <TouchableOpacity onPress={handleCommentsPress} style={styles.commentButton}>
                 {showComments ? (
                   <>
+                  {items.type === "fitness_center" ? (
+                    <>
                     <MaterialIcons name={"fitness-center"} color={"#0d0d0d"} size={20} style={{ position: "absolute", left: 10 }} />
                     <Text style={styles.commentText}>Salon Detayları</Text>
+                    </>
+                  ) : (
+                    <>
+                    <Text style={styles.commentText}>Tesis Detayları    </Text>
+                    </>
+                  )}
                   </>
                 ) : (
                   <>
