@@ -1,21 +1,22 @@
 import * as React from "react";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-
+import {StyleSheet, Text, View } from "react-native";
 const OutputText = ({ text, style }) => {
     return (
-        <View style={styles.container}>
-        <Text style={[styles.text, style]}>{text}</Text>
-        </View>
+      <View style={styles.container}>
+       
+          <Text style={[styles.text, style]}>{text}</Text>
+   
+      </View>
     );
-    }
+  };
+  
 
 const styles = StyleSheet.create({
-    container: {
-        
+    container: { 
         backgroundColor: "#AAA",
         borderRadius: 7,
-        width:350,
-        height: 280,
+        width:"90%",
+        height: "30%",
         marginLeft:"auto",
         marginRight:"auto",
         marginTop: 35,

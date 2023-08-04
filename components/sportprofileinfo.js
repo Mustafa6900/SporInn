@@ -45,8 +45,7 @@ const SportProfileInfo = ({ items }) => {
           fitness_centers_id: items.id,
           created_id: session.user.id,
           rating: rating,
-          comments_text: newComment,
-         
+          comments_text: newComment, 
         });
         if (error) {
           console.error("Error inserting comment:", error.message);

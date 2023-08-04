@@ -8,13 +8,11 @@ import OrderList from "./orderlist";
 export default function Cart(){
 
     const categories = [
-        // Diğer kategorileri buraya ekleyin
         { name: 'Tüm Siparişler' },
         { name: 'Devam Edenler' },
         { name: 'Tamamlananlar' },
         { name: 'İadeler' },
         { name: 'İptaller'}
-           // İçerik kategorisini diziye ekledik
       ];
 
     return(

@@ -6,7 +6,11 @@ import * as Animatable from 'react-native-animatable';
 const SubCategories = ({ items, onItemPress }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
   useEffect(() => {
+    fetchItems();
+  }, []);
+
     const fetchItems = async () => {
       try {
         let data;
@@ -64,27 +68,21 @@ const SubCategories = ({ items, onItemPress }) => {
             setItemss(categoryList); 
           }
         }
-        else if (items[0]?.name  === "Tüm Siparişler")
-        {
-         
+        else {
           setItemss(items);
-          }
-        else if (items[0]?.name === "İçerik" ) {
-          setItemss(items);
+          setSelectedCategory(items[0]); 
         }
       } catch (error) {
         console.error(error);
       }
     };
-    fetchItems();
-  }, [items]);
 
   const handleItemPress = (item) => {
-    if (item.name !== "İçerik" && item.name !== "Tüm Siparişler") {
-      setSelectedCategory(item);
-      onItemPress(item);
-    }
+      setSelectedCategory(item); // Yeni bir kategori seçildiyse seçimi güncelle
+      onItemPress(item); // onItemPress fonksiyonunu çağır
+    
   };
+  
   
 
   const renderItem = ({ item }) => (
@@ -95,6 +93,7 @@ const SubCategories = ({ items, onItemPress }) => {
       ]}
       onPress={() => handleItemPress(item)}
     >
+     
       {item.name}
     </Text>
   );
@@ -112,6 +111,7 @@ const SubCategories = ({ items, onItemPress }) => {
       renderItem={renderItem}
       keyExtractor={(item, index) => index.toString()}
       showsHorizontalScrollIndicator={false}
+     
     />
   </Animatable.View>
   );

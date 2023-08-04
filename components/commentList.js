@@ -39,6 +39,20 @@ const CommentList = ({ item }) => {
     }
     fetchComments();
   }
+  else{
+    const fetchComments = async () => {
+      const { data: fetchedComments, error } = await supabase
+        .from('comments')
+        .select('*,profiles(first_name,last_name)') 
+        .eq('products_id', item.id);
+      if (error) {
+        console.error(error);
+      } else {
+        setComments(fetchedComments);
+      }
+    }
+    fetchComments();
+  }
   }, []);
 
 
