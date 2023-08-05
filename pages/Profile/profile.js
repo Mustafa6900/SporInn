@@ -2,7 +2,6 @@ import React, { useState, useEffect,useContext } from 'react';
 import {ScrollView,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
 import ProfileTopInfo from '../../components/profileTopinfo';
-import profiledata from './profiledata.json';
 import ProfileButtons from './profilebuttons';
 import LanguageVersionbuttons from './languageVersionbuttons';
 import { AuthContext } from '../Auth/AuthContext';
