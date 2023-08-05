@@ -12,11 +12,23 @@ const ItemAllPage = ({ route }) => {
   const { category } = route.params;
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
-  useEffect(() => {
+  const [searchResults, setSearchResults] = useState([]);
 
+  console.log('items', items);
+
+  const handleSearchResults = async (results) => {
+    setSearchResults(results);
+    setItems(results|| []);
+  };
+
+  console.log('searchResults', searchResults);
+
+  useEffect(() => {
+    if (searchResults.length === 0) {
     if (category === "Spor Salonları") {
       const fetchData = async () => {
         try {
+          
           const { data, error } = await supabase
             .from('fitness_centers')
             .select('*');
@@ -63,7 +75,7 @@ const ItemAllPage = ({ route }) => {
           const updatedData = await Promise.all(data.map(async (item) => {
             if (item.image_url) {
               const { data: imageData, error: imageError } = await supabase.storage
-                .from('fitnesscenterimage')
+                .from('sportsfacilityimage')
                 .getPublicUrl(item.image_url);
 
               if (imageError) {
@@ -85,7 +97,8 @@ const ItemAllPage = ({ route }) => {
     };
     fetchData();
 
-  }}, []);
+  }}},
+ [searchResults]);
 
 
   const sections = [
@@ -106,7 +119,10 @@ const ItemAllPage = ({ route }) => {
            
             <AddresesTopInfo />
             <InformationText  text={`Şehrinizdeki ${title}  listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
-            <SearchButton placeholder={title+" Ara"} />
+            {category === "Spor Salonları" ? 
+            <SearchButton name={"Fitness Salonu"} placeholder={title+" Ara"} table={"fitness_centers"} column={"name"} storage={"fitnesscenterimage"} onSearchResults={handleSearchResults} /> : 
+            <SearchButton name={"Spor Tesisi"} placeholder={title+" Ara"} table={"sports_facilities"} column={"name"} storage={"sportsfacilityimage"}onSearchResults={handleSearchResults} categoryId={category.id}/>
+             }
             <SportTitle title={`Tüm ${title}`} />
             
           </>
