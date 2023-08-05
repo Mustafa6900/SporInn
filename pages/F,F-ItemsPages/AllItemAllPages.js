@@ -14,14 +14,12 @@ const ItemAllPage = ({ route }) => {
   const [title, setTitle] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  console.log('items', items);
 
   const handleSearchResults = async (results) => {
     setSearchResults(results);
     setItems(results|| []);
   };
 
-  console.log('searchResults', searchResults);
 
   useEffect(() => {
     if (searchResults.length === 0) {

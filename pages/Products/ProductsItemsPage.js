@@ -7,20 +7,18 @@ import CategorySlider from '../../components/categoryslider';
 import ProductList from './productsItemList';
 import { supabase } from '../../supabaseClient';
 export default function ProductsItems({ route }) {
-        const { category } = route.params;
-        const [items, setItems] = useState([]);
-        const [selectedCategory, setSelectedCategory] = useState(null);
-    const handleCategorySelect = (selectedCategory) => {
-      setSelectedCategory(selectedCategory);
-    };
+    const { category,categoryId } = route.params;
+    const [items, setItems] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
 
-        useEffect(() => {
+    useEffect(() => {
           const fetchData = async () => {
             try {
               const { data, error } = await supabase
                 .from('products')
                 .select('*,categoryid,categories(id,name)')
-                .eq('main_category', category);
+                .eq('main_category_id', categoryId);
               if (error) {
                 console.error(error);
               } else {
@@ -50,21 +48,29 @@ export default function ProductsItems({ route }) {
           };
           fetchData();
           
-        }, []);
+    }, []);
 
+    const handleCategorySelect = (selectedCategory) => {
+      setSelectedCategory(selectedCategory);
+    };
+
+    const handleSearchResults = async (results) => {
+      setSearchResults(results);
+  
+    };
 
     return (
         <SafeAreaView style={styles.container}>
         <Header title={category} />
         <BackButton left={15} top={43} />
         <View >
-        <SearchButton placeholder={`${category} Ara`} />
+        <SearchButton placeholder={`${category} Ara`} table={"products"} column={"name"} storage={"productsimage"} onSearchResults={handleSearchResults} name={"Ürün"} categoryId={categoryId} selectedCategory={selectedCategory} />
         </View>
         {items.length > 0 ? (
         <>
-          <CategorySlider items={items[0]} onItemPress={handleCategorySelect} />
+          <CategorySlider items={items[0]} onItemPress={handleCategorySelect}/>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <ProductList items={items} selectedCategory={selectedCategory}/>
+            <ProductList items={items} selectedCategory={selectedCategory} searchItem={searchResults}/>
           </ScrollView>
         </>
       ) : (

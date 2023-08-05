@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { supabase } from "../supabaseClient.js";
 
-const SearchButton = ({ name,placeholder, table, column, storage, onSearchResults,categoryId }) => {
+const SearchButton = ({ name,placeholder, table, column, storage, onSearchResults,categoryId,selectedCategory }) => {
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = async () => {
@@ -123,6 +123,91 @@ const SearchButton = ({ name,placeholder, table, column, storage, onSearchResult
           alert(`${name} bulunamadı.`);
         }
       }
+        else if(name==="Ürün"){
+         // Non-empty search text, perform the search as usual
+         if(selectedCategory.id!==0){
+         const { data, error } = await supabase
+         .from(table)
+         .select('*')
+         .eq('main_category_id', categoryId)
+         .eq('categoryid', selectedCategory.id)
+         .ilike(column, `%${searchText}%`);
+         
+       if (error) {
+         console.error(error);
+       } else {
+         // If the storage name is provided, fetch and attach the imageData to each item
+         if (storage) {
+           const updatedData = await Promise.all(data.map(async (item) => {
+             if (item.image_url) {
+               const { data: imageData, error: imageError } = await supabase.storage
+                 .from(storage)
+                 .getPublicUrl(item.image_url);
+ 
+               if (imageError) {
+                 console.error('Resim alınamadı:', imageError.message);
+               } else {
+                 if (imageData) {
+                   item.imageData = imageData;
+                 }
+               }
+             }
+             return item;
+           }));
+ 
+           onSearchResults(updatedData);
+         } else {
+           // If no storage name is provided, simply pass the search results to the parent component
+           onSearchResults(data);
+         }
+       }
+       if (data.length === 0) {
+        // If the search results are empty, show an alert message
+        alert(`${name} bulunamadı.`);
+      }
+    }
+       else{
+        const { data, error } = await supabase
+        .from(table)
+        .select('*')
+        .eq('main_category_id', categoryId)
+        .ilike(column, `%${searchText}%`);
+
+        if (error) {
+            console.error(error);
+          } else {
+            // If the storage name is provided, fetch and attach the imageData to each item
+            if (storage) {
+              const updatedData = await Promise.all(data.map(async (item) => {
+                if (item.image_url) {
+                  const { data: imageData, error: imageError } = await supabase.storage
+                    .from(storage)
+                    .getPublicUrl(item.image_url);
+    
+                  if (imageError) {
+                    console.error('Resim alınamadı:', imageError.message);
+                  } else {
+                    if (imageData) {
+                      item.imageData = imageData;
+                    }
+                  }
+                }
+                return item;
+              }));
+    
+              onSearchResults(updatedData);
+            } else {
+              // If no storage name is provided, simply pass the search results to the parent component
+              onSearchResults(data);
+            }
+          }
+          if (data.length === 0) {
+            // If the search results are empty, show an alert message
+            alert(`${name} bulunamadı.`);
+          }
+    }
+ 
+        }
         else{
             const { data, error } = await supabase
             .from(table)
@@ -164,7 +249,6 @@ const SearchButton = ({ name,placeholder, table, column, storage, onSearchResult
             alert(`${name} bulunamadı.`);
           }
         }
-
     }}
      catch (error) {
       console.error(error);

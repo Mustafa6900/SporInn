@@ -9,7 +9,10 @@ import { supabase } from '../../supabaseClient';
 
 export default function Products({ navigation }) {
 
+    const [searchResults, setSearchResults] = useState([]);
     const [categories, setCategories] = useState([]);
+    const navigations = useNavigation();
+
 
       useEffect(() => {
         const fetchCategories = async () => {
@@ -46,23 +49,25 @@ export default function Products({ navigation }) {
         fetchCategories();
     }, []);
 
+      const handleSearchResults = async (results) => {
+        setSearchResults(results);   
+    };
 
-      const navigations = useNavigation();
       const handleCategoryPress = (category) => {
-        navigations.navigate('ProductsItems', { category: category.name });
-     };
+        navigations.navigate('ProductsItems', { category: category.name ,categoryId:category.id });
+    };
     
     return (
         <SafeAreaView style={styles.container}>
             <Header title="Ürünler" />
             <View style={{top:15}}>
-            <SearchButton placeholder="Ürün ara" />
+            <SearchButton placeholder="Ürün Kategorisi Ara" table={"products_category"} column={"name"} storage={"productscategoryimage"} onSearchResults={handleSearchResults} name={"Ürün Kategorisi"}/>
             </View>
             <View style={{top:25}}>
             <Title title="Ürün Kategorileri" />
             </View>
          
-            <ProductCategoryList categories={categories} onCategoryPress={handleCategoryPress} />
+            <ProductCategoryList categories={categories} onCategoryPress={handleCategoryPress} searchItem={searchResults}/>
             
         </SafeAreaView>
     );

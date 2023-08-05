@@ -48,7 +48,8 @@ const SubCategories = ({ items, onItemPress }) => {
             setItemss(categoryList); 
           }
         }
-        else if (items.main_category === "Supplement") {
+        // Supplementleri aşağıdaki gibi çağırıyorum.
+        else if (items.type === "products") {
           const tumuKategori = {
             id: 0, 
             name: "Tümü", 
@@ -57,7 +58,7 @@ const SubCategories = ({ items, onItemPress }) => {
           const { data: categoryData, error: categoryError } = await supabase
             .from('categories')
             .select('*')
-            .eq('created_id',1);
+            .eq('created_id',items.main_category_id);
           if (categoryError) {
             console.error(categoryError);
           } else {

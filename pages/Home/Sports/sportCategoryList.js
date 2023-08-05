@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { supabase } from '../../../supabaseClient';
-const SportList = ({onCategoryPress }) => {
+const SportList = ({onCategoryPress, searchItem}) => {
   const handleCategoryPress = (category) => {
     onCategoryPress(category);
   };
@@ -43,11 +43,14 @@ const SportList = ({onCategoryPress }) => {
 
     fetchCategoriesData();
   }, []);
+
+  const filteredCategories = searchItem.length > 0 ? searchItem : categories;
+
   
 
   return (
     <View style={styles.container}>
-      {categories.map((category, index) => (
+      {filteredCategories.map((category, index) => (
         <TouchableOpacity
           key={index}
           style={styles.category}
@@ -101,4 +104,3 @@ const styles = StyleSheet.create({
 
 export default SportList;
 
-// Spor listesi (kategoriler) için kullanılan component

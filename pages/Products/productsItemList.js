@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../supabaseClient';
-const ProductList = ({ items, selectedCategory }) => {
+const ProductList = ({ items, selectedCategory, searchItem }) => {
     const navigation = useNavigation();
     const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.
     const [products, setProducts] = useState([]);
@@ -47,10 +47,13 @@ const ProductList = ({ items, selectedCategory }) => {
         fetchProducts();
       }, [selectCategory]);
 
+      const filteredCategories = searchItem.length > 0 ? searchItem : items;
+
+
       return (
         <View style={styles.container}>
           {selectCategory === 0 ? (
-            items.map((item, index) => (
+            filteredCategories.map((item, index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.item}
