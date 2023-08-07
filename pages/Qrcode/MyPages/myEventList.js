@@ -4,10 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../../supabaseClient';
 
 const ItemList = ({ items , category}) => {
-  const [Data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(true);
-
+ 
   useEffect(() => {
 
     if(category === 'Spor Salonlarım'){
@@ -55,9 +55,8 @@ const ItemList = ({ items , category}) => {
   }
   else{
     setData(items);
-    setIsLoading(false);}
- 
- 
+    setIsLoading(false);
+  }
   }, []);
   
   if (isLoading) {
@@ -98,7 +97,7 @@ const ItemList = ({ items , category}) => {
     return `(${startHours}:${startMinutes} / ${formattedStartDate})\n                       ↓\n (${endHours}:${endMinutes} / ${formattedEndDate})`;
 
   };
-
+  
 
   const renderItem = ({ item }) => (
     <View style={styles.container}>
@@ -120,14 +119,14 @@ const ItemList = ({ items , category}) => {
       <View style={styles.itemInfo}>
         {category === 'Spor Salonlarım' && (
          <>
-        <Text style={styles.itemName}>{Data[0].name}</Text>
+        <Text style={styles.itemName}>{data[0].name}</Text>
         <Text style={styles.iteminfo}>Kalan Gün: {item.remaining_days}</Text>
        
         </>
         )}
         {category === 'Randevularım' && (
           <>
-        <Text style={styles.itemName}>{Data[0].name} ( {item.sports_facilities_config.name} )</Text>
+        <Text style={styles.itemName}>{data[0].name} ( {item.sports_facilities_config.name} )</Text>
         <Text style={styles.iteminfo}>Randevu Tarihi: {formatDate(item.purchase_date,item.end_date)}</Text>
        
         </>

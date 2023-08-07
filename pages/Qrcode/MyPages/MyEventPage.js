@@ -7,146 +7,95 @@ import Title from '../../../components/sportptTitle';
 import MyEventList from './myEventList';
 import { supabase } from '../../../supabaseClient';
 import { AuthContext } from '../../Auth/AuthContext';
+
 export default function MyEventPage({ route }) {
-    const { category } = route.params;
-    const [items, setItems] = useState([]);
-    const { session } = useContext(AuthContext);
- 
-    useEffect(() => {
-        if (category === 'Spor Salonlarım') {
-        const fetchFitnessItems = async () => {
-            try {
-                const { data, error } = await supabase
-                .from('users_fitness_packages')
-                .select('*,packages_id, fitness_centers_packages(id,name,fitness_centers_id))')
-                .eq('user_id', session.user.id)   
-                if (error) {
-                    console.error(error);
-                } else {
-                
-                    const fitnessWithImage = await Promise.all(data.map(async (item) => {
-                        // 'sports_facilities_config' bilgisini almak için yeni bir istek yapın
-                        const { data: newdata, error: newdataError } = await supabase
-                          .from('fitness_centers')
-                          .select('*')
-                          .eq('created_id', item.fitness_centers_packages.fitness_centers_id);
-                        if (newdataError) {
-                          console.error(newdataError);
-                        } else {
-                          const { data: imageData, error: imageError } = await supabase.storage
-                            .from('fitnesscenterimage')
-                            .getPublicUrl(newdata[0]?.image_url);
-                      
-                          if (imageError) {
-                            console.error('Resim alınamadı:', imageError.message);
-                          } else {
-                            item.imageData = imageData; // imageData verisini tesis verisine ekleyin
-                          }
-                        }
-                        return item;
-                      }));
-                      
-                      setItems(fitnessWithImage || []);
-                      
-                    
-                }
+  const { category } = route.params;
+  const [items, setItems] = useState([]);
+  const { session } = useContext(AuthContext);
+  const [sections, setSections] = useState([]);
 
-                
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchFitnessItems();
-    }
-    else if (category === 'Randevularım') {
-        const fetchFacilityItems = async () => {
-          try {
-            const { data, error } = await supabase
-              .from('users_appointments')
-              .select('*,packages_id, sports_facilities_config(id,name,created_id)')
-              .eq('user_id', session.user.id);
-      
-            if (error) {
-              console.error(error);
-            } else {
-              const appointmentsWithImage = await Promise.all(data.map(async (item) => {
-                // 'sports_facilities_config' bilgisini almak için yeni bir istek yapın
-                const { data: newdata, error: newdataError } = await supabase
-                  .from('sports_facilities')
-                  .select('*')
-                  .eq('created_id', item.sports_facilities_config.created_id);
-                
-                if (newdataError) {
-                  console.error(newdataError);
-                } else {
-                    const { data: imageData, error: imageError } = await supabase.storage
-                    .from('sportsfacilityimage')
-                    .getPublicUrl(newdata[0]?.image_url);
-                    
-                  if (imageError) {
-                    console.error('Resim alınamadı:', imageError.message);
-                  } else {
-                    
-                      item.imageData = imageData; // imageData verisini tesis verisine ekleyin
-                  }
-                }
-                return item;
-              }));
-      
-              setItems(appointmentsWithImage || []);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        };
-      
-        fetchFacilityItems();
+
+
+
+
+  const handleSearchResults = async (results) => {
+        console.log(results)
+  };
+
+  const fetchItems = async () => {
+    try {
+      let data, error;
+
+      if (category === 'Spor Salonlarım') {
+        ({ data, error } = await supabase
+          .from('users_fitness_packages')
+          .select('*,packages_id, fitness_centers_packages(id,name,fitness_centers_id))')
+          .eq('user_id', session.user.id));
+      } else if (category === 'Randevularım') {
+        ({ data, error } = await supabase
+          .from('users_appointments')
+          .select('*,packages_id, sports_facilities_config(id,name,created_id)')
+          .eq('user_id', session.user.id));
+      } else {
+        ({ data, error } = await supabase
+          .from('users_challenge')
+          .select('*,challenge_id, challenges(id,name,created_id,small_description,description,image_url)')
+          .eq('user_id', session.user.id));
       }
-    else{
-        const fetchChallengeItems = async () => {
-            try{
-                const { data, error } = await supabase
-                .from('users_challenge')
-                .select('*,challenge_id, challenges(id,name,created_id,small_description,description,image_url)')
-                .eq('user_id', session.user.id)
-                if (error) {
-                    console.error(error);
-                }
-                else {
-                    const updatedData = await Promise.all(data.map(async (item) => {
-                        if (item.challenges?.image_url) {
-                          const { data: imageData, error: imageError } = await supabase.storage
-                            .from('challengeimage')
-                            .getPublicUrl(item.challenges.image_url);
-            
-                          if (imageError) {
-                            console.error('Resim alınamadı:', imageError.message);
-                          } else {
-                            if (imageData) {                            
-                              item.challenges.imageData = imageData; // Temizlenmiş URL'yi challenges objesine ekleyin
-                            }
-                          }
-                        }
-                        return item;
-                      }));
-            
-                      setItems(updatedData || []);
-                    }
-            } catch (error) {
-                console.error(error);
-            }
-            };
-            fetchChallengeItems();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      const itemsWithImage = await Promise.all(data.map(async (item) => {
+        const createdId = category === 'Spor Salonlarım'
+          ? item.fitness_centers_packages.fitness_centers_id
+          : category === 'Randevularım'
+          ? item.sports_facilities_config.created_id
+          : item.challenges.created_id;
+
+        const { data: newdata, error: newdataError } = await supabase
+          .from(category === 'Spor Salonlarım' ? 'fitness_centers' : category === 'Randevularım' ? 'sports_facilities' : 'challenges')
+          .select('*')
+          .eq('created_id', createdId);
+
+        if (newdataError) {
+          console.error(newdataError);
+          return null;
+        }
+
+        const { data: imageData, error: imageError } = await supabase.storage
+          .from(category === 'Spor Salonlarım' ? 'fitnesscenterimage' : category === 'Randevularım' ? 'sportsfacilityimage' : 'challengeimage')
+          .getPublicUrl(newdata[0]?.image_url);
+
+        if (imageError) {
+          console.error('Resim alınamadı:', imageError.message);
+          return null;
+        }
+
+        return {
+          ...item,
+          imageData,
+        };
+      }));
+
+      setItems(itemsWithImage.filter(item => item !== null));
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    }, []);
+  useEffect(() => {
+    fetchItems();
+  }, [category]);
 
+  const title = category;
 
-    const title = category;
- 
-    const sections = [
-        {  data: items },
-    ];
+  useEffect(() => {
+    setSections([{ data: items }]);
+  }, [items]);
+
 
 
     
@@ -163,7 +112,9 @@ export default function MyEventPage({ route }) {
             <>
             
             <View style={{top:-15}}>
-            <SearchButton placeholder={title} />
+              {category === 'Spor Salonlarım' &&  <SearchButton name={"Spor Salonum"} placeholder={title} onSearchResults={handleSearchResults}/>}
+              {category === 'Randevularım' && <Text style={{color:'white',fontSize:20,fontWeight:'bold',marginLeft:20}}>Randevularım</Text>}
+              {category === 'Challenge' && <Text style={{color:'white',fontSize:20,fontWeight:'bold',marginLeft:20}}>Challenge</Text>}
             </View>
             <Title title={title}/>
             
