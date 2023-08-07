@@ -16,12 +16,6 @@ export default function MyEventPage({ route }) {
 
 
 
-
-
-  const handleSearchResults = async (results) => {
-        console.log(results)
-  };
-
   const fetchItems = async () => {
     try {
       let data, error;
@@ -97,9 +91,6 @@ export default function MyEventPage({ route }) {
   }, [items]);
 
 
-
-    
-
     return (
         <SafeAreaView style={styles.container}>
         <Header title={title} />
@@ -109,15 +100,8 @@ export default function MyEventPage({ route }) {
         sections={sections}
         renderItem={({ item }) => <MyEventList items={[item]} category={category} />}
         renderSectionHeader={({ section }) => (
-            <>
-            
-            <View style={{top:-15}}>
-              {category === 'Spor Salonlarım' &&  <SearchButton name={"Spor Salonum"} placeholder={title} onSearchResults={handleSearchResults}/>}
-              {category === 'Randevularım' && <Text style={{color:'white',fontSize:20,fontWeight:'bold',marginLeft:20}}>Randevularım</Text>}
-              {category === 'Challenge' && <Text style={{color:'white',fontSize:20,fontWeight:'bold',marginLeft:20}}>Challenge</Text>}
-            </View>
+            <>          
             <Title title={title}/>
-            
             </>
         )}
         keyExtractor={(item, index) => index.toString()}
