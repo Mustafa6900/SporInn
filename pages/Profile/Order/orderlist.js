@@ -11,8 +11,6 @@ const OrderList = ({selectedCategory}) => {
   const [ordersSportsFacilities , setOrdersSportsFacilities] = useState([]); // ordersSportsFacilities nesnesini oluşturduk
   const [ordersFitness , setOrdersFitness] = useState([]); // ordersFitness nesnesini oluşturduk
 
-  console.log(selectedCategory)
-
 
   const mergeOrdersWithFitnessData = () => {
     const mergedOrders = orders.map((order) => {
