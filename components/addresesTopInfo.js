@@ -1,15 +1,18 @@
 import React from 'react';
 import { StyleSheet, ImageBackground, View } from 'react-native';
 import CustomButton from './custombutton';
+import { useNavigation } from '@react-navigation/native';
 
 const AddresesTopInfo = ({ navigation }) => {
+
+    const navigationn = useNavigation();
 
     return (
         <ImageBackground source={require(".././assets/sliderpic/e.jpg")} style={styles.container}>
             <View style={styles.viewcontainer}>
                 <CustomButton
                     title="Adres Belirle veya Seç"
-                    onPress={() => console.log("Adres Belirle veya Seç")}
+                    onPress={() => navigationn.navigate('Maps')}
                     style={styles.button1}
                     titleStyle={{ color: '#AAAAAA' }}
                     icon="radar"

@@ -14,24 +14,31 @@ import Home from '../Home/Home';
 import Profile from '../Profile/profile';
 import Orders from '../Profile/Order/Orders';
 import Cart from '../Profile/Carts/Cart';
+
 import PaymentProducts from '../Payments/PaymentProducts.js';
 import PaymentFtPtDt from '../Payments/PaymentFtPtDt.js';
 import PaymentSports from '../Payments/PaymentSports.js';
 import PaymentMethods from '../Profile/PaymentMethod/PaymentMethods.js'
 import AddCreditCardPage from '../Profile/PaymentMethod/AddCreditCardPage.js';
 import AddCardsNextPage from '../Profile/PaymentMethod/AddCardsNextPage.js';
+
 import Adresses from '../Profile/Adress/AdressesPage.js';
 import AddAdressPage from '../Profile/Adress/AddAdressPage.js';
+
 import FavoriteProducts from '../Profile/FavoriteProduct/FavoriteProducts.js';
+
 import ContactPreferences from '../Profile/ContactPreference/ContactPreferences.js';
 import AccountSettings from '../Profile/AccountSetting/AccountSettings.js';
 import Help from '../Profile/Helps/Help.js';
 import Languages from '../Profile/Language/Languages.js';
+
 import Products from '../Products/ProductsCategoryPage.js';
 import ProductDetailPage from '../Products/ProductDetailPage.js';
 import ProductsItems from '../Products/ProductsItemsPage.js';
+
 import QrCode from '../Qrcode/QrcodeHome.js';
 import QrCodePage from '../Qrcode/QrCodePage.js'
+
 import Budy from '../Budy/budy.js';
 import PtDtitemPages from '../Budy/PtDtChPages/PtDtitemPages.js';
 import ChallengeDetailPage from '../Budy/ChallengePage/ChallengeDetailPage.js';
@@ -42,6 +49,8 @@ import Sports from '../Home/Sports/SportsCategoryPage.js';
 import PackageDetailPage from '../Home/Fitness/FitnessPackageDetailPage.js';
 import MyEventPage from '../Qrcode/MyPages/MyEventPage.js';
 import MyEventDetailPage from '../Qrcode/MyPages/MyEventDetailPage.js';
+
+import Maps from '../Map/Maps.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -250,7 +259,12 @@ const AuthStack = () => {
           options={{ title: "PtDtitemPages" }}
         />
 
-      
+        <Stack.Screen
+          name='Maps'
+          component={Maps}
+          options={{ title: "Maps" }}
+        />
+        
  
     </Stack.Navigator>
   );
