@@ -9,9 +9,15 @@ import { supabase } from '../../../supabaseClient';
 
 export default function ChallengePage({ route }) {
     const [challenges, setChallenges] = useState([]);
-
     const { category } = route.params;
+    const [searchResults, setSearchResults] = useState([]);
+
+    const handleSearchResults = async (results) => {
+        setSearchResults(results);
+        setChallenges(results || []);
+    };
     useEffect(() => {
+        if (searchResults.length === 0) {
         const fetchChallengeData = async () => {
             try {
                 const { data, error } = await supabase
@@ -43,7 +49,7 @@ export default function ChallengePage({ route }) {
             }
         };
         fetchChallengeData();
-    }, []);
+    }}, [searchResults]);
     const title = category;
     const sections = [
         {
@@ -64,7 +70,7 @@ export default function ChallengePage({ route }) {
             <>
             
            
-            <SearchButton placeholder={title} />
+            <SearchButton name={"Challenge"} placeholder={title +" Ara"} table={"challenges"} column={"name"} storage={"challengeimage"} onSearchResults={handleSearchResults} />
        
             <Title title={title}/>
             

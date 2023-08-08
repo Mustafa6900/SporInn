@@ -83,8 +83,6 @@ const SubCategories = ({ items, onItemPress }) => {
       onItemPress(item); // onItemPress fonksiyonunu çağır
     
   };
-  
-  
 
   const renderItem = ({ item }) => (
     <Text
@@ -123,8 +121,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#AAAAAA",
     overflow: "hidden",
     marginTop: 25,
-    height: 50,
+    height: 55,
     borderRadius: 3,
+    borderWidth: 2,
+    borderColor: "#292929",
   },
   flatcontainer: {
     paddingLeft: 25,

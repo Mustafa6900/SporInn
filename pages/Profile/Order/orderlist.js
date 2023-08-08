@@ -4,12 +4,15 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../../Auth/AuthContext";
 import { supabase } from "../../../supabaseClient";
 
-const OrderList = () => {
+const OrderList = ({selectedCategory}) => {
   const navigation = useNavigation();
   const { session } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [ordersSportsFacilities , setOrdersSportsFacilities] = useState([]); // ordersSportsFacilities nesnesini oluşturduk
   const [ordersFitness , setOrdersFitness] = useState([]); // ordersFitness nesnesini oluşturduk
+
+  console.log(selectedCategory)
+
 
   const mergeOrdersWithFitnessData = () => {
     const mergedOrders = orders.map((order) => {
@@ -51,6 +54,7 @@ const OrderList = () => {
   mergeOrdersWithFitnessData();
 
   useEffect(() => {
+    if (selectedCategory === "Tüm Siparişler" || selectedCategory === null) {
     const fetchOrders = async () => {
       try {
         const { data: orderData, error: orderError } = await supabase
@@ -107,7 +111,243 @@ const OrderList = () => {
       }
     };
     fetchOrders();
-  }, []);
+    }
+    else if (selectedCategory === "Devam Edenler") {
+    const fetchOrders = async () => {
+      try {
+        const { data: orderData, error: orderError } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("status", "Sipariş Alındı")
+          .order("created_at", { ascending: false });
+        if (orderError) {
+          console.error(orderError);
+        } else {
+          // orders nesnesine orderItems verilerini ekleyerek güncelliyoruz
+          const ordersWithItems = await Promise.all(
+            orderData.map(async (order) => {
+              if (order.address_id != null) {
+                const { data: orderItemsData, error: orderItemsError } = await supabase
+                  .from("order_items")
+                  .select("*,product_id,products(id,*)")
+                  .eq("orders_id", order.id)
+                  .order("created_at", { ascending: false });
+                if (orderItemsError) {
+                  console.error(orderItemsError);
+                } else {
+                  order.orderItems = orderItemsData;
+                  await Promise.all(
+                    order.orderItems.map(async (orderItem) => {
+                      const product = orderItem.products;
+                      if (product.image_url) {
+                        try {
+                          const { data: imageData, error: imageError } = await supabase.storage
+                            .from("productsimage")
+                            .getPublicUrl(product.image_url);
+                          if (imageError) {
+                            console.error("Resim alınamadı:", imageError.message);
+                          } else {
+                            if (imageData) {
+                              product.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                            }
+                          }
+                        } catch (error) {
+                          console.error(error);
+                        }
+                      }
+                    })
+                  );
+                }
+              }
+              return order;
+            })
+          );
+          setOrders(ordersWithItems);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchOrders();
+    }
+    else if (selectedCategory === "Tamamlananlar") {
+    const fetchOrders = async () => {
+       try {
+         const { data: orderData, error: orderError } = await supabase
+            .from("orders")
+            .select("*")
+            .eq("user_id", session.user.id)
+            .eq("status", "Teslim Edildi")
+            .order("created_at", { ascending: false });
+          if (orderError) {
+            console.error(orderError);
+          } else {
+            // orders nesnesine orderItems verilerini ekleyerek güncelliyoruz
+            const ordersWithItems = await Promise.all(
+              orderData.map(async (order) => {
+                if (order.address_id != null) {
+                  const { data: orderItemsData, error: orderItemsError } = await supabase
+                    .from("order_items")
+                    .select("*,product_id,products(id,*)")
+                    .eq("orders_id", order.id)
+                    .order("created_at", { ascending: false });
+                  if (orderItemsError) {
+                    console.error(orderItemsError);
+                  } else {
+                    order.orderItems = orderItemsData;
+                    await Promise.all(
+                      order.orderItems.map(async (orderItem) => {
+                        const product = orderItem.products;
+                        if (product.image_url) {
+                          try {
+                            const { data: imageData, error: imageError } = await supabase.storage
+                              .from("productsimage")
+                              .getPublicUrl(product.image_url);
+                            if (imageError) {
+                              console.error("Resim alınamadı:", imageError.message);
+                            } else {
+                              if (imageData) {
+                                product.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                              }
+                            }
+                          } catch (error) {
+                            console.error(error);
+                          }
+                        }
+                      })
+                    );
+                  }
+                }
+                return order;
+              })
+            );
+            setOrders(ordersWithItems);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchOrders();
+    }
+    else if (selectedCategory === "İadeler") {
+    const fetchOrders = async () => {
+      try{
+        const { data: orderData, error: orderError } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("status", "İade Edildi")
+          .order("created_at", { ascending: false });
+        if (orderError) {
+          console.error(orderError);
+        } else {
+            const ordersWithItems = await Promise.all(
+              orderData.map(async (order) => {
+                if (order.address_id != null) {
+                  const { data: orderItemsData, error: orderItemsError } = await supabase
+                    .from("order_items")
+                    .select("*,product_id,products(id,*)")
+                    .eq("orders_id", order.id)
+                    .order("created_at", { ascending: false });
+                  if (orderItemsError) {
+                    console.error(orderItemsError);
+                  } else {
+                    order.orderItems = orderItemsData;
+                    await Promise.all(
+                      order.orderItems.map(async (orderItem) => {
+                        const product = orderItem.products;
+                        if (product.image_url) {
+                          try {
+                            const { data: imageData, error: imageError } = await supabase.storage
+                              .from("productsimage")
+                              .getPublicUrl(product.image_url);
+                            if (imageError) {
+                              console.error("Resim alınamadı:", imageError.message);
+                            } else {
+                              if (imageData) {
+                                product.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                              }
+                            }
+                          } catch (error) {
+                            console.error(error);
+                          }
+                        }
+                      })
+                    );
+                  }
+                }
+                return order;
+              })
+            );
+            setOrders(ordersWithItems);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchOrders();
+    }
+    else if (selectedCategory === "İptaller") {
+    const fetchOrders = async () => {
+      try{
+        const { data: orderData, error: orderError } = await supabase
+          .from("orders")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("status", "İptal Edildi")
+          .order("created_at", { ascending: false });
+        if (orderError) {
+          console.error(orderError);
+        } else {
+            const ordersWithItems = await Promise.all(
+              orderData.map(async (order) => {
+                if (order.address_id != null) {
+                  const { data: orderItemsData, error: orderItemsError } = await supabase
+                    .from("order_items")
+                    .select("*,product_id,products(id,*)")
+                    .eq("orders_id", order.id)
+                    .order("created_at", { ascending: false });
+                  if (orderItemsError) {
+                    console.error(orderItemsError);
+                  } else {
+                    order.orderItems = orderItemsData;
+                    await Promise.all(
+                      order.orderItems.map(async (orderItem) => {
+                        const product = orderItem.products;
+                        if (product.image_url) {
+                          try {
+                            const { data: imageData, error: imageError } = await supabase.storage
+                              .from("productsimage")
+                              .getPublicUrl(product.image_url);
+                            if (imageError) {
+                              console.error("Resim alınamadı:", imageError.message);
+                            } else {
+                              if (imageData) {
+                                product.imageData = imageData; // imageData verisini tesis verisine ekleyin
+                              }
+                            }
+                          } catch (error) {
+                            console.error(error);
+                          }
+                        }
+                      })
+                    );
+                  }
+                }
+                return order;
+              }
+              )
+            );
+            setOrders(ordersWithItems);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchOrders();
+    }
+  }, [selectedCategory]);
 
   useEffect(() => {
     try {

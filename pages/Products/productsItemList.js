@@ -10,6 +10,7 @@ const ProductList = ({ items, selectedCategory, searchItem }) => {
       navigation.navigate('ProductDetailPage', { item});
     };
 
+
     useEffect(() => {
       const fetchProducts = async () => {
         try {
