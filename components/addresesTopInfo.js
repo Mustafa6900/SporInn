@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../supabaseClient';
 import { Picker } from '@react-native-picker/picker';
 
-const AddresesTopInfo = ({ navigation }) => {
+const AddresesTopInfo = ({ city , district }) => {
     const navigationn = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedCity, setSelectedCity] = useState(null);
@@ -40,7 +40,7 @@ const AddresesTopInfo = ({ navigation }) => {
         }
     };
 
-    const handleConfirm = () => {
+    const handleMapConfirm = () => {
         if (selectedCity && selectedDistrict) {
             const selectedDistrictData = districts.find(item => item.semt === selectedDistrict);
 
@@ -53,6 +53,16 @@ const AddresesTopInfo = ({ navigation }) => {
         }
         setModalVisible(false);
     };
+
+    const handleListConfirm = () => {
+        if (selectedCity && selectedDistrict) {
+            city(selectedCity);
+            district(selectedDistrict);
+        }
+        setModalVisible(false);
+    };
+
+            
 
     return (
         <ImageBackground source={require(".././assets/sliderpic/e.jpg")} style={styles.container}>
@@ -109,12 +119,12 @@ const AddresesTopInfo = ({ navigation }) => {
                         <View style={{flexDirection:"row"}}>
                         <CustomButton
                             title="Liste"
-                            onPress={() => handleConfirm()}
+                            onPress={() => handleListConfirm()}
                             style={{marginRight:"5%", marginLeft:"5%", marginTop: 20, width: '40%' }}
                         />
                         <CustomButton
                         title="Harita"
-                        onPress={() => handleConfirm()}
+                        onPress={() => handleMapConfirm()}
                         style={{marginRight:"5%",marginLeft:"5%", marginTop: 20, width: '40%' }}
                     />
                         </View>

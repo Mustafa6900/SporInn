@@ -3,13 +3,15 @@ import { Text, StyleSheet, TouchableOpacity, Image, View, FlatList } from 'react
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const ItemList = ({ items}) => {
+const ItemList = ({ items }) => {
   
   const navigation = useNavigation();
+
+
  
   const renderItem = ({ item }) => (
     <View style={styles.container}>
-      
+
     <TouchableOpacity
       style={styles.Item}
       onPress={() => navigation.navigate('ItemPackagePage', { item })}
@@ -97,6 +99,8 @@ const styles = StyleSheet.create({
       color: "#0D0D0D",
       marginLeft: 5,
     },
+  
+    
   });
 
 export default ItemList;

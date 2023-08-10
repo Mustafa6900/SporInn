@@ -1,5 +1,5 @@
 import React,{useEffect,useState}from 'react';
-import { SafeAreaView, StyleSheet, SectionList,View } from 'react-native';
+import { SafeAreaView, StyleSheet, SectionList,View,Text } from 'react-native';
 import Header from '../../components/header';
 import AddresesTopInfo from '../../components/addresesTopInfo';
 import InformationText from '../../components/informationtext';
@@ -13,6 +13,9 @@ const ItemAllPage = ({ route }) => {
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  
 
 
   const handleSearchResults = async (results) => {
@@ -26,10 +29,11 @@ const ItemAllPage = ({ route }) => {
     if (category === "Spor Salonları") {
       const fetchData = async () => {
         try {
-          
           const { data, error } = await supabase
             .from('fitness_centers')
-            .select('*');
+            .select('*')
+            .eq( 'city', cities)
+            .eq('district', districts);
           if (error) {
             console.error(error);
           } else {
@@ -65,7 +69,9 @@ const ItemAllPage = ({ route }) => {
         const { data, error } = await supabase
           .from('sports_facilities')
           .select('*')
-          .eq('sports_category_id', category.id);
+          .eq('sports_category_id', category.id)
+          .eq( 'city', cities)
+          .eq('district', districts);
         if (error) {
           console.error(error);
         } else {
@@ -96,10 +102,10 @@ const ItemAllPage = ({ route }) => {
     fetchData();
 
   }}},
- [searchResults]);
+ [searchResults,cities,districts]);
 
 
-  const sections = [
+  const sections = [ 
     { title: `Tüm ${title}`, data: items },
   ];
 
@@ -109,27 +115,58 @@ const ItemAllPage = ({ route }) => {
       <BackButton left={15} top={43} />
       <View>
       <SectionList
-        sections={sections}
-        renderItem={({ item }) => <ItemList items={[item]} />}
-        renderSectionHeader={({ section }) => (
+    sections={sections}
+    renderItem={({ item }) => {
+        if (cities.length > 0 && districts.length > 0) {
+            return <ItemList items={[item]} title={title}/>
+          } 
+        else {
+            return null;
+        }
+    }}
+    renderSectionHeader={({ section }) => (
+      <>
+      <AddresesTopInfo city={setCities} district={setDistricts} />
+      <InformationText text={`Şehrinizdeki ${title} listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
+      {cities.length > 0 && districts.length > 0 && (
           <>
-         
-           
-            <AddresesTopInfo />
-            <InformationText  text={`Şehrinizdeki ${title}  listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
-            {category === "Spor Salonları" ? 
-            <SearchButton name={"Fitness Salonu"} placeholder={title+" Ara"} table={"fitness_centers"} column={"name"} storage={"fitnesscenterimage"} onSearchResults={handleSearchResults} /> : 
-            <SearchButton name={"Spor Tesisi"} placeholder={title+" Ara"} table={"sports_facilities"} column={"name"} storage={"sportsfacilityimage"}onSearchResults={handleSearchResults} categoryId={category.id}/>
-             }
-            <SportTitle title={`Tüm ${title}`} />
-            
+              {items.length > 0 ? (
+                  <View>
+                      {category === "Spor Salonları" ? (
+                          <SearchButton
+                              name={"Fitness Salonu"}
+                              placeholder={title + " Ara"}
+                              table={"fitness_centers"}
+                              column={"name"}
+                              storage={"fitnesscenterimage"}
+                              onSearchResults={handleSearchResults}
+                          />
+                      ) : (
+                          <SearchButton
+                              name={"Spor Tesisi"}
+                              placeholder={title + " Ara"}
+                              table={"sports_facilities"}
+                              column={"name"}
+                              storage={"sportsfacilityimage"}
+                              onSearchResults={handleSearchResults}
+                              categoryId={category.id}
+                          />
+                      )}
+                      <SportTitle title={`Tüm ${title}`} />
+                  </View>
+              ) : (
+                  <Text style={styles.noItem}>! Seçili şehrinizde {title} bulunmamaktadır.</Text>
+              )}
           </>
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        style={styles.sectionList}
-        showsVerticalScrollIndicator={false}
+      )}
+  </>
+  
+    )}
+    keyExtractor={(item, index) => index.toString()}
+    style={styles.sectionList}
+    showsVerticalScrollIndicator={false}
+/>
 
-      />
       </View>
     </SafeAreaView>
   );
@@ -143,6 +180,14 @@ const styles = StyleSheet.create({
   },
   sectionList: {
     marginBottom: 60,
+  },
+  noItem: {
+    fontSize: 16,
+    fontWeight: '900',
+    color: "#AAAAAA",
+    marginLeft: "10%",
+    marginRight: "10%",
+    marginTop: 40,
   },
 });
 
