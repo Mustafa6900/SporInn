@@ -4,16 +4,18 @@ import CustomButton from './custombutton';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../supabaseClient';
 import { Picker } from '@react-native-picker/picker';
+import { FontAwesome } from '@expo/vector-icons';
 
-const AddresesTopInfo = ({ city , district }) => {
+const AddresesTopInfo = ({ city , district,items }) => {
     const navigationn = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedCity, setSelectedCity] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [cities, setCities] = useState([]);
     const [districts, setDistricts] = useState([]);
+    const [itemss, setItems] = useState(items); // props'dan gelen items ile başlatın
 
-    useEffect(() => {
+     useEffect(() => {
         const fetchCities = async () => {
             const { data, error } = await supabase
                 .from('tr_il_ilce_latlng')
@@ -22,10 +24,11 @@ const AddresesTopInfo = ({ city , district }) => {
             if (error) console.error(error);
             else {
                 setCities(data);
+                setItems(items);
             }
         };
         fetchCities();
-    }, []);
+    }, [items]);
 
     const fetchDistricts = async (cityName) => {
         const { data, error } = await supabase
@@ -37,13 +40,16 @@ const AddresesTopInfo = ({ city , district }) => {
         if (error) console.error(error);
         else {
             setDistricts(data);
+         
         }
     };
 
+ 
     const handleMapConfirm = () => {
         if (selectedCity && selectedDistrict) {
+            city(selectedCity);
+            district(selectedDistrict);
             const selectedDistrictData = districts.find(item => item.semt === selectedDistrict);
-
             if (selectedDistrictData) {
                 navigationn.navigate('Maps', {
                     districtLat: selectedDistrictData.lat,
@@ -53,7 +59,8 @@ const AddresesTopInfo = ({ city , district }) => {
         }
         setModalVisible(false);
     };
-
+    
+    
     const handleListConfirm = () => {
         if (selectedCity && selectedDistrict) {
             city(selectedCity);
@@ -83,7 +90,7 @@ const AddresesTopInfo = ({ city , district }) => {
             >
                 <View style={styles.modalContainer}>
                     <TouchableOpacity style={styles.closeButton} onPress={() => setModalVisible(false)}>
-                        <Text style={styles.closeButtonText}>Kapat</Text>
+                        <FontAwesome name="close" size={40} color="white" />
                     </TouchableOpacity>
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -175,16 +182,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.9)',
     },
     closeButton: {
-        position: 'absolute',
-        top: 20,
-        right: 20,
-        padding: 10,
-        backgroundColor: '#AAA',
-        borderRadius: 5,
+       position: 'absolute',
+       top: 10,
+       right: 10,
     },
-    closeButtonText: {
-        color: 'white',
-    },
+   
     pickerContainer: {
         marginTop:0,
         width: '90%',        

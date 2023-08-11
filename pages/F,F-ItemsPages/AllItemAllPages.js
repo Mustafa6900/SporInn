@@ -8,15 +8,18 @@ import SearchButton from '../../components/searchbutton';
 import SportTitle from '../../components/sportptTitle';
 import ItemList from './AllItemPageslist';
 import { supabase } from "../../supabaseClient.js";
+import { useDataContext } from "../../components/DataContext.js";
 const ItemAllPage = ({ route }) => {
   const { category } = route.params;
+  const { sharedItems, setSharedItems } = useDataContext();
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
-  
 
+
+  
 
   const handleSearchResults = async (results) => {
     setSearchResults(results);
@@ -34,11 +37,13 @@ const ItemAllPage = ({ route }) => {
             .select('*')
             .eq( 'city', cities)
             .eq('district', districts);
+
           if (error) {
             console.error(error);
           } else {
             setTitle(category);
             const updatedData = await Promise.all(data.map(async (item) => {
+  
               if (item.image_url) {
                 const { data: imageData, error: imageError } = await supabase.storage
                   .from('fitnesscenterimage')
@@ -54,8 +59,9 @@ const ItemAllPage = ({ route }) => {
               }
               return item;
             }));
-  
+           
             setItems(updatedData);
+            setSharedItems(updatedData);
           }
         } catch (error) {
           console.error("catch",error);
@@ -94,6 +100,7 @@ const ItemAllPage = ({ route }) => {
           }));
 
           setItems(updatedData);
+          setSharedItems(updatedData);
         }
       } catch (error) {
         console.error(error);
@@ -126,7 +133,7 @@ const ItemAllPage = ({ route }) => {
     }}
     renderSectionHeader={({ section }) => (
       <>
-      <AddresesTopInfo city={setCities} district={setDistricts} />
+      <AddresesTopInfo city={setCities} district={setDistricts}/>
       <InformationText text={`Şehrinizdeki ${title} listelenmektedir. Adresinize yakın ${title} görmek için lütfen adresinizi giriniz.`} />
       {cities.length > 0 && districts.length > 0 && (
           <>

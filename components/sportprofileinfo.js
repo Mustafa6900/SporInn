@@ -199,7 +199,7 @@ const SportProfileInfo = ({ items }) => {
             <Text style={styles.submitButtonText}>Gönder</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setIsCommentModalVisible(false)} style={styles.closeCommentButton}>
-            <FontAwesome name={"close"} color={"#0D0D0D"} size={40} />
+            <FontAwesome name={"close"} color={"#FFF"} size={40} />
           </TouchableOpacity>
         </View>
       </Modal>
