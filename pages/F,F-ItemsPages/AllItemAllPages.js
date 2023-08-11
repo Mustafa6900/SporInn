@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   noItem: {
     fontSize: 16,
-    fontWeight: '900',
+    fontWeight: '700',
     color: "#AAAAAA",
     marginLeft: "10%",
     marginRight: "10%",
