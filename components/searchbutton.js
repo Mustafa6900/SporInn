@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { supabase } from "../supabaseClient.js";
 
-const SearchButton = ({ name, placeholder, table, column, storage, onSearchResults, categoryId, selectedCategory }) => {
+const SearchButton = ({ name, placeholder, table, column, storage, onSearchResults, categoryId, selectedCategory, city, district}) => {
   const [searchText, setSearchText] = useState('');
 
   const handleSearch = async () => {
@@ -14,7 +14,9 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
         const { data, error } = await supabase
           .from(table)
           .select('*')
-          .eq('sports_category_id', categoryId);
+          .eq('sports_category_id', categoryId)
+          .eq('city', city)
+          .eq('district', district);
   
         if (error) {
           console.error(error);
@@ -49,6 +51,8 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
             const { data, error } = await supabase
             .from(table)
             .select('*')
+            .eq('city', city)
+            .eq('district', district);
             if (error) {
                 console.error(error);
               } else {
@@ -86,6 +90,8 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
           .from(table)
           .select('*')
           .eq('sports_category_id', categoryId)
+          .eq('city', city)
+          .eq('district', district)
           .ilike(column, `%${searchText}%`);
   
         if (error) {
@@ -212,6 +218,8 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
             const { data, error } = await supabase
             .from(table)
             .select('*')
+            .eq('city', city)
+            .eq('district', district)
             .ilike(column, `%${searchText}%`);
     
           if (error) {

@@ -138,6 +138,8 @@ const ItemAllPage = ({ route }) => {
                               placeholder={title + " Ara"}
                               table={"fitness_centers"}
                               column={"name"}
+                              city={cities}
+                              district={districts}
                               storage={"fitnesscenterimage"}
                               onSearchResults={handleSearchResults}
                           />
@@ -147,6 +149,8 @@ const ItemAllPage = ({ route }) => {
                               placeholder={title + " Ara"}
                               table={"sports_facilities"}
                               column={"name"}
+                              city={cities}
+                              district={districts}
                               storage={"sportsfacilityimage"}
                               onSearchResults={handleSearchResults}
                               categoryId={category.id}
@@ -155,7 +159,7 @@ const ItemAllPage = ({ route }) => {
                       <SportTitle title={`Tüm ${title}`} />
                   </View>
               ) : (
-                  <Text style={styles.noItem}>! Seçili şehrinizde {title} bulunmamaktadır.</Text>
+                  <Text style={styles.noItem}> Seçtiğiniz şehirde {title} bulunmamaktadır.</Text>
               )}
           </>
       )}
@@ -187,7 +191,8 @@ const styles = StyleSheet.create({
     color: "#AAAAAA",
     marginLeft: "10%",
     marginRight: "10%",
-    marginTop: 40,
+    marginTop: "50%",
+    marginBottom: "50%",
   },
 });
 
