@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, TouchableOpacity, View, SafeAreaView, TextInput } from "react-native";
+import React, { useState,useEffect } from "react";
+import { Text, StyleSheet, View, SafeAreaView, TextInput,Alert,ScrollView } from "react-native";
 import CustomButton from "../../../components/custombutton";
 import { supabase } from "../../../supabaseClient";
 import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
 const AddressAddInformation = ({ session }) => {
   const navigation = useNavigation();
   const [firstName, setFirstName] = useState("");
@@ -14,10 +15,55 @@ const AddressAddInformation = ({ session }) => {
   const [buildingNo, setBuildingNo] = useState("");
   const [apartmentNo, setApartmentNo] = useState("");
   const [addressName, setAddressName] = useState("");
+  const [fetchCityDistrict, setFetchCityDistrict] = useState([]);
   const { user } = session;
 
+  const cities = Array.from(new Set(fetchCityDistrict.map((item) => item.sehir)));
+  const districts = fetchCityDistrict.filter((item) => item.sehir === city);
+
   
+  useEffect(() => {
+    const fetchCityDistrict = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("tr_il_ilce_latlng")
+          .select("sehir, semt")
+
+        if (error) {
+          console.error("Hata:", error);
+        } else {
+          setFetchCityDistrict(data);
+        }
+      } catch (error) {
+        console.error("Hata:", error.message);
+      }
+    };
+    fetchCityDistrict();
+  }, []);
+
   const sendSupabase = async () => {
+
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      phone === "" ||
+      address === "" ||
+      city === "" ||
+      district === "" ||
+      buildingNo === "" ||
+      apartmentNo === "" ||
+      addressName === ""
+    ) {
+      // Boş alanlar var, hata mesajı göster
+      Alert.alert(
+        "Hata",
+        "Lütfen tüm alanları doldurunuz.",
+        [{ text: "Tamam"}],
+        { cancelable: false }
+      );
+
+      return; // İşlemi durdur
+    }
     const { data, error } = await supabase
     .from('addresses')
     .insert([
@@ -41,12 +87,12 @@ const AddressAddInformation = ({ session }) => {
   } else {
     navigation.replace('Adresses');
   }
-};
+  };
 
   
   
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Kişisel Bilgileriniz</Text>
       <Text style={styles.title2}>Teslim alacak kişinin bilgileri</Text>
       <View style={{ flexDirection: "row" }}>
@@ -72,6 +118,7 @@ const AddressAddInformation = ({ session }) => {
         placeholder="Telefon"
         placeholderTextColor="#AAAAAA"
         color="#FFFFFF"
+        keyboardType="numeric"
         style={styles.textinputmax}
         value={phone}
         onChangeText={setPhone}
@@ -86,28 +133,39 @@ const AddressAddInformation = ({ session }) => {
         onChangeText={setAddress}
       />
       <View style={{ flexDirection: "row" }}>
-        <TextInput
-          placeholder="İl"
-          placeholderTextColor="#AAAAAA"
-          color="#FFFFFF"
-          style={styles.textinputmin}
-          value={city}
-          onChangeText={setCity}
-        />
-        <TextInput
-          placeholder="İlçe"
-          placeholderTextColor="#AAAAAA"
-          color="#FFFFFF"
-          style={styles.textinputmin}
-          value={district}
-          onChangeText={setDistrict}
-        />
+      <View style={styles.pickerContainer}>
+       <Picker
+          selectedValue={city}
+          style={styles.dropdowns}
+          dropdownIconColor={"#AAAAAA"}
+          onValueChange={(itemValue) => setCity(itemValue)}
+        >
+          <Picker.Item label="Şehir Seçiniz" value="" />
+          {cities.map((item,index) => (
+            <Picker.Item key={index} label={item} value={item} />
+          ))}
+        </Picker>
+      </View>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={district}
+          style={styles.dropdowns}
+          dropdownIconColor={"#AAAAAA"}
+          onValueChange={(itemValue) => setDistrict(itemValue)}
+        >
+          <Picker.Item label="İlçe Seçiniz" value="" />
+          {districts.map((item,index) => (
+            <Picker.Item key={index} label={item.semt} value={item.semt} />
+          ))}
+        </Picker>
+        </View>
       </View>
       <View style={{ flexDirection: "row" }}>
         <TextInput
           placeholder="Bina No"
           placeholderTextColor="#AAAAAA"
           color="#FFFFFF"
+          keyboardType="numeric"
           style={styles.textinputmin}
           value={buildingNo}
           onChangeText={setBuildingNo}
@@ -116,6 +174,7 @@ const AddressAddInformation = ({ session }) => {
           placeholder="Daire No"
           placeholderTextColor="#AAAAAA"
           color="#FFFFFF"
+          keyboardType="numeric"
           style={styles.textinputmin}
           value={apartmentNo}
           onChangeText={setApartmentNo}
@@ -136,44 +195,44 @@ const AddressAddInformation = ({ session }) => {
             title="Adres Ekle"
             onPress={sendSupabase}
         />
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderRadius: 3,
     backgroundColor: "#AAAAAA",
-    marginBottom: 20,
-    marginTop: 20,
+    marginTop: "3%",
+    marginBottom: "3%"
   },
   title: {
     fontSize: 20,
     fontWeight: "900",
-    marginLeft: 12,
-    marginTop: 20,
-    marginBottom: 20,
+    marginLeft: "3%",
+    marginTop: "5%",
+   
   },
   title2: {
     fontSize: 20,
     fontWeight: "600",
-    marginLeft: 12,
-    marginTop: 20,
+    marginLeft: "4%",
+    marginTop: "8%",
   },
   textinputmin: {
-    height: 50,
-    width: 180,
+    height: "100%",
+    width: "45%",
     backgroundColor: "#0D0D0D",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 20,
+    marginTop: "5%",
     borderRadius: 7,
     paddingLeft: 20,
+    color: "#FFFFFF",
   },
   textinputmax: {
     height: 50,
-    width: 385,
+    width: "95%",
     backgroundColor: "#0D0D0D",
     marginLeft: "auto",
     marginRight: "auto",
@@ -193,6 +252,23 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
+  },
+  dropdowns: {
+    height: 50,
+    width: 180,
+    backgroundColor: "#0D0D0D",
+    marginLeft: "auto",
+    marginRight: "auto",
+    color: "#AAAAAA",
+  },
+
+  pickerContainer: {
+    marginTop: 20,
+    width: "45%",
+    borderRadius: 7, // Gerekli yuvarlak köşe yarıçapı
+    marginLeft: "auto",
+    marginRight: "auto",
+    overflow: "hidden", // İçeriklerin dışarı taşmasını engelle
   },
 });
 

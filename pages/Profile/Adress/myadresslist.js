@@ -30,7 +30,6 @@ const myAdressList = ({ session }) => {
     }
   };
   const handleDeleteAddress = async (addressId) => {
-    console.log(addressId)
     try {
         const { data, error } = await supabase
             .from('addresses')

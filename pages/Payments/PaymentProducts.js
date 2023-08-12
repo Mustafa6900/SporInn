@@ -9,7 +9,7 @@ import { FontAwesome } from "react-native-vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { supabase } from "../../supabaseClient";
 import { AuthContext } from "../Auth/AuthContext";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useIsFocused  } from "@react-navigation/native";
 
 export default function Payment({ route }) {
   const { item } = route.params;
@@ -22,12 +22,13 @@ export default function Payment({ route }) {
   const [isCheckedAgreement, setIsCheckedAgreement] = useState(false);
   const { session } = useContext(AuthContext);
   const navigation = useNavigation();
+  const isFocused = useIsFocused(); // Sayfa odaklanmış mı değil mi kontrolü için
 
   const totalPrice = item.reduce((total, item) => total + item.products.price*item.quantity, 0);
 
 
   useEffect(() => {
-
+    if (isFocused) {
     const fetchCreditCards = async () => {
       try { 
         const  { data, error } = await supabase
@@ -45,7 +46,6 @@ export default function Payment({ route }) {
         console.error(error);
       }
     };
-    fetchCreditCards();
 
     const fetchAdresses = async () => {
       try{
@@ -65,9 +65,10 @@ export default function Payment({ route }) {
         console.error(error);
       }
     };
+    fetchCreditCards();
     fetchAdresses();
 
-  }, []);
+}}, [isFocused]);
 
   
   const handlePurchase = async () => {

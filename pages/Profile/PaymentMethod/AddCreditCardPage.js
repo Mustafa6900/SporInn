@@ -7,6 +7,7 @@ import CustomButton from "../../../components/custombutton";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from '../../Auth/AuthContext';
 import { supabase } from "../../../supabaseClient";
+import { Picker } from "@react-native-picker/picker";
 const AddAdressPage = () => {
   const navigation = useNavigation();
   const [cardName, setCardName] = useState("");
@@ -16,6 +17,8 @@ const AddAdressPage = () => {
   const [checked, setChecked] = useState(false);
   const { session } = useContext(AuthContext);
 
+  const months = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
+  const years = Array.from({ length: 20 }, (_, index) => (new Date().getFullYear() + index).toString());
 
   const handleContinue = () => {
     if (checked) {
@@ -26,6 +29,26 @@ const AddAdressPage = () => {
   };
 
   const sendSupabase = async () => {
+
+    if (
+      cardName === "" ||
+      cardNo === "" ||
+      month === "" ||
+      year === ""
+    ) 
+    {
+      Alert.alert(
+        "Hata",
+        "Lütfen tüm alanları doldurunuz.",
+        [{ text: "Tamam" }],
+        { cancelable: false }
+      );
+      return; 
+    }
+    if (cardNo.length !== 16) {
+      Alert.alert('Hata', 'Kart numarası 16 karakter olmalıdır.');
+      return;
+    }
     const { data, error } = await supabase
       .from("credit_cards")
       .insert([
@@ -76,36 +99,47 @@ const AddAdressPage = () => {
               color="#FFFFFF"
               style={styles.textinputmax}
               value={cardNo}
+              keyboardType="numeric"
               maxLength={16}
               onChangeText={setCardNo}
             />
           </View>
           <View style={styles.date}>
-            <TextInput
-              placeholder="  Ay"
-              placeholderTextColor="#AAAAAA"
-              color="#FFFFFF"
-              style={styles.textinputmin}
-              value={month}
-              onChangeText={setMonth}
-            />
-            <TextInput
-              placeholder="  Yıl"
-              placeholderTextColor="#AAAAAA"
-              color="#FFFFFF"
-              style={styles.textinputmin}
-              value={year}
-              onChangeText={setYear}
-            />
+            <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={month}
+              style={styles.dropdowns}
+              dropdownIconColor={"#AAAAAA"}
+              onValueChange={(itemValue, itemIndex) => setMonth(itemValue)}
+            >
+              <Picker.Item label="Ay" value="" />
+              {months.map((month) => (
+                <Picker.Item key={month} label={month} value={month} />
+              ))}
+            </Picker>
+            </View>
+            <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={year}
+              style={styles.dropdowns}
+              dropdownIconColor={"#AAAAAA"}
+              onValueChange={(itemValue, itemIndex) => setYear(itemValue)}
+            >
+              <Picker.Item label="Yıl" value="" />
+              {years.map((year) => (
+                <Picker.Item key={year} label={year} value={year} />
+              ))}
+            </Picker>
+            </View>
           </View>
           <View style={{ flexDirection: "row" }}>
             <CheckButton
               title="✓"
-              styletip={{ marginLeft: 20, marginTop: 10, backgroundColor: "#AAAAAA" }}
+              styletip={{ marginLeft: 20, marginTop: 20, backgroundColor: "#AAAAAA" }}
               checked={checked}
               onPress={() => setChecked(!checked)}
             />
-            <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 10, fontWeight: '500', color: "#0D0D0D", width: 340 }}>Kullanım Koşullarını’nı okudum ve kabul ediyorum.</Text>
+            <Text style={{ fontSize: 15, marginLeft: 20, marginTop: 30, fontWeight: '500', color: "#0D0D0D", width: 340 }}>Kullanım Koşullarını’nı okudum ve kabul ediyorum.</Text>
           </View>
         </View>
         <Image source={require("../../../assets/profilepic/cardslogos.png")} style={{ width: 415, height: 50,marginBottom:10}} />
@@ -136,7 +170,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: "100%",
         backgroundColor: "#AAAAAA",
-        borderRadius: 3,
+       
     
     },
     security: {
@@ -147,7 +181,7 @@ const styles = StyleSheet.create({
     addcardcontainer: {
         backgroundColor: "#AAAAAA",
         marginBottom: 20,
-        marginTop:20,
+     
     },
     cardnamenumber: {
         flexDirection: "column",
@@ -163,29 +197,37 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: "#0D0D0D",
         borderRadius: 3,
+        marginTop:10,
         marginBottom: 20,
         marginLeft: 20,
         marginRight: 20,
         paddingLeft: 10,
         fontSize: 15,
     },
-    textinputmin: {
-        height: 50,
-        backgroundColor: "#0D0D0D",
-        borderRadius: 3,
-        marginBottom: 20,
-        marginLeft: 20,
-        
-        paddingLeft: 10,
-        fontSize: 15,
-        width: 166,
-    },
-   
+
     buttontext: {
         fontSize: 15,
         fontFamily: 'Roboto',
         fontWeight: 'bold',
         letterSpacing: 0.4,
+    },
+    dropdowns: {
+      height: 50,
+      width: 165,
+      backgroundColor: "#0D0D0D",
+      marginLeft: "auto",
+      marginRight: "auto",
+      color: "#AAAAAA",
+      
+    },
+    pickerContainer: {
+      marginTop: 10,
+      marginBottom: 10,
+      width: "40%",
+      borderRadius: 3, // Gerekli yuvarlak köşe yarıçapı
+      marginLeft: "auto",
+      marginRight: "auto",
+      overflow: "hidden", // İçeriklerin dışarı taşmasını engelle
     },
 
 

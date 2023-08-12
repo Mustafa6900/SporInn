@@ -90,7 +90,6 @@ const MyPaymentMethods = ({session}) => {
 
 const styles = StyleSheet.create({
   container: {
- 
     marginTop: 20,
   },
   button: {
