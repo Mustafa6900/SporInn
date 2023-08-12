@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext,useEffect } from 'react';
 import { View, Image, TouchableOpacity, Text, StyleSheet, Modal, TextInput, Alert } from 'react-native';
 import ItemTitleFavorite from './titleFavorite';
 import { FontAwesome } from "react-native-vector-icons";
@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
 import { AuthContext } from '../pages/Auth/AuthContext';
 import StarRating from 'react-native-star-rating-fixed-viewproptype';
+import { useNavigation } from '@react-navigation/native';
 
 const SportProfileInfo = ({ items }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -15,12 +16,20 @@ const SportProfileInfo = ({ items }) => {
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [rating, setRating] = useState(3);
+  
+  const [latitudes, setLatitudes] = useState([]);
+  const [longitudes, setLongitudes] = useState([]);
   const { session } = useContext(AuthContext);
+  const navigation = useNavigation();
 
   const userName = session.user?.user_metadata?.first_name;
   const lastName = session.user?.user_metadata?.last_name;
 
+  const locationArray = items.location.split(',').map(coord => parseFloat(coord));
 
+  const latitude = locationArray[0]; // Enlem (Latitude)
+  const longitude = locationArray[1]; // Boylam (Longitude)
+  
   const handleImagePress = () => {
     setIsModalVisible(true);
   };
@@ -83,7 +92,6 @@ const SportProfileInfo = ({ items }) => {
   }
   };
   };
-
 
   return (
     <View>
@@ -161,7 +169,16 @@ const SportProfileInfo = ({ items }) => {
                   <Text style={styles.commentText}>Yorum Yap</Text>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity onPress={() => console.log("Yol Tarifi")} style={styles.commentButton}>
+                <TouchableOpacity
+                onPress={() =>
+                    navigation.navigate('Maps', {
+                        districtLat: latitude,
+                        districtLng: longitude,
+                        directions: true,
+                    })
+                }
+                style={styles.commentButton}
+                >
                   <FontAwesome name={"location-arrow"} color={"#0d0d0d"} size={20} style={{ position: "absolute", left: 20 }} />
                   <Text style={styles.commentText}>Yol Tarifi</Text>
                 </TouchableOpacity>

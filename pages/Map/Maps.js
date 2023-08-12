@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Alert} from 'react-native';
 import Header from '../../components/header';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import BackButton from '../../components/backbutton';
@@ -7,9 +7,10 @@ import { useDataContext } from '../../components/DataContext';
 import { FontAwesome } from '@expo/vector-icons';
 
 export default function Maps({ route }) {
-    const { districtLat, districtLng } = route.params || {};
+    const { districtLat, districtLng, directions } = route.params || {};
     const { sharedItems } = useDataContext();
     const sportTypes = sharedItems?.[0]?.type === 'fitness_center' ? 'spor salonu' : 'spor tesisi';
+    const [showAlert, setShowAlert] = useState(true);
 
 
     const customMapStyle = [
@@ -176,9 +177,9 @@ export default function Maps({ route }) {
 
     const initialRegion = {
         latitude: parseFloat(districtLat),
-        latitudeDelta: 0.034,
+        latitudeDelta: !directions ? 0.034 : 0.004,
         longitude: parseFloat(districtLng),
-        longitudeDelta: 0.034,
+        longitudeDelta: !directions ? 0.034 : 0.004, 
     };
 
     const MarkerCallout = ({ name }) => (
@@ -188,34 +189,65 @@ export default function Maps({ route }) {
         </View>
     );
 
+    const handleMarkerPress = () => {
+        if(showAlert){
+            Alert.alert(
+                "Bilgilendirme",
+                "Yol tarifi ve haritalarda açmak için sağ altta bulunan butonları kullanabilirsiniz",
+                [{ text: "Tamam" }]
+            );
+            setShowAlert(false);    
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <Header title="Harita" />
             <BackButton left={15} top={43} />
-         
+            {directions ? (
+                <View style={styles.salonsCountContainer}>
+                    <Text style={styles.salonsCountText}>
+                        Adrese gitmek için işaretliyiciye dokunun
+                    </Text>
+                </View>
+            ) : (
             <View style={styles.salonsCountContainer}>
-                <Text style={styles.salonsCountText}>
-                    Seçili adreste {sharedItems.length} {sportTypes} bulunmaktadır
-                </Text>
+            <Text style={styles.salonsCountText}>
+                Seçili adreste {sharedItems.length} {sportTypes} bulunmaktadır
+            </Text>
             </View>
-            
+            )}
             <MapView
                 style={styles.map}
                 initialRegion={initialRegion}
                 customMapStyle={customMapStyle}
             >
-                {sharedItems.map((item, index) => (
+                 {directions ? (
                     <Marker
-                        key={index}
                         coordinate={{
-                            latitude: parseFloat(item.location.split(',')[0]),
-                            longitude: parseFloat(item.location.split(',')[1]),
+                            latitude: parseFloat(districtLat),
+                            longitude: parseFloat(districtLng),
                         }}
+                        onPress={handleMarkerPress}
+
                     >
-                        <MarkerCallout name={item.name} />
-                       
+                    <FontAwesome name="map-marker" size={40} color="#FF6F25" />
                     </Marker>
-                ))}
+                ) : (
+                    sharedItems.map((item, index) => (
+                        <Marker
+                            key={index}
+                            coordinate={{
+                                latitude: parseFloat(item.location.split(',')[0]),
+                                longitude: parseFloat(item.location.split(',')[1]),
+                            }}
+                            onPress={handleMarkerPress}
+
+                        >
+                            <MarkerCallout name={item.name} />
+                        </Marker>
+                    ))
+                )}
             </MapView>
         </SafeAreaView>
     );
@@ -258,4 +290,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 12,
     },
+    
 });
