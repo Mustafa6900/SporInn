@@ -33,7 +33,8 @@ export default function Payment({ route }) {
         const  { data, error } = await supabase
           .from("credit_cards")
           .select("*")
-          .eq("user_id", session.user.id);
+          .eq("user_id", session.user.id)
+          .eq("delete_at", false)
         if (error) {
           console.error(error);
         } else {
@@ -51,7 +52,8 @@ export default function Payment({ route }) {
         const { data, error } = await supabase
           .from("addresses")
           .select("*")
-          .eq("user_id", session.user.id);
+          .eq("user_id", session.user.id)
+          .eq("delete_at", false)
         if (error) {
           console.error(error);
         } else {

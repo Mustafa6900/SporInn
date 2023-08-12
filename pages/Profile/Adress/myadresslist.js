@@ -17,7 +17,8 @@ const myAdressList = ({ session }) => {
       const { data, error } = await supabase
         .from('addresses')
         .select('id,address_name, full_address')
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .eq('delete_at', false)
 
       if (error) {
         console.error('Hata:', error);
@@ -33,19 +34,19 @@ const myAdressList = ({ session }) => {
     try {
       const { data, error } = await supabase
         .from('addresses')
-        .delete()
+        .update({ deleted_at: true }) 
         .eq('id', addressId);
-
+  
       if (error) {
         console.error('Hata:', error);
       } else {
-        // Veriyi başarıyla sildikten sonra adresleri yeniden getir
         fetchAddresses();
       }
     } catch (error) {
       console.error('Hata:', error.message);
     }
   };
+  
 
   const confirmDelete = (addressId) => {
     Alert.alert(

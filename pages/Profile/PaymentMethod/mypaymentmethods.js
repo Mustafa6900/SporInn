@@ -14,7 +14,8 @@ const MyPaymentMethods = ({session}) => {
       const { data: creditCardsData, error } = await supabase
         .from('credit_cards')
         .select('id,card_name, card_number')
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .eq('delete_at', false)
 
       if (error) {
         console.error('Error fetching credit cards:', error.message);
@@ -30,13 +31,12 @@ const MyPaymentMethods = ({session}) => {
     try {
       const { data, error } = await supabase
         .from('credit_cards')
-        .delete()
-        .eq('id', cardId);
-
+        .update({ deleted_at: true }) // Burada deleted_at sütununu true olarak güncelliyoruz
+        .eq('id', addressId);
+  
       if (error) {
         console.error('Hata:', error);
       } else {
-        // Veriyi başarıyla sildikten sonra adresleri yeniden getir
         fetchCreditCards();
       }
     } catch (error) {
