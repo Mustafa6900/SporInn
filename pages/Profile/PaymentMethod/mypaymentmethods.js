@@ -31,8 +31,8 @@ const MyPaymentMethods = ({session}) => {
     try {
       const { data, error } = await supabase
         .from('credit_cards')
-        .update({ deleted_at: true }) // Burada deleted_at sütununu true olarak güncelliyoruz
-        .eq('id', addressId);
+        .update({ delete_at: true }) // Burada deleted_at sütununu true olarak güncelliyoruz
+        .eq('id', cardId);
   
       if (error) {
         console.error('Hata:', error);

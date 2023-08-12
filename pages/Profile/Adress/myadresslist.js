@@ -29,23 +29,28 @@ const myAdressList = ({ session }) => {
       console.error('Hata:', error.message);
     }
   };
-
   const handleDeleteAddress = async (addressId) => {
+    console.log(addressId)
     try {
-      const { data, error } = await supabase
-        .from('addresses')
-        .update({ deleted_at: true }) 
-        .eq('id', addressId);
-  
-      if (error) {
-        console.error('Hata:', error);
-      } else {
-        fetchAddresses();
-      }
+        const { data, error } = await supabase
+            .from('addresses')
+            .update({ delete_at: true })
+            .eq('id', addressId)
+            .select()
+
+        if (error) {
+            console.error('Hata:', error);
+        } else {
+            fetchAddresses();
+        }
     } catch (error) {
-      console.error('Hata:', error.message);
+        console.error('Hata:', error.message);
     }
-  };
+};
+
+
+
+
   
 
   const confirmDelete = (addressId) => {
@@ -82,7 +87,7 @@ const myAdressList = ({ session }) => {
               onPress={() => confirmDelete(address.id)}
               style={{ marginLeft: 'auto', marginRight: 20,  justifyContent: 'center' }}
             >
-              <Ionicons name="trash-outline" size={50}  />
+              <Ionicons name="trash-outline" size={40}  />
             </TouchableOpacity>
           </View>
           </View>
