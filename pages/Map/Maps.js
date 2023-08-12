@@ -9,6 +9,8 @@ import { FontAwesome } from '@expo/vector-icons';
 export default function Maps({ route }) {
     const { districtLat, districtLng } = route.params || {};
     const { sharedItems } = useDataContext();
+    const sportTypes = sharedItems?.[0]?.type === 'fitness_center' ? 'spor salonu' : 'spor tesisi';
+
 
     const customMapStyle = [
         {
@@ -174,9 +176,9 @@ export default function Maps({ route }) {
 
     const initialRegion = {
         latitude: parseFloat(districtLat),
-        latitudeDelta: 0.033,
+        latitudeDelta: 0.034,
         longitude: parseFloat(districtLng),
-        longitudeDelta: 0.033,
+        longitudeDelta: 0.034,
     };
 
     const MarkerCallout = ({ name }) => (
@@ -190,6 +192,13 @@ export default function Maps({ route }) {
         <SafeAreaView style={styles.container}>
             <Header title="Harita" />
             <BackButton left={15} top={43} />
+         
+            <View style={styles.salonsCountContainer}>
+                <Text style={styles.salonsCountText}>
+                    Seçili adreste {sharedItems.length} {sportTypes} bulunmaktadır
+                </Text>
+            </View>
+            
             <MapView
                 style={styles.map}
                 initialRegion={initialRegion}
@@ -202,11 +211,9 @@ export default function Maps({ route }) {
                             latitude: parseFloat(item.location.split(',')[0]),
                             longitude: parseFloat(item.location.split(',')[1]),
                         }}
-                        
                     >
                         <MarkerCallout name={item.name} />
-                     
-                    
+                       
                     </Marker>
                 ))}
             </MapView>
@@ -235,5 +242,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 12,
         padding: 4,
+    },
+    salonsCountContainer: {
+        backgroundColor: 'rgba(255, 111, 37, 0.7)',
+        padding: 4,
+        borderRadius: 4,
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: "3%",
+        width: "90%",
+
+    },
+    salonsCountText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 12,
     },
 });
