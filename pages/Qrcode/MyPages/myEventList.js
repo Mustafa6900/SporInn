@@ -97,6 +97,8 @@ const ItemList = ({ items , category}) => {
     return `(${startHours}:${startMinutes} / ${formattedStartDate})\n                       ↓\n (${endHours}:${endMinutes} / ${formattedEndDate})`;
 
   };
+
+
   
 
   const renderItem = ({ item }) => (
@@ -114,7 +116,7 @@ const ItemList = ({ items , category}) => {
       
       )}
       {category === 'Challenge' && (
-      <Image source={{ uri: item.challenges.imageData?.publicUrl }} style={styles.itemImage} />
+      <Image source={{ uri: item.imageData?.publicUrl }} style={styles.itemImage} />
       )}
       <View style={styles.itemInfo}>
         {category === 'Spor Salonlarım' && (
