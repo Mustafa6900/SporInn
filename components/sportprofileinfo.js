@@ -93,6 +93,7 @@ const SportProfileInfo = ({ items }) => {
   };
   };
 
+
   return (
     <View>
       <Animatable.View
@@ -101,7 +102,7 @@ const SportProfileInfo = ({ items }) => {
         style={styles.container}
       >
         <Image source={{ uri: items.imageData?.publicUrl }} style={styles.image} />
-        <ItemTitleFavorite title={items.name} point="4.8" />
+        <ItemTitleFavorite title={items.name} point= {items.rating !== null ? items.rating : "0.0"} />
         <TouchableOpacity onPress={handleImagePress}>
           {isModalVisible ? null : (
             <FontAwesome name="angle-double-down" color="#FF6F25" size={30} style={{ left: "47%", bottom: "1%" }} />

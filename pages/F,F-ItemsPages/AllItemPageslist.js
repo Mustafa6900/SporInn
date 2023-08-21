@@ -6,8 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 const ItemList = ({ items }) => {
   
   const navigation = useNavigation();
-
-
  
   const renderItem = ({ item }) => (
     <View style={styles.container}>
@@ -22,7 +20,9 @@ const ItemList = ({ items }) => {
         <Text style={styles.iteminfo}>{item.small_description}</Text>
         <View style={styles.itemInfo2}>
           <AntDesign name="star" size={24} color="#FF6F25" />
-          <Text style={styles.itemPoint}>{item.point}</Text>
+          <Text style={styles.itemPoint}>
+              {item.rating !== null ? item.rating : "0.0"}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
         marginLeft: "88%",
         marginTop: "6%", 
     },
+
    itemName: {
       fontSize: 16,
       fontWeight: '900',

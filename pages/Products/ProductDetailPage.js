@@ -125,8 +125,8 @@ const ProductDetailPage = ({ route }) => {
     <SafeAreaView style={styles.container}>
         <Header title="Ürün Detayı" />
         <BackButton left={15} top={43} />
-        <FavoriteButton left={360} top={45} item_id={item.id}/>
-        <TouchableOpacity onPress={navigateToCart} style={{ left: 310, top: 45, position: "absolute" }}>
+        <FavoriteButton left={"88%"} top={"5%"} item_id={item.id}/>
+        <TouchableOpacity onPress={navigateToCart} style={{ left: "75%", top: "5%", position: "absolute" }}>
         <Ionicons name="cart-outline" size={40} />        
         </TouchableOpacity>
         <View style={styles.topContainer}>
