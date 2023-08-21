@@ -289,6 +289,7 @@ const styles = StyleSheet.create({
         },
         closeCommentButton: {
           position: 'absolute',
+          
           top: 10,
           right: 10,
         },

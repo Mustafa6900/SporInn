@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal,TouchableWithoutFeedback } from 'react-native';
 import { FontAwesome } from "react-native-vector-icons";
 import { AntDesign } from '@expo/vector-icons';
 import { supabase } from '../supabaseClient';
@@ -81,15 +81,20 @@ const CommentList = ({ item }) => {
     )}
 
 
-    <Modal visible={selectedComment !== null} transparent animationType="fade">
-      <View style={styles.modalContainer}>
+<Modal visible={selectedComment !== null} transparent animationType="fade" >
+  <TouchableOpacity style={styles.modalContainer} onPress ={() => setSelectedComment(null)} >
+    <TouchableWithoutFeedback>
+      <View style={styles.info}>
         <Text style={styles.modalUserText}>{selectedCommentUser}</Text>
         <Text style={styles.modalText}>{selectedComment}</Text>
-        <TouchableOpacity onPress={() => setSelectedComment(null)} style={styles.closeButton}>
-          <FontAwesome name={"close"} color={"#0D0D0D"} size={40} />
-        </TouchableOpacity>
       </View>
-    </Modal>
+    </TouchableWithoutFeedback>
+    <TouchableOpacity onPress={() => setSelectedComment(null)} style={styles.closeButton}>
+      <FontAwesome name={"close"} color={"#FFFFFF"} size={40} />
+    </TouchableOpacity>
+  </TouchableOpacity>
+</Modal>
+
   </View>
   );
 };
@@ -128,6 +133,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
+  info: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+    
   modalText: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -143,8 +153,9 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     backgroundColor: '#292929',
-    top: 10,
-    left: 10,
+    width: '50%',
+    textAlign: 'center',
+    marginBottom: 10,
   },
   closeButton: {
     position: 'absolute',
