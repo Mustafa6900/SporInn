@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     color: "#FF6F25",
     marginLeft: "10%",
     marginRight: "10%",
-    marginTop: "50%",
+    marginTop: "10%",
     marginBottom: "50%",
   },
 });
