@@ -112,8 +112,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
                 [
                   {
                     text: 'İptal',
-                    onPress: () => console.error('Cancel Pressed'),
-                    style: 'cancel'
+                   
                   },
                   { text: 'Evet', onPress: () => handleDeleteProduct(cartItem.product_id) }
                 ]
