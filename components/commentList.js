@@ -8,56 +8,61 @@ const CommentList = ({ item }) => {
   const [comments, setComments] = useState([]);
   const [selectedComment, setSelectedComment] = useState(null);
   const [selectedCommentUser, setSelectedCommentUser] = useState(null);
+  const [selectedCommentDateStr, setSelectedCommentDate] = useState(null);
+  const selectedCommentDate = new Date(selectedCommentDateStr);
+  const formattedDate = `${selectedCommentDate.getFullYear()}/${(selectedCommentDate.getMonth() + 1).toString().padStart(2, '0')}/${selectedCommentDate.getDate().toString().padStart(2, '0')}`;
 
   
   useEffect(() => {
-    if(item.type === 'fitness_center'){
-    const fetchComments = async () => {
-      const { data: fetchedComments, error } = await supabase
-        .from('comments')
-        .select('*,profiles(first_name,last_name)') 
-        .eq('fitness_centers_id', item.id);
-      if (error) {
-        console.error(error);
-      } else {
-        setComments(fetchedComments);
-      }
-    };
-    fetchComments();
-  }
-  else if(item.type === 'sports_facility'){
-    const fetchComments = async () => {
-      const { data: fetchedComments, error } = await supabase
-        .from('comments')
-        .select('*,profiles(first_name,last_name)') 
-        .eq('sports_facilities_id', item.id);
-      if (error) {
-        console.error(error);
-      } else {
-        setComments(fetchedComments);
-      }
+    if (item.type === 'fitness_center') {
+      const fetchComments = async () => {
+        const { data: fetchedComments, error } = await supabase
+          .from('comments')
+          .select('*,profiles(first_name,last_name)')
+          .eq('fitness_centers_id', item.id)
+          .order('created_at', { ascending: false }); // Sıralama işlemi
+        if (error) {
+          console.error(error);
+        } else {
+          setComments(fetchedComments);
+        }
+      };
+      fetchComments();
+    } else if (item.type === 'sports_facility') {
+      const fetchComments = async () => {
+        const { data: fetchedComments, error } = await supabase
+          .from('comments')
+          .select('*,profiles(first_name,last_name)')
+          .eq('sports_facilities_id', item.id)
+          .order('created_at', { ascending: false }); // Sıralama işlemi
+        if (error) {
+          console.error(error);
+        } else {
+          setComments(fetchedComments);
+        }
+      };
+      fetchComments();
+    } else {
+      const fetchComments = async () => {
+        const { data: fetchedComments, error } = await supabase
+          .from('comments')
+          .select('*,profiles(first_name,last_name)')
+          .eq('products_id', item.id)
+          .order('created_at', { ascending: false }); // Sıralama işlemi
+        if (error) {
+          console.error(error);
+        } else {
+          setComments(fetchedComments);
+        }
+      };
+      fetchComments();
     }
-    fetchComments();
-  }
-  else{
-    const fetchComments = async () => {
-      const { data: fetchedComments, error } = await supabase
-        .from('comments')
-        .select('*,profiles(first_name,last_name)') 
-        .eq('products_id', item.id);
-      if (error) {
-        console.error(error);
-      } else {
-        setComments(fetchedComments);
-      }
-    }
-    fetchComments();
-  }
   }, []);
+  
 
 
   const renderItem = ({ item, index }) => (
-    <TouchableOpacity onPress={() => [setSelectedComment(comments[index].comments_text), setSelectedCommentUser(comments[index].profiles.first_name) ]}>
+    <TouchableOpacity onPress={() => [setSelectedComment(comments[index].comments_text), setSelectedCommentUser(comments[index].profiles.first_name), setSelectedCommentDate(comments[index].created_at)]}>
       <View style={styles.commentContainer}>
         <FontAwesome name={"comment"} color={"#AAAAAA"} size={20} style={{ marginRight: 10, marginLeft: 10 }} />
         <Text style={styles.commentText}>{item.comments_text}</Text>
@@ -86,7 +91,7 @@ const CommentList = ({ item }) => {
     <TouchableWithoutFeedback>
       <View style={styles.info}>
         <Text style={styles.modalUserText}>{selectedCommentUser}</Text>
-        <Text style={styles.modalText}>{selectedComment}</Text>
+        <Text style={styles.modalText}>{selectedComment}{"\n\n"}{formattedDate}</Text>
       </View>
     </TouchableWithoutFeedback>
     <TouchableOpacity onPress={() => setSelectedComment(null)} style={styles.closeButton}>
@@ -145,6 +150,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     backgroundColor: '#292929',
+    textAlign: 'center',
   },
   modalUserText: {
     fontSize: 20,

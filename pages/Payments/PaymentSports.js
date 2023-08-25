@@ -150,10 +150,13 @@ export default function Payment({ route }) {
   };
   
   const handleSporInnPress = () => {
-    if (!isCheckedSporInn) {
+   /* if (!isCheckedSporInn) {
       setIsCheckedSporInn(true);
       setIsCheckedCreditCard(false);
     }
+    */
+    Alert.alert('SporInn Cüzdan ile Ödeme seçeneği şu anda kullanılamamaktadır.');
+
   };
   
   const handleAgreementPress = () => {
