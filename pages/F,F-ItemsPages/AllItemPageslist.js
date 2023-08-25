@@ -21,7 +21,7 @@ const ItemList = ({ items }) => {
         <View style={styles.itemInfo2}>
           <AntDesign name="star" size={24} color="#FF6F25" />
           <Text style={styles.itemPoint}>
-              {item.rating !== null ? item.rating : "0.0"}
+          {item.rating !== null ? item.rating.toFixed(1) : "0.0"}
           </Text>
         </View>
       </View>

@@ -34,7 +34,7 @@ const ItemDetailPage = ({ route }) => {
       <View style={styles.topContainer}>
         <SportProfileInfo items={item} />
       </View>
-      <CategorySlider items={item} onItemPress={handleCategorySelect} />
+      <CategorySlider items={item} onItemPress={handleCategorySelect} style={styles.CategorySlider}/>
 
       {itemLoaded ? (
         item.type === 'fitness_center' || item.type === 'personal_trainer' || item.type === 'dietitian' ? (
@@ -66,6 +66,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     letterSpacing: 0.4,
+  },
+  CategorySlider: {
+    marginTop: 10,
   },
 });
 

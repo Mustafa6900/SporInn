@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 35,
+    marginTop: 20,
   },
   timeSelectionContainer: {
     alignItems: 'center',
@@ -363,11 +363,11 @@ const styles = StyleSheet.create({
   scrollView: {
     height: 280,
     width: '100%',
-    marginBottom: 15,
+    marginBottom: 5,
   },
   timeslotButton: {
     width: '100%',
-    height: 30,
+    height: 25,
     backgroundColor: '#AAAAAA',
     borderRadius: 5,
     marginBottom: 10,
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     width: '100%',
-    height: 40,
+    height: 35,
     backgroundColor: '#0D0D0D',
     borderRadius: 5,
     marginBottom: 10,
@@ -388,23 +388,25 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     width: '100%',
-    height: 80,
+    height: 60,
     backgroundColor: '#FF6F25',
     borderRadius: 5,
     marginBottom: 10,
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   timeslotButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#0D0D0D',
   },
   timeslotButtonTextSelected: {
+    fontSize: 18,
     color: '#FFFFFF',
   },
   backButtonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#AAAAAA',
   },
@@ -415,13 +417,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop:5,
     marginBottom: 5,
+    marginTop: 10,
   },
   confirmButtonText2: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
-  
+    marginBottom: 10,
   },
 });
 

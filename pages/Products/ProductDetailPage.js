@@ -24,6 +24,7 @@ const ProductDetailPage = ({ route }) => {
   const [isCommentModalVisible, setIsCommentModalVisible] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [rating, setRating] = useState(0);
+  const [handleProduct , setHandleProduct] = useState(false);
 
 
   
@@ -115,6 +116,7 @@ const ProductDetailPage = ({ route }) => {
         }
   
         Alert.alert('Sepete Eklendi');
+        setHandleProduct(true);
       }
     } catch (error) {
       console.error(error);
@@ -127,6 +129,7 @@ const ProductDetailPage = ({ route }) => {
         <BackButton left={15} top={43} />
         <FavoriteButton left={"88%"} top={"5%"} item_id={item.id}/>
         <TouchableOpacity onPress={navigateToCart} style={{ left: "75%", top: "5%", position: "absolute" }}>
+        {handleProduct ? <Text style={{color:"#0D0D0D",fontSize:15,fontWeight:"bold",position:"absolute",left:25,borderRadius:10,backgroundColor:"#AAAAAA",zIndex:1}}> +1 </Text> : null}
         <Ionicons name="cart-outline" size={40} />        
         </TouchableOpacity>
         <View style={styles.topContainer}>

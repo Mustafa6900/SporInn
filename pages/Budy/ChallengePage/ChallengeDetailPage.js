@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import { View, Text, StyleSheet,Image,SafeAreaView,Alert } from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
@@ -10,8 +10,13 @@ import { supabase } from '../../../supabaseClient';
 const ChallengeDetailPage = ({ route }) => {
   const { eventId,eventName, person, event,adress,bigdetail,eventStartTime,eventEndTime,eventImage } = route.params;
   const { session } = useContext(AuthContext);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-const handleConfirmChallenge = async () => {
+  const handleCategory = (selectedCategory) => {
+    setSelectedCategory(selectedCategory);
+  };
+
+  const handleConfirmChallenge = async () => {
 const generateQRCodeData = () => {
   const data = {
     challenge_id: eventId,
@@ -37,14 +42,11 @@ const generateQRCodeData = () => {
   } catch (error) {
     console.error(error);
   }
-};
-
-  
+  };
   const categories = [
     // Diğer kategorileri buraya ekleyin
     { name: 'İçerik' }, // İçerik kategorisini diziye ekledik
   ];
-
   const formatDate = (startDateString, endDateString) => {
     const startDate = new Date(startDateString);
     const endDate = new Date(endDateString);
@@ -72,7 +74,7 @@ const generateQRCodeData = () => {
       <Text style={styles.title}> {event}</Text>
       </View>
         </View>
-        <Categoryslider items = {categories} />
+        <Categoryslider items = {categories} onItemPress={handleCategory}/>
         <OutputText text={  "\n"+ bigdetail + "\n\n" +
           "Kişi sayısı limiti: " + person + "\n\n" +
           "Etkinlik süresi:"+"\n\n" +formatDate(eventStartTime, eventEndTime) + "\n\n" +

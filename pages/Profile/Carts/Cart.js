@@ -19,14 +19,14 @@ export default function Cart(){
     const [itemLoaded, setItemLoaded] = useState(false);
  
     const setItemss = (data) => {
-        // Verileri kontrol edin
+        // Verileri kontrolü
         if (data && data.length > 0) {
           setItem(data);
           setItemLoaded(true); 
         }
         
       };
-useEffect(() => {
+    useEffect(() => {
     const fetchCartProducts = async () => {
         try {
             const { data, error } = await supabase
@@ -64,9 +64,9 @@ useEffect(() => {
     };
 
     fetchCartProducts(); // Fetch cart products first
-}, []);
+    }, []);
 
-useEffect(() => {
+    useEffect(() => {
     const fetchCartProductsSellers = async () => {
         try {
             if (item.length > 0) {
@@ -86,9 +86,9 @@ useEffect(() => {
     };
 
     fetchCartProductsSellers(); // Fetch cart products sellers
-}, [item]);
+    }, [item]);
 
-useEffect(() => {
+    useEffect(() => {
     // Calculate the total price based on the checked items
     const totalPrice = item.reduce((total, cartItem, index) => {
         if (checkedStates[index]) {
@@ -97,7 +97,7 @@ useEffect(() => {
         return total;
     }, 0);
     setTotalPrice(totalPrice);
-}, [item, checkedStates]);
+    }, [item, checkedStates]);
 
 return (
     <SafeAreaView style={styles.container}>

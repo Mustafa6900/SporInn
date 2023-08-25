@@ -3,7 +3,7 @@ import { View, Text, FlatList,StyleSheet } from 'react-native';
 import { supabase } from '../supabaseClient';
 import * as Animatable from 'react-native-animatable';
 
-const SubCategories = ({ items, onItemPress }) => {
+const SubCategories = ({ items, onItemPress,style }) => {
   const [itemss, setItemss] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -101,10 +101,10 @@ const SubCategories = ({ items, onItemPress }) => {
     <Animatable.View
     animation="zoomIn" // İstediğiniz animasyonu buraya ekleyin
     duration={1000} // Animasyon süresini burada ayarlayın
-    style={styles.container}
+    style={[styles.container ,style]}
   >
     <FlatList
-      style={styles.flatcontainer}
+      style={styles.flatcontainer }
       data={itemss}
       horizontal={true}
       renderItem={renderItem}
