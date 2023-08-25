@@ -11,7 +11,6 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
   const { session } = useContext(AuthContext);
   const [quantityDropdown, setQuantityDropdown] = useState({});
 
-  console.log(item)
   useEffect(() => {
       // Başlangıçta tüm ürünleri işaretli olarak ayarla
       setCheckedStates(Array(item.length).fill(true));
@@ -107,7 +106,7 @@ const Cartitemlist = ({ item, itemSeller, checkedStates, setCheckedStates, setIt
             }
             ));
             setItemss(newupdatedData || []);
-            
+
         }
       }
     } catch (error) {
