@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {StyleSheet, SafeAreaView } from "react-native";
 import Header from "../../../components/header";
 import BackButton from "../../../components/backbutton";
-import SearchButton from "../../../components/searchbutton";
 import CategorySlider from "../../../components/categoryslider";
 import OrderList from "./orderlist";
 

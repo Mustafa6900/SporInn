@@ -1,7 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {View,SafeAreaView,StyleSheet } from 'react-native';
 import Header from '../../components/header';
-import SearchButton from '../../components/searchbutton';
 import Title from '../../components/sportptTitle';
 import ProductCategoryList from './productCategoryList';
 import { useNavigation } from '@react-navigation/native';
@@ -61,7 +60,6 @@ export default function Products({ navigation }) {
         <SafeAreaView style={styles.container}>
             <Header title="Ürünler" />
             <View style={{top:15}}>
-            <SearchButton placeholder="Ürün Kategorisi Ara" table={"products_category"} column={"name"} storage={"productscategoryimage"} onSearchResults={handleSearchResults} name={"Ürün Kategorisi"}/>
             </View>
             <View style={{top:25}}>
             <Title title="Ürün Kategorileri" />

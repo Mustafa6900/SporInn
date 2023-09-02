@@ -2,7 +2,6 @@ import React, { useEffect, useState,useContext } from 'react';
 import { SafeAreaView,StyleSheet,Text,View,ScrollView,SectionList} from 'react-native';
 import Header from '../../../components/header';
 import BackButton from '../../../components/backbutton';
-import SearchButton from '../../../components/searchbutton';
 import Title from '../../../components/sportptTitle';
 import MyEventList from './myEventList';
 import { supabase } from '../../../supabaseClient';

@@ -47,6 +47,76 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
           }
         }
       }
+      else if(name==="Ürün"){
+        if(selectedCategory.id==0){
+        const { data, error } = await supabase
+        .from(table)
+        .select('*')
+        .eq('main_category_id', categoryId)
+        .eq('categoryid', selectedCategory.id);
+
+        if (error) {
+            console.error(error);
+          }  else {
+            // If the storage name is provided, fetch and attach the imageData to each item
+            if (storage) {
+              const updatedData = await Promise.all(data.map(async (item) => {
+                if (item.image_url) {
+                  const { data: imageData, error: imageError } = await supabase.storage
+                    .from(storage)
+                    .getPublicUrl(item.image_url);
+    
+                  if (imageError) {
+                    console.error('Resim alınamadı:', imageError.message);
+                  } else {
+                    if (imageData) {
+                      item.imageData = imageData;
+                    }
+                  }
+                }
+                return item;
+              }));
+    
+              onSearchResults(updatedData);
+            } else {
+              // If no storage name is provided, simply pass the search results to the parent component
+              onSearchResults(data);
+            }
+          }
+        }
+      }
+      else if(name==="Challenge"){
+        const { data, error } = await supabase
+        .from(table)
+        .select("*")
+        
+        if (error) {
+            console.error(error);
+          }
+          else{
+            if(storage)
+            {
+              const updatedData = await Promise.all(data.map(async (item) => {
+                if (item.image_url) {
+                  const { data: imageData, error: imageError } = await supabase.storage
+                    .from(storage)
+                    .getPublicUrl(item.image_url);
+    
+                  if (imageError) {
+                    console.error('Resim alınamadı:', imageError.message);
+                  } else {
+                    if (imageData) {
+                      item.imageData = imageData;
+                    }
+                  }
+                }
+                return item;
+              }));
+    
+              onSearchResults(updatedData);
+            }
+          }
+      }
         else{
             const { data, error } = await supabase
             .from(table)
@@ -214,6 +284,46 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
     }
  
         }
+        else if(name==="Challenge"){
+            const { data, error } = await supabase
+            .from(table)
+            .select('*')
+            .ilike(column, `%${searchText}%`);
+
+            if (error) {
+                console.error(error);
+              } else {
+                // If the storage name is provided, fetch and attach the imageData to each item
+                if (storage) {
+                  const updatedData = await Promise.all(data.map(async (item) => {
+                    if (item.image_url) {
+                      const { data: imageData, error: imageError } = await supabase.storage
+                        .from(storage)
+                        .getPublicUrl(item.image_url);
+
+                      if (imageError) {
+                        console.error('Resim alınamadı:', imageError.message);
+                      } else {
+                        if (imageData) {
+                          item.imageData = imageData;
+                        }
+                      }
+                    }
+                    return item;
+                  }));
+                  
+                  onSearchResults(updatedData);
+                } else {
+                  // If no storage name is provided, simply pass the search results to the parent component
+                  onSearchResults(data);
+                }
+              }
+              if (data.length === 0) {
+                // If the search results are empty, show an alert message
+                alert(`${name} bulunamadı.`);
+              }
+        }
+        
         else{
             const { data, error } = await supabase
             .from(table)
