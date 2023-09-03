@@ -1,16 +1,14 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 
-const ProductCategoryList = ({ categories, onCategoryPress, searchItem }) => {
+const ProductCategoryList = ({ categories, onCategoryPress }) => {
   const handleCategoryPress = (category) => {
     onCategoryPress(category);
   };
 
-  const filteredCategories = searchItem.length > 0 ? searchItem : categories;
-
   return (
     <View style={styles.container}>
-      {filteredCategories.map((category, index) => {
+      {categories.map((category, index) => {
         return (
           <TouchableOpacity
             key={index}

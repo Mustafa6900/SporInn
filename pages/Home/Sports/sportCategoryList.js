@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { supabase } from '../../../supabaseClient';
-const SportList = ({onCategoryPress, searchItem}) => {
+const SportList = ({onCategoryPress}) => {
   const handleCategoryPress = (category) => {
     onCategoryPress(category);
   };
@@ -43,14 +43,11 @@ const SportList = ({onCategoryPress, searchItem}) => {
 
     fetchCategoriesData();
   }, []);
-
-  const filteredCategories = searchItem.length > 0 ? searchItem : categories;
-
   
 
   return (
     <View style={styles.container}>
-      {filteredCategories.map((category, index) => (
+      {categories.map((category, index) => (
         <TouchableOpacity
           key={index}
           style={styles.category}

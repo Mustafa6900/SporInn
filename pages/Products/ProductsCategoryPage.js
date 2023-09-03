@@ -8,7 +8,6 @@ import { supabase } from '../../supabaseClient';
 
 export default function Products({ navigation }) {
 
-    const [searchResults, setSearchResults] = useState([]);
     const [categories, setCategories] = useState([]);
     const navigations = useNavigation();
 
@@ -48,9 +47,7 @@ export default function Products({ navigation }) {
         fetchCategories();
     }, []);
 
-      const handleSearchResults = async (results) => {
-        setSearchResults(results);   
-    };
+    
 
       const handleCategoryPress = (category) => {
         navigations.navigate('ProductsItems', { category: category.name ,categoryId:category.id });
@@ -65,7 +62,7 @@ export default function Products({ navigation }) {
             <Title title="Ürün Kategorileri" />
             </View>
          
-            <ProductCategoryList categories={categories} onCategoryPress={handleCategoryPress} searchItem={searchResults}/>
+            <ProductCategoryList categories={categories} onCategoryPress={handleCategoryPress} />
             
         </SafeAreaView>
     );

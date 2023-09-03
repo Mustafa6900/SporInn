@@ -7,14 +7,10 @@ import SportList from './sportCategoryList';
 import { useNavigation } from '@react-navigation/native';
 
 const Sports = ({ navigation }) => {
-  const [searchResults, setSearchResults] = useState([]);
   const navigations = useNavigation();
 
   
-  const handleSearchResults = async (results) => {
-    setSearchResults(results);
 
-  };
   const handleCategoryPress = (category) => {
     navigations.navigate('AllItemAllPages', { category });
   };
@@ -25,7 +21,7 @@ const Sports = ({ navigation }) => {
       <Header title="Spor Tesisleri" />
       <BackButton left={15} top={43} />
       <SportTitle title="Tüm Spor Tesisleri" />
-      <SportList onCategoryPress={handleCategoryPress} searchItem={searchResults}/>
+      <SportList onCategoryPress={handleCategoryPress} />
     </SafeAreaView>
   );
 };
