@@ -7,7 +7,7 @@ const languageVersionbuttons = ({  }) => {
     const navigation = useNavigation();
     const handleItemPress = (name) => {
         if(name=="Türkçe"){
-            navigation.navigate('Languages', { item: item });
+            navigation.navigate('Languages');
         }
     };
     category=[

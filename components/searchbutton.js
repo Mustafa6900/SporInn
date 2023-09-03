@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput,TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { supabase } from "../supabaseClient.js";
+import { PermissionsAndroid } from 'react-native';
+
+
+
 
 const SearchButton = ({ name, placeholder, table, column, storage, onSearchResults, categoryId, selectedCategory, city, district}) => {
   const [searchText, setSearchText] = useState('');
@@ -323,7 +327,7 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
                 alert(`${name} bulunamadı.`);
               }
         }
-        
+
         else{
             const { data, error } = await supabase
             .from(table)
@@ -373,7 +377,28 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
     }
   };
 
-  
+  const requestMicrophonePermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        {
+          title: 'Mikrofon İzni',
+          message: 'Uygulamamızın mikrofonunu kullanmak için izin vermelisiniz.',
+          buttonNeutral: 'Daha Sonra Sor',
+          buttonNegative: 'İptal',
+          buttonPositive: 'İzin Ver',
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('Mikrofon izni verildi.');
+        // Mikrofon izni verildiğinde konuşma tanıma işlemini başlatabilirsiniz.
+      } else {
+        console.log('Mikrofon izni reddedildi.');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   
   
 
@@ -392,7 +417,9 @@ const SearchButton = ({ name, placeholder, table, column, storage, onSearchResul
         onSubmitEditing={handleSearch}
         value={searchText}
       />
-      <MaterialCommunityIcons name="microphone-outline" size={24} color="#AAAAAA" style={{ right: 20 }} />
+            <TouchableOpacity onPress={requestMicrophonePermission} style={{right:20}}>
+  <MaterialCommunityIcons name="microphone-outline" size={24} color="#AAAAAA" />
+  </TouchableOpacity>
     </View>
   );
 };
