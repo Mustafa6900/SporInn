@@ -1,19 +1,19 @@
 import React,{useState,useContext,useEffect} from 'react';
 import { View, Text, StyleSheet,Image,SafeAreaView,Alert,TouchableOpacity,Modal,TextInput } from 'react-native';
-import Header from '../../components/header';
-import BackButton from '../../components/backbutton';
-import Categoryslider from '../../components/categoryslider';
-import OutputText from '../../components/outputText';
-import CustomButton from '../../components/custombutton';
-import FavoriteButton from '../../components/favoritebutton';
+import Header from '../../../components/header';
+import BackButton from '../../../components/backbutton';
+import Categoryslider from '../../../components/categoryslider';
+import OutputText from '../../../components/outputText';
+import CustomButton from '../../../components/custombutton';
+import FavoriteButton from '../../../components/favoritebutton';
 import { Ionicons } from '@expo/vector-icons';
-import { supabase } from '../../supabaseClient';
-import { AuthContext } from '../Auth/AuthContext';
+import { supabase } from '../../../supabaseClient';
+import { AuthContext } from '../../Auth/AuthContext';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import StarRating from 'react-native-star-rating-fixed-viewproptype';
 import { FontAwesome } from "react-native-vector-icons";
-import CommentList from '../../components/commentList';
+import CommentList from '../../../components/commentList';
 
 
 const ProductDetailPage = ({ route }) => {

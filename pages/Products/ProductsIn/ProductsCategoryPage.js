@@ -1,10 +1,10 @@
 import React,{useEffect,useState} from 'react';
 import {View,SafeAreaView,StyleSheet } from 'react-native';
-import Header from '../../components/header';
-import Title from '../../components/sportptTitle';
+import Header from '../../../components/header';
+import Title from '../../../components/sportptTitle';
 import ProductCategoryList from './productCategoryList';
 import { useNavigation } from '@react-navigation/native';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../../supabaseClient';
 
 export default function Products({ navigation }) {
 

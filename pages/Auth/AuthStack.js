@@ -32,21 +32,22 @@ import AccountSettings from '../Profile/AccountSetting/AccountSettings.js';
 import Help from '../Profile/Helps/Help.js';
 import Languages from '../Profile/Language/Languages.js';
 
-import Products from '../Products/ProductsCategoryPage.js';
-import ProductDetailPage from '../Products/ProductDetailPage.js';
-import ProductsItems from '../Products/ProductsItemsPage.js';
+import Products from '../Products/ProductsIn/ProductsCategoryPage.js';
+import ProductDetailPage from '../Products/ProductsIn/ProductDetailPage.js';
+import ProductsItems from '../Products/ProductsIn/ProductsItemsPage.js';
 
 import QrCode from '../Qrcode/QrcodeHome.js';
 import QrCodePage from '../Qrcode/QrCodePage.js'
 
+import ProductsHomePage from '../Products/ProductsHomePage.js';
 import Budy from '../Budy/budy.js';
 import PtDtitemPages from '../Budy/PtDtChPages/PtDtitemPages.js';
 import ChallengeDetailPage from '../Budy/ChallengePage/ChallengeDetailPage.js';
 import ChallengePage from '../Budy/ChallengePage/ChallengeePage.js';
 import AllItemAllPages from '../F,F-ItemsPages/AllItemAllPages.js';
 import ItemPackagePage from '../F,F-ItemsPages/AllItemPacketsPages.js';
-import Sports from '../Home/Sports/SportsCategoryPage.js';
-import PackageDetailPage from '../Home/Fitness/FitnessPackageDetailPage.js';
+import Sports from '../Products/Sports/SportsCategoryPage.js';
+import PackageDetailPage from '../Products/Fitness/FitnessPackageDetailPage.js';
 import MyEventPage from '../Qrcode/MyPages/MyEventPage.js';
 import MyEventDetailPage from '../Qrcode/MyPages/MyEventDetailPage.js';
 
@@ -264,6 +265,13 @@ const AuthStack = () => {
           component={Maps}
           options={{ title: "Maps" }}
         />
+
+        <Stack.Screen
+          name='ProductsHomePage'
+          component={ProductsHomePage}
+          options={{ title: "ProductsHomePage" }}
+        />
+
         
  
     </Stack.Navigator>

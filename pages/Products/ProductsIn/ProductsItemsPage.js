@@ -1,11 +1,11 @@
 import React,{useEffect,useState} from 'react';
 import {ScrollView,View,SafeAreaView,StyleSheet } from 'react-native';
-import Header from '../../components/header';
-import BackButton from '../../components/backbutton';
-import SearchButton from '../../components/searchbutton';
-import CategorySlider from '../../components/categoryslider';
+import Header from '../../../components/header';
+import BackButton from '../../../components/backbutton';
+import SearchButton from '../../../components/searchbutton';
+import CategorySlider from '../../../components/categoryslider';
 import ProductList from './productsItemList';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../../supabaseClient';
 export default function ProductsItems({ route }) {
     const { category,categoryId } = route.params;
     const [items, setItems] = useState([]);

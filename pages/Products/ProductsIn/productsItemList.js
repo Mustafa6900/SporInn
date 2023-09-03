@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react';
 import { Text, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { supabase } from '../../supabaseClient';
+import { supabase } from '../../../supabaseClient';
 const ProductList = ({ items, selectedCategory, searchItem }) => {
     const navigation = useNavigation();
     const selectCategory = selectedCategory?.id; // ? işareti ile optional chaining kullanarak selectedCategory'nin null olması durumunda hata almamak için kontrol ediyoruz.

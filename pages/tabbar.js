@@ -5,7 +5,7 @@ import Home from './Home/Home'
 import Profile from './Profile/profile';
 import QrCode from './Qrcode/QrcodeHome';
 import Budy from './Budy/budy';
-import Products from './Products/ProductsCategoryPage.js';
+import ProductsHomePage from './Products/ProductsHomePage';
 
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -25,7 +25,7 @@ const Tabbar = ({initialRoute}) =>{
                         {
                             return <Ionicons name="home-outline" size={35} color={color} />;
                         }
-                        else if(route.name === 'Products')
+                        else if(route.name === 'ProductsHomePage')
                         {
                             return <Ionicons name="cart-outline" size={35} color={color} />;
                         }
@@ -68,7 +68,7 @@ const Tabbar = ({initialRoute}) =>{
                 initialRouteName={initialRoute}
             >
                 <Tab.Screen name="Home" component={Home} />  
-                <Tab.Screen name="Products" component={Products} />
+                <Tab.Screen name="ProductsHomePage" component={ProductsHomePage} />
                 <Tab.Screen name="QrCode" component={QrCode} />
                 <Tab.Screen name="Budy" component={Budy} />
                 <Tab.Screen name="Profile" component={Profile} />
